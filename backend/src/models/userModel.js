@@ -19,16 +19,13 @@ const userSchema = new mongoose.Schema({
     required: true,
     minlength: 6,
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
   role: {
     type: String,
     enum: ["user", "admin"],
     default: "user",
-  },
-});
+  }, 
+  refreshTokens: [String]
+  }, { timestamps: true });
 
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
@@ -38,8 +35,10 @@ userSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });
+
+//compare password
 userSchema.methods.comparePassword = async function (candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);
 };
-const User = mongoose.model("User", userSchema);
-module.exports = User;
+
+module.exports =  mongoose.model("User", userSchema);
