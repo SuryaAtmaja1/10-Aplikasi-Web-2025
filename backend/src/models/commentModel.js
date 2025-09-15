@@ -10,6 +10,11 @@ const commentSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+      parent: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: "Comment", 
+        default: null 
+    }, // for replies
     text: {
       type: String,
       required: true,

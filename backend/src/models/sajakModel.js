@@ -4,6 +4,10 @@ const postSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
+    },  
+    title: { 
+      type: String, 
+      required: true 
     },
     content: {
       type: String,
@@ -11,7 +15,7 @@ const postSchema = new mongoose.Schema(
       maxlength: 500,
     },
     image: String,
-    hastags: {
+    hashtags: {
       type: [String],
       enum: [
         "umum",
@@ -24,8 +28,23 @@ const postSchema = new mongoose.Schema(
       ],
       default: ["umum"],
     },
+    views: { 
+      type: Number, 
+      default: 0 
+    },
+    commentsCount: { 
+      type: Number, 
+      default: 0 
+    },
+    isPublish: { 
+      type: Boolean, 
+      default: true 
+    },
   },
   { timestamps: true }
 );
+
+//for searching
+SajakSchema.index({ title: 'text', content: 'text', hashtags: 'text' });
 
 module.exports = mongoose.model("Sajak", postSchema);
