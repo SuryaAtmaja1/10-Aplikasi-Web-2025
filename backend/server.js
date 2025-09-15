@@ -18,18 +18,18 @@ app.use(express.json()); // Parse JSON requests
 
 // Routes import
 const authRoutes = require("./src/routes/authRoutes");
-//const commentRoutes =
-//const sajakRoutes =
-//const userRoutes = 
+const commentRoutes = require("./src/routes/commentRoutes");
+const sajakRoutes = require("./src/routes/sajakRoutes");
+const userRoutes = require("./src/routes/userRoutes");
 
 //Routes
 app.get("/", (req, res) => {
   res.send("Backend is running 🚀");
 });
 app.use("/auth", authRoutes);
-// app.use("/comment", commentRoutes);
-// app.use("/sajak", sajakRoutes);
-// app.use("/user", userRoutes);
+app.use("/comment", commentRoutes);
+app.use("/sajak", sajakRoutes);
+app.use("/user", userRoutes);
 
 // ? Error handler
 // ? will be called automatically when the url doesn't exist or it's wrong
