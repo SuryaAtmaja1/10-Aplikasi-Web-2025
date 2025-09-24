@@ -1,13 +1,16 @@
-const postSchema = new mongoose.Schema(
+const { create } = require("./userModel");
+const mongoose = require("mongoose");
+
+const sajakSchema = new mongoose.Schema(
   {
-    author: {
+    authorId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
-    },  
-    title: { 
-      type: String, 
-      required: true 
+    },
+    title: {
+      type: String,
+      required: true,
     },
     content: {
       type: String,
@@ -28,23 +31,26 @@ const postSchema = new mongoose.Schema(
       ],
       default: ["umum"],
     },
-    views: { 
-      type: Number, 
-      default: 0 
+    views: {
+      type: Number,
+      default: 0,
     },
-    commentsCount: { 
-      type: Number, 
-      default: 0 
+    commentsCount: {
+      type: Number,
+      default: 0,
     },
-    isPublish: { 
-      type: Boolean, 
-      default: true 
+    isPublish: {
+      type: Boolean,
+      default: true,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
     },
   },
   { timestamps: true }
 );
 
-//for searching
-SajakSchema.index({ title: 'text', content: 'text', hashtags: 'text' });
+sajakSchema.index({ title: "text", content: "text", hashtags: "text" });
 
-module.exports = mongoose.model("Sajak", postSchema);
+module.exports = mongoose.model("Sajak", sajakSchema);
