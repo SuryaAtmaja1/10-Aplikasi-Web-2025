@@ -1,3 +1,5 @@
+const mongoose = require("mongoose");
+
 const commentSchema = new mongoose.Schema(
   {
     post: {
@@ -5,20 +7,28 @@ const commentSchema = new mongoose.Schema(
       ref: "Sajak",
       required: true,
     },
-    author: {
+    authorId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
-      parent: { 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: "Comment", 
-        default: null 
-    }, // for replies
+    parent: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Comment",
+      default: null,
+    },
     text: {
       type: String,
       required: true,
       maxlength: 300,
+    },
+    isEdited: {
+      type: Boolean,
+      default: false,
+    },
+    repliesCount: {
+      type: Number,
+      default: 0,
     },
   },
   { timestamps: true }
