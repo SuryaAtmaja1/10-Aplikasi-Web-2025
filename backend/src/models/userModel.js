@@ -13,10 +13,13 @@ const userSchema = new mongoose.Schema({
     unique: true,
     lowercase: true,
     match: [/.+\@.+\..+/, "Please fill a valid email address"],
+  },   
+  googleId: { 
+    type: String 
   },
   password: {
     type: String,
-    required: true,
+    required: function() { return !this.googleId; },
     minlength: 6,
   },
   role: {

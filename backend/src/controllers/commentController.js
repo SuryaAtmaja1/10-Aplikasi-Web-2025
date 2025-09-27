@@ -35,7 +35,7 @@ exports.addComment = async (req, res) => {
 };
 
 // Get all comments by sajak id
-exports.getCommentsBySajakId = async (req, res) => {
+exports.getComments = async (req, res) => {
   try {
     const { sajakId } = req.params;
 

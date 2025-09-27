@@ -12,6 +12,43 @@ const COOKIE_OPTIONS = {
 const msPerDay = 24 * 60 * 60 * 1000;
 const refreshTokenMaxAge = (process.env.REFRESH_TOKEN_EXPIRES_IN_DAYS || 7) * msPerDay;
 
+exports.googleCallback = async (req, res) => {
+   try {
+    const user = req.user; // user from passport Google strategy
+
+    // Generate tokens
+    const accessToken = generateAccessToken(user._id);
+    const refreshToken = generateRefreshToken(user._id);
+
+    // Save refresh token in DB
+    user.refreshTokens.push(refreshToken);
+    await user.save();
+
+    // Set cookies
+    res.cookie("accessToken", accessToken, {
+      ...COOKIE_OPTIONS,
+      maxAge: 15 * 60 * 1000, // 15 minutes
+    });
+    res.cookie("refreshToken", refreshToken, {
+      ...COOKIE_OPTIONS,
+      maxAge: refreshTokenMaxAge, // e.g., 7 days
+    });
+
+    // Respond with user info and access token
+    res.status(200).json({
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+      },
+      accessToken,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: err.message });
+  }
+};
+
 exports.register = async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -159,19 +196,24 @@ exports.refreshToken = async (req, res) => {
 
 exports.logout = async (req, res) => {
   try {
-    const token = req.cookies.refreshToken;
-    if (token && req.userId) {
-      // remove token from DB if present
-      await User
-        .findByIdAndUpdate(
-            req.userId, 
-            { $pull: { refreshTokens: token } }
-        );
+    const refreshToken = req.cookies.refreshToken;
+
+    if (refreshToken) {
+      // Remove token from DB if userId is known
+      if (req.userId) {
+        await User.findByIdAndUpdate(req.userId, {
+          $pull: { refreshTokens: refreshToken },
+        });
+      }
     }
-    res.clearCookie('refreshToken', COOKIE_OPTIONS);
-    return res.json({ message: 'Logged out' });
+
+    // Clear cookies
+    res.clearCookie("accessToken", COOKIE_OPTIONS);
+    res.clearCookie("refreshToken", COOKIE_OPTIONS);
+
+    return res.json({ message: "Logged out successfully" });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: "Server error" });
   }
 };
