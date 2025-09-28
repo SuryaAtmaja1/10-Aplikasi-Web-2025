@@ -5,6 +5,7 @@ const {
   addComment,      // POST  /sajak/:id/comments
   getComments,     // GET   /sajak/:id/comments
   deleteComment,   // DELETE /sajak/:id/comments/:commentId
+  replyComment
 } = require("../controllers/commentController");
 const { verifyUser } = require("../middlewares/auth");
 
@@ -13,6 +14,9 @@ router.post("/", verifyUser, addComment);
 
 // Get all comments for a sajak
 router.get("/", getComments);
+
+// Delete a specific comment by id
+router.post("/:commentId", verifyUser, replyComment);
 
 // Delete a specific comment by id
 router.delete("/:commentId", verifyUser, deleteComment);

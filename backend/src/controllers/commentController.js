@@ -55,5 +55,9 @@ exports.getComments = async (req, res) => {
   }
 };
 
+// reply a comment to a sajak
+exports.replyComment = async (req, res) => {
+};
+
 // Delete a specific comment by id
 exports.deleteComment = (req, res) => {};

@@ -1,31 +1,81 @@
 const Sajak = require("../models/sajakModel");
+const stream = require("stream");
+const path = require("path");
+const { drive } = require("../config/googleDrive.js"); // <-- your Google Drive config
 
 exports.createSajak = async (req, res) => {
-  const { title, content, tags } = req.body;
+  try {
+    const { title, content, tags, isPublish } = req.body;
 
-  if (!title || !content) {
-    return res.status(400).json({ message: "Title and content are required." });
+    if (!title || !content) {
+      return res.status(400).json({ message: "Title and content are required." });
+    }
+
+    let imageLink = null;
+
+    if (req.file) {
+      // Only allow image types (png, jpg, jpeg, gif)
+      const allowedTypes = ["image/png", "image/jpeg", "image/jpg", "image/gif"];
+      if (!allowedTypes.includes(req.file.mimetype)) {
+        return res.status(400).json({ message: "Only image files are allowed" });
+      }
+
+      // Convert buffer into a stream
+      const bufferStream = new stream.PassThrough();
+      bufferStream.end(req.file.buffer);
+
+      // Upload directly to Google Drive
+      const uploadResponse = await drive.files.create({
+        media: {
+          mimeType: req.file.mimetype,
+          body: bufferStream,
+        },
+        requestBody: {
+          name: "sajak_" + Date.now() + path.extname(req.file.originalname),
+          parents: ["1BxT26NHF1TdX5HyZ1mQtY3YLtz5a-ZYs"], // put your Drive folder ID here
+        },
+        fields: "id",
+      });
+
+      const newFileId = uploadResponse.data.id;
+
+      // Make file public
+      await drive.permissions.create({
+        fileId: newFileId,
+        requestBody: {
+          role: "reader",
+          type: "anyone",
+        },
+      });
+
+      // Get the public link
+      imageLink = `https://drive.google.com/uc?export=view&id=${newFileId}`;
+    }
+
+    const newSajak = new Sajak({
+      authorId: req.userId,
+      title,
+      content,
+      image: imageLink,
+      hastags: tags,
+      views: 0,
+      commentsCount: 0,
+      isPublish: isPublish || true,
+      createdAt: new Date(),
+    });
+
+    await newSajak.save();
+
+    return res.status(201).json({
+      message: "Sajak created successfully",
+      sajak: newSajak,
+    });
+  } catch (err) {
+    console.error("Error creating sajak:", err);
+    return res
+      .status(500)
+      .json({ message: "Server error", error: err.message });
   }
-
-  const newSajak = new Sajak({
-    authorId: req.userId,
-    title,
-    content,
-    image: req.body.image,
-    hastags: tags,
-    views: 0,
-    commentsCount: 0,
-    isPublish: req.body.isPublish || false,
-    createdAt: new Date(),
-  });
-
-  await newSajak.save();
-
-  // Respon sukses dengan data sajak baru
-  return res.status(201).json({
-    message: "Sajak created successfully",
-    sajak: newSajak,
-  });
 };
 
 exports.getSajakById = async (req, res) => {
