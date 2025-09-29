@@ -66,4 +66,31 @@ exports.replyComment = async (req, res) => {
 };
 
 // Delete a specific comment by id
-exports.deleteComment = (req, res) => {};
+exports.deleteComment = async (req, res) => {
+  try {
+    const commentId = req.params.commentId;
+    const userId = req.userId; // from verifyUser middleware
+
+    if (!commentId) {
+      return res.status(400).json({ message: "Comment ID is required" });
+    }
+
+    // Find the comment
+    const comment = await Comment.findById(commentId);
+    if (!comment) {
+      return res.status(404).json({ message: "Comment not found" });
+    }
+
+    // Only allow the author to delete
+    if (comment.authorId.toString() !== userId) {
+      return res.status(403).json({ message: "You are not allowed to delete this comment" });
+    }
+
+    await Comment.findByIdAndDelete(commentId);
+
+    res.status(200).json({ message: "Comment deleted successfully" });
+  } catch (err) {
+    console.error("Error deleting comment:", err);
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+};
