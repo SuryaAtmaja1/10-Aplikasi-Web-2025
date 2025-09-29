@@ -4,12 +4,18 @@ const Sajak = require("../models/sajakModel");
 // Add a comment to a sajak
 exports.addComment = async (req, res) => {
   try {
-    const { postId, text, parentId } = req.body;
-
-    if (!postId || !text) {
-      return res.status(400).json({ message: "Post ID and text are required" });
+    const { text, parentId } = req.body;
+    const postId = req.params.id?.trim(); // get Sajak ID from URL
+    // Validate ObjectId
+    if (!mongoose.Types.ObjectId.isValid(postId)) {
+      return res.status(400).json({ message: "Invalid Sajak ID" });
     }
 
+    if (!text || text.trim() === "") {
+      return res.status(400).json({ message: "Comment text is required" });
+    }
+
+    // Find Sajak (works even if Mongoose pluralized collection)
     const sajak = await Sajak.findById(postId);
     if (!sajak) {
       return res.status(404).json({ message: "Sajak not found" });
@@ -17,9 +23,9 @@ exports.addComment = async (req, res) => {
 
     const comment = new Comment({
       post: postId,
-      authorId: req.user._id,
+      authorId: req.userId,
       parent: parentId || null,
-      text,
+      text: text.trim(),
     });
 
     await comment.save();
@@ -29,8 +35,8 @@ exports.addComment = async (req, res) => {
       comment,
     });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Server error" });
+    console.error("Error adding comment:", err);
+    res.status(500).json({ message: "Server error", error: err.message });
   }
 };
 
