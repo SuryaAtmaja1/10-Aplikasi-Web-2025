@@ -30,6 +30,38 @@ Aplikasi web ini merupakan platform komunitas untuk berbagi dan membaca karya tu
    - Fitur pencarian
 
 ## 📂 Struktur Folder & File
+```
+backend/
+├── src/
+│ ├── config/
+| | ├── db.js
+| | ├── goggleDrive.js
+│ │ └── passport.js
+│ ├── controllers/
+│ │ ├── authController.js
+│ │ ├── commentController.js
+│ │ ├── sajakController.js
+│ │ └── userController.js
+│ ├── middlewares/
+│ │ ├── auth.js
+│ │ └── upload.js
+│ ├── models/
+│ │ ├── commentModel.js
+│ │ ├── sajakModel.js
+│ │ └── userModel.js
+│ ├── routes/
+│ │ ├── authRoutes.js
+│ │ ├── commentRoutes.js
+│ │ ├── sajakRoutes.js
+│ │ └── userRoutes.js
+│ └── utils/
+│ └── tokens.js
+│
+├── server.js
+├── package.json
+├── package-lock.json
+└── README.md
+```
 
 ## 🛠️ Teknologi yang Digunakan
 
