@@ -73,6 +73,12 @@ exports.updateUserData = async (req, res) => {
 };
 
 // Delete user data
-exports.deleteUserData = (req, res) => {
-  return res.status(200).json({ message: "deleteUserData" });
+exports.deleteUserData = async (req, res) => {
+  try {
+    await User.findByIdAndDelete(req.userId);
+    res.status(200).json({ message: "User account deleted successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
 };
