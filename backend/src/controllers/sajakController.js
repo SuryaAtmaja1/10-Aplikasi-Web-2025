@@ -78,6 +78,86 @@ exports.createSajak = async (req, res) => {
   }
 };
 
+exports.editSajak = async (req, res) => {
+  try {
+    const { id } = req.params; // sajak ID
+    const { title, content, tags, isPublish } = req.body;
+
+    // Find the sajak
+    const sajak = await Sajak.findById(id);
+    if (!sajak) {
+      return res.status(404).json({ message: "Sajak not found" });
+    }
+
+    let imageLink = sajak.image; // keep old image by default
+
+    // If new image is uploaded
+    if (req.file) {
+      const allowedTypes = ["image/png", "image/jpeg", "image/jpg", "image/gif"];
+      if (!allowedTypes.includes(req.file.mimetype)) {
+        return res.status(400).json({ message: "Only image files are allowed" });
+      }
+
+      // Delete old image from Google Drive if exists
+      if (sajak.image) {
+        try {
+          const oldFileId = sajak.image.match(/id=([^&]+)/)?.[1];
+          if (oldFileId) {
+            await drive.files.delete({ fileId: oldFileId });
+          }
+        } catch (deleteErr) {
+          console.warn("Failed to delete old image:", deleteErr.message);
+        }
+      }
+
+      //Upload new image
+      const bufferStream = new stream.PassThrough();
+      bufferStream.end(req.file.buffer);
+
+      const uploadResponse = await drive.files.create({
+        media: {
+          mimeType: req.file.mimetype,
+          body: bufferStream,
+        },
+        requestBody: {
+          name: "sajak_" + Date.now() + path.extname(req.file.originalname),
+          parents: ["1BxT26NHF1TdX5HyZ1mQtY3YLtz5a-ZYs"], // Drive folder ID
+        },
+        fields: "id",
+      });
+
+      const newFileId = uploadResponse.data.id;
+
+      await drive.permissions.create({
+        fileId: newFileId,
+        requestBody: { role: "reader", type: "anyone" },
+      });
+
+      imageLink = `https://drive.google.com/uc?export=view&id=${newFileId}`;
+    }
+
+    // 3. Update fields
+    sajak.title = title || sajak.title;
+    sajak.content = content || sajak.content;
+    sajak.hastags = tags || sajak.hastags;
+    sajak.isPublish = typeof isPublish === "boolean" ? isPublish : sajak.isPublish;
+    sajak.image = imageLink;
+
+    await sajak.save();
+
+    return res.status(200).json({
+      message: "Sajak updated successfully",
+      sajak,
+    });
+  } catch (err) {
+    console.error("Error editing sajak:", err);
+    return res
+      .status(500)
+      .json({ message: "Server error", error: err.message });
+  }
+};
+
+
 exports.getSajakById = async (req, res) => {
   try {
     const sajakId = req.params.id;

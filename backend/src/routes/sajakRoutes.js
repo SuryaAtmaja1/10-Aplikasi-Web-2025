@@ -3,6 +3,7 @@ const router = express.Router();
 
 const {
   createSajak,
+  editSajak,
   getSajakById,
   getTrending,
   getTrendingByTag,
@@ -39,6 +40,10 @@ router.get("/:id", getSajakById); //done
 
 // DELETE /sajak/:id
 router.delete("/:id", verifyUser, deleteSajak);
+
+// PATCH /sajak 
+router.patch("/:id", verifyUser, upload.single("image"), editSajak);
+
 
 
 module.exports = router;
