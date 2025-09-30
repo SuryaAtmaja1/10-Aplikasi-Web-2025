@@ -32,7 +32,7 @@ exports.createSajak = async (req, res) => {
         },
         requestBody: {
           name: "sajak_" + Date.now() + path.extname(req.file.originalname),
-          parents: ["1BxT26NHF1TdX5HyZ1mQtY3YLtz5a-ZYs"], // put your Drive folder ID here
+          parents: [process.env.DRIVEID_SAJAK_PHOTO], // put your Drive folder ID here
         },
         fields: "id",
       });
@@ -121,7 +121,7 @@ exports.editSajak = async (req, res) => {
         },
         requestBody: {
           name: "sajak_" + Date.now() + path.extname(req.file.originalname),
-          parents: ["1BxT26NHF1TdX5HyZ1mQtY3YLtz5a-ZYs"], // Drive folder ID
+          parents: [process.env.DRIVEID_SAJAK_PHOTO], // Drive folder ID
         },
         fields: "id",
       });

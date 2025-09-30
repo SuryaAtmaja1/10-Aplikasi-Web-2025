@@ -78,7 +78,7 @@ exports.updateUserData = async (req, res) => {
         },
         requestBody: {
           name: "profile_" + req.userId + path.extname(req.file.originalname),
-          parents: ["1_yfJIMxAWH8LpQ5dCTDsLBkqJzawdPTo"], // replace with your Drive folder ID
+          parents: [process.env.DRIVEID_PROFILE_PHOTO], // replace with your Drive folder ID
         },
         fields: "id",
       });
