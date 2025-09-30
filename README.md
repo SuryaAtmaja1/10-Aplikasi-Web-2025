@@ -16,13 +16,16 @@ Aplikasi web ini merupakan platform komunitas untuk berbagi dan membaca karya tu
 1. Autentikasi & Profil
    - Registrasi & login
    - Update dan kelola profil pengguna
+   - Hapus Akun Pengguna
 2. Manajemen Karya (Sajak/Postingan)
    - Membuat, mengedit, menghapus sajak
    - Memberi tag/kategori pada sajak
    - Membaca dan menjelajahi karya
 3. Komentar
    - Menambahkan komentar
-   - Membaca dan menghapus komentar
+   - Membaca komentar
+   - Menghapus komentar
+   - Membalas Komentar
 4. Eksplorasi Konten
    - Timeline sajak atau postingan
    - Menelusuri karya berdasarkan kategori/tag
