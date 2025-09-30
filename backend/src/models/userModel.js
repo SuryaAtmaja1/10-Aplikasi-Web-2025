@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
     type: String,         // URL or base64 string
     default: null
   },
-    preferenceCategory: {
+    categoryPreference: {
     type: [String],       // array of strings
     default: []           // empty array by default
   },

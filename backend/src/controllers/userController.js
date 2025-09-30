@@ -97,7 +97,7 @@ exports.updateUserData = async (req, res) => {
     const updateFields = { username, email };
     if (profilePhotoLink) updateFields.profilePhoto = profilePhotoLink;
     if (categoryPreference) {
-      updateFields.preferenceCategory = Array.isArray(categoryPreference)
+      updateFields.categoryPreference = Array.isArray(categoryPreference)
         ? categoryPreference
         : [categoryPreference];
     }

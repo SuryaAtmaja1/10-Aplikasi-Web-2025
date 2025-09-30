@@ -14,8 +14,7 @@ const sajakSchema = new mongoose.Schema(
     },
     content: {
       type: String,
-      required: true,
-      maxlength: 500,
+      required: true
     },
     image: String,
     hashtags: {

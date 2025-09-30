@@ -46,8 +46,10 @@ exports.addCommentOrReply = async (req, res) => {
     await newComment.save();
 
     res.status(201).json({
-      message: parentComment ? "Reply added successfully" : "Comment added successfully",
+      message: parentComment ? "Reply added successfully" 
+      : "Comment added successfully",
       comment: newComment,
+      commentsCount: sajak.commentsCount, // kirim balik agar frontend dapat langsung update
     });
   } catch (err) {
     console.error("Error adding comment/reply:", err);
@@ -58,7 +60,7 @@ exports.addCommentOrReply = async (req, res) => {
 // Get all comments by sajak id
 exports.getComments = async (req, res) => {
   try {
-    const { sajakId } = req.params;
+    const { id: sajakId } = req.params;
 
     if (!sajakId) {
       return res.status(400).json({ message: "Sajak ID is required" });
@@ -98,6 +100,12 @@ exports.deleteComment = async (req, res) => {
     }
 
     await Comment.findByIdAndDelete(commentId);
+    
+    // reduce commentsCount
+    await Sajak.findByIdAndUpdate(comment.post, {
+      $inc: { commentsCount: -1 },
+      deletedCount: 1,
+    });
 
     res.status(200).json({ message: "Comment deleted successfully" });
   } catch (err) {

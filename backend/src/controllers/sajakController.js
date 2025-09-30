@@ -57,7 +57,7 @@ exports.createSajak = async (req, res) => {
       title,
       content,
       image: imageLink,
-      hastags: tags,
+      hashtags: tags,
       views: 0,
       commentsCount: 0,
       isPublish: isPublish || true,
@@ -82,11 +82,17 @@ exports.editSajak = async (req, res) => {
   try {
     const { id } = req.params; // sajak ID
     const { title, content, tags, isPublish } = req.body;
+    const userId = req.userId; // from verifyUser middleware
 
     // Find the sajak
     const sajak = await Sajak.findById(id);
     if (!sajak) {
       return res.status(404).json({ message: "Sajak not found" });
+    }
+
+    //Check if the logged-in user is the author
+    if (sajak.authorId.toString() !== userId) {
+      return res.status(403).json({ message: "Not authorized to edit this sajak" });
     }
 
     let imageLink = sajak.image; // keep old image by default
@@ -139,7 +145,7 @@ exports.editSajak = async (req, res) => {
     // 3. Update fields
     sajak.title = title || sajak.title;
     sajak.content = content || sajak.content;
-    sajak.hastags = tags || sajak.hastags;
+    sajak.hashtags = tags || sajak.hashtags;
     sajak.isPublish = typeof isPublish === "boolean" ? isPublish : sajak.isPublish;
     sajak.image = imageLink;
 
@@ -162,8 +168,12 @@ exports.getSajakById = async (req, res) => {
   try {
     const sajakId = req.params.id;
 
-    // Cari sajak di DB berdasarkan ID
-    const sajak = await Sajak.findById(sajakId);
+    // Tambahkan 1 ke views dan kembalikan dokumen terbaru
+    const sajak = await Sajak.findByIdAndUpdate(
+      sajakId,
+      { $inc: { views: 1 } },  // increment views by 1
+      { new: true }            // return updated document
+    );
 
     // Jika tidak ada
     if (!sajak) {
@@ -181,7 +191,13 @@ exports.getSajakById = async (req, res) => {
 // Get trending sajak
 exports.getTrending = async (req, res) => {
   try {
-    const trendingSajak = await Sajak.find()
+    // set time range
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+    const trendingSajak = await Sajak.find({
+      createdAt: { $gte: sevenDaysAgo }, // only from the last 7 days
+    })
       .sort({ views: -1, commentCount: -1 })
       .limit(10);
 
@@ -280,22 +296,31 @@ exports.getRecentSajak = async (req, res) => {
 exports.deleteSajak = async (req, res) => {
   try {
     const { id } = req.params;
+    const userId = req.userId; // set by verifyUser middleware
 
-    const deletedSajak = await Sajak.findByIdAndDelete(id);
-
-    if (!deletedSajak) {
+    // Find sajak
+    const sajak = await Sajak.findById(id);
+    if (!sajak) {
       return res.status(404).json({ message: "Sajak not found" });
     }
 
+    // Check if the logged-in user is the owner
+    if (sajak.authorId.toString() !== userId) {
+      return res.status(403).json({ message: "Not authorized to delete this sajak" });
+    }
+
+    await sajak.deleteOne();
+
     return res.status(200).json({
       message: "Sajak deleted successfully",
-      data: deletedSajak,
+      data: sajak,
     });
   } catch (error) {
     console.error("Error deleting sajak:", error);
     return res.status(500).json({ message: "Server error" });
   }
 };
+
 
 // Search Sajak (still based on content and title)
 exports.searchSajak = async (req, res) => {
