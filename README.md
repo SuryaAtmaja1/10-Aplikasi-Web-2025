@@ -34,6 +34,7 @@ Aplikasi web ini merupakan platform komunitas untuk berbagi dan membaca karya tu
 backend/
 ├── src/
 │ ├── config/
+| | ├── config.env
 | | ├── db.js
 | | ├── goggleDrive.js
 │ │ └── passport.js
@@ -65,5 +66,37 @@ backend/
 
 ## 🛠️ Teknologi yang Digunakan
 
+Backend aplikasi ini dibangun menggunakan berbagai teknologi dan library utama sebagai berikut.
+### 1. Core Backend
+- **[Express](https://expressjs.com/)**  
+  Framework Node.js untuk membangun REST API dengan dukungan routing, middleware, dan manajemen request/response.
+- **[Mongoose](https://mongoosejs.com/)**  
+  ODM (Object Data Modeling) untuk MongoDB, digunakan dalam pendefinisian schema dan operasi basis data.
+- **[dotenv](https://github.com/motdotla/dotenv)**  
+  Digunakan untuk mengelola variabel lingkungan (environment variables) seperti `MONGO_URI`, `JWT_SECRET`, dan konfigurasi Google Drive.
+
+### 2. Autentikasi & Keamanan
+- **[jsonwebtoken](https://github.com/auth0/node-jsonwebtoken)**  
+  Implementasi JWT untuk proses autentikasi (signing, verifikasi, dan decoding token).
+- **[passport](http://www.passportjs.org/)** & **[passport-google-oauth20](https://www.passportjs.org/packages/passport-google-oauth20/)**  
+  Mendukung autentikasi menggunakan akun Google melalui OAuth 2.0.
+- **[bcryptjs](https://github.com/dcodeIO/bcrypt.js)**  
+  Untuk hashing dan verifikasi password secara aman.
+- **[cookie-parser](https://github.com/expressjs/cookie-parser)**  
+  Middleware untuk parsing cookie yang digunakan dalam penyimpanan token.
+- **[cors](https://github.com/expressjs/cors)**  
+  Mengatur izin Cross-Origin Resource Sharing agar frontend dapat berkomunikasi dengan backend secara aman.
+
+### 3. Manajemen File & Integrasi Google
+- **[multer](https://github.com/expressjs/multer)**  
+  Middleware untuk menangani upload file (contohnya foto profil dan gambar sajak).
+- **[googleapis](https://github.com/googleapis/google-api-nodejs-client)**  
+  Library resmi Google API, digunakan untuk integrasi Google Drive (upload, akses publik, dan penghapusan file).
+
+### 4. Tools Pengembangan
+- **[nodemon](https://github.com/remy/nodemon)**  
+  Alat bantu development yang memantau perubahan kode dan otomatis melakukan restart server.
+
+---
 ## 📎 URL Google Drive Laporan
 https://drive.google.com/drive/folders/1hbBO_teCQiXnrb-Kr0v4pIleM8jy5mHs?usp=sharing 
