@@ -1,41 +1,56 @@
 const Comment = require("../models/commentModel");
 const Sajak = require("../models/sajakModel");
+const mongoose = require("mongoose");
 
-// Add a comment to a sajak
-exports.addComment = async (req, res) => {
+// Add a comment or reply comment in a sajak
+exports.addCommentOrReply = async (req, res) => {
   try {
-    const { text, parentId } = req.body;
-    const postId = req.params.id?.trim(); // get Sajak ID from URL
-    // Validate ObjectId
-    if (!mongoose.Types.ObjectId.isValid(postId)) {
+    const { text } = req.body;
+    const { id: sajakId, commentId } = req.params;
+
+    // Validate sajakId
+    if (!mongoose.Types.ObjectId.isValid(sajakId)) {
       return res.status(400).json({ message: "Invalid Sajak ID" });
     }
 
+    // Check text
     if (!text || text.trim() === "") {
       return res.status(400).json({ message: "Comment text is required" });
     }
 
-    // Find Sajak (works even if Mongoose pluralized collection)
-    const sajak = await Sajak.findById(postId);
+    // Ensure sajak exists
+    const sajak = await Sajak.findById(sajakId);
     if (!sajak) {
       return res.status(404).json({ message: "Sajak not found" });
     }
 
-    const comment = new Comment({
-      post: postId,
+    // If commentId exists, it's a reply
+    let parentComment = null;
+    if (commentId) {
+      if (!mongoose.Types.ObjectId.isValid(commentId)) {
+        return res.status(400).json({ message: "Invalid Comment ID" });
+      }
+      parentComment = await Comment.findById(commentId);
+      if (!parentComment) {
+        return res.status(404).json({ message: "Parent comment not found" });
+      }
+    }
+
+    const newComment = new Comment({
+      post: sajakId,
       authorId: req.userId,
-      parent: parentId || null,
+      parent: parentComment ? parentComment._id : null,
       text: text.trim(),
     });
 
-    await comment.save();
+    await newComment.save();
 
     res.status(201).json({
-      message: "Comment created successfully",
-      comment,
+      message: parentComment ? "Reply added successfully" : "Comment added successfully",
+      comment: newComment,
     });
   } catch (err) {
-    console.error("Error adding comment:", err);
+    console.error("Error adding comment/reply:", err);
     res.status(500).json({ message: "Server error", error: err.message });
   }
 };
@@ -59,10 +74,6 @@ exports.getComments = async (req, res) => {
     console.error(err);
     res.status(500).json({ message: "Server error" });
   }
-};
-
-// reply a comment to a sajak
-exports.replyComment = async (req, res) => {
 };
 
 // Delete a specific comment by id
