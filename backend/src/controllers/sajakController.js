@@ -296,3 +296,35 @@ exports.deleteSajak = async (req, res) => {
     return res.status(500).json({ message: "Server error" });
   }
 };
+
+// Search Sajak (still based on content and title)
+exports.searchSajak = async (req, res) => {
+  try {
+    const { query } = req.query; // e.g. /sajaks/search?query=love
+
+    if (!query || query.trim() === "") {
+      return res.status(400).json({ message: "Search query is required" });
+    }
+
+    // Search in title or content (case-insensitive)
+    const sajakList = await Sajak.find({
+      $or: [
+        { title: { $regex: query, $options: "i" } },
+        { content: { $regex: query, $options: "i" } },
+      ],
+    }).populate("authorId", "name profilePhoto"); // optional: populate author info
+
+    if (sajakList.length === 0) {
+      return res.status(404).json({ message: "No sajak found" });
+    }
+
+    res.status(200).json({
+      message: "Search results",
+      count: sajakList.length,
+      sajak: sajakList,
+    });
+  } catch (err) {
+    console.error("Error searching sajak:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+};

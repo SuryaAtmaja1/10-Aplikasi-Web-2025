@@ -10,6 +10,7 @@ const {
   getSajakByTag,
   getRecentSajak,
   deleteSajak,
+  searchSajak
 } = require("../controllers/sajakController");
 const { verifyUser } = require("../middlewares/auth");
 const upload = require("../middlewares/upload")
@@ -19,6 +20,9 @@ const commentRoutes = require("./commentRoutes");
 
 // POST /sajak 
 router.post("/", verifyUser, upload.single("image"), createSajak);
+
+// GET /sajak/search
+router.get("/search", searchSajak);
 
 // GET /sajak/trending
 router.get("/trending", getTrending); //done
