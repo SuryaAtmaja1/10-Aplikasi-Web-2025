@@ -14,6 +14,14 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     match: [/.+\@.+\..+/, "Please fill a valid email address"],
   },   
+    profilePhoto: {
+    type: String,         // URL or base64 string
+    default: null
+  },
+    preferenceCategory: {
+    type: [String],       // array of strings
+    default: []           // empty array by default
+  },
   googleId: { 
     type: String 
   },

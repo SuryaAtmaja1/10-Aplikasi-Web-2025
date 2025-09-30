@@ -8,6 +8,7 @@ const {
     deleteUserData,
 } = require("../controllers/userController");
 const { verifyUser } = require("../middlewares/auth");
+const upload = require("../middlewares/upload")
 
 // Get user data by ID
 // GET /user/:id
@@ -22,7 +23,7 @@ router.get("/", getUserData);
 
 // Update User Data
 // PATCH /user
-router.patch("/", updateUserData);
+router.patch("/", upload.single("profileImage"), updateUserData);
 
 // DELETE User Data
 // DELETE /user
