@@ -1,3 +1,10 @@
+import React from "react";
+import { LandingHero } from "@/components/LandingPage/LandingHero";
+
 export default function Home() {
-  return <div className=" font-jakarta h-screen">Samlekom Sajak</div>;
+  return (
+    <div>
+      <LandingHero />
+    </div>
+  )
 }
