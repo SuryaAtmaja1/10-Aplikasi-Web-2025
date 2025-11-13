@@ -353,26 +353,3 @@ exports.searchSajak = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
-
-// Get sajak by user ID
-exports.getSajakByUserId = async (req, res) => {
-  try {
-    const { userId } = req.params;
-
-    if (!userId) {
-      return res.status(400).json({ message: "User ID is required" });
-    }
-
-    const sajakList = await Sajak.find({ authorId: userId })
-      .sort({ createdAt: -1 })
-      .populate("authorId", "username name profilePhoto");
-
-    return res.status(200).json({
-      message: "Sajak by user",
-      sajak: sajakList,
-    });
-  } catch (error) {
-    console.error("Error fetching sajak by user ID:", error);
-    return res.status(500).json({ message: "Server error" });
-  }
-};

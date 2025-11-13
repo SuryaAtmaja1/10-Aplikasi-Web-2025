@@ -10,8 +10,7 @@ const {
   getSajakByTag,
   getRecentSajak,
   deleteSajak,
-  searchSajak,
-  getSajakByUserId
+  searchSajak
 } = require("../controllers/sajakController");
 const { verifyUser } = require("../middlewares/auth");
 const upload = require("../middlewares/upload")
@@ -30,9 +29,6 @@ router.get("/trending", getTrending); //done
 
 // GET /sajak/recent
 router.get("/recent", getRecentSajak); //done
-
-// GET /sajak/user/:userId
-router.get("/user/:userId", getSajakByUserId);
 
 // nest comments under sajak
 router.use("/:id/comments", commentRoutes);
