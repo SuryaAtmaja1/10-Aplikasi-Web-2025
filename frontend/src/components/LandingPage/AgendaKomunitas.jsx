@@ -41,7 +41,7 @@ export const AgendaKomunitas = () => {
         </div>
       </div>
       {/* Mobile */}
-      <div className="absolute w-full h-[254px] bg-oren translate-y-[124px]"></div>
+      <div className="md:hidden absolute w-full h-[254px] bg-oren translate-y-[124px]"></div>
       <div className="md:hidden relative flex flex-col h-fit mt-5 pb-10 px-5">
         <h1 className="z-100 text-[2rem] text-nowrap">
           <span className="font-bold">Agenda </span><span className="font-instrument">Komunitas</span>
