@@ -44,7 +44,7 @@ export default function BoxSajak({ sajak }) {
         <div className="flex justify-between items-center flex-none">
           <div className="flex gap-3 sm:gap-6 items-center">
             <div className="flex gap-1.5 sm:gap-3 items-center">
-              <div className="group text-[16px] md:text-[24px] text-oren bg-transparent hover:bg-oren/10 p-1 rounded-fulltransition duration-200 ease-in-out hover:scale-110">
+              <div className="group text-[16px] md:text-[24px] text-oren bg-transparent hover:bg-oren/10 p-1 rounded-full transition duration-200 ease-in-out hover:scale-110">
                 <PiHeart
                   className="h-full w-full transition-colors duration-200"
                   style={{ fill: "currentColor" }}

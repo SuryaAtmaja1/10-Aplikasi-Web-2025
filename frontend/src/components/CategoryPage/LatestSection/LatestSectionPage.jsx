@@ -2,9 +2,9 @@ import React from "react";
 import { LatestContainer } from "./LatestContainer";
 import LatestList from "./LatestList";
 
-export default function LatestSectionPage() {
+export default function LatestSectionPage({ themeColor }) {
   return (
-    <LatestContainer>
+    <LatestContainer themeColor={themeColor}>
       <LatestList />
     </LatestContainer>
   );
