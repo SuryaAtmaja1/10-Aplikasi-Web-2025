@@ -8,7 +8,7 @@ const TextInput = ({label, placeholder, ...props}) => {
             </label>
 
             <input type='text' placeholder={placeholder} 
-            className='w-full font-jakarta text-lg px-4 py-3 bg-white rounded-lg focus:outline-none border-1 border-[#B5B5B5]'
+            className='w-full font-jakarta text-lg px-4 py-3 bg-white rounded-lg focus:outline-none focus:outline-none focus:ring-1 focus:ring-black border-1 border-[#B5B5B5]'
             {...props}>
             </input>
         </div>
