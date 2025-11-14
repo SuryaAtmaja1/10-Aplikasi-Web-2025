@@ -17,12 +17,12 @@ const Modal = ({ isOpen, title, onConfirm, onCancel }) => {
                 <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 mt-4">
                     <button 
                         onClick={onCancel}
-                        className='w-full sm:w-auto px-6 py-2 text-[#D1345B] border border-[#D1345B] font-jakarta font-semibold rounded-lg hover:bg-gray-100 transition duration-150'>
+                        className='w-full sm:w-auto px-6 py-2 text-cerise border border-cerise font-jakarta font-semibold rounded-lg hover:bg-gray-100 transition duration-150'>
                         Tidak
                     </button>
                     <button 
                         onClick={onConfirm}
-                        className='w-full sm:w-auto px-6 py-2 bg-[#09814A] text-white font-jakarta font-semibold rounded-lg hover:bg-[#076B3D] transition duration-150'>
+                        className='w-full sm:w-auto px-6 py-2 bg-hijau text-white font-jakarta font-semibold rounded-lg hover:bg-[#076B3D] transition duration-150'>
                         Iya
                     </button>
                 </div>
@@ -74,7 +74,7 @@ export default function EditProfilePage(){
                 <div className='mb-6 md:mb-8 space-y-5'> 
                     <button 
                         onClick={() => setIsCancelModalOpen(true)} 
-                        className='text-[#FA7921] text-5xl mr-3 transform hover:scale-120 transition-transform duration-200'>
+                        className='text-oren text-5xl mr-3 transform hover:scale-120 transition-transform duration-200'>
                         &lt;
                     </button>
                     
@@ -126,13 +126,13 @@ export default function EditProfilePage(){
                 <div className='flex flex-col-reverse md:flex-row md:justify-end items-end gap-3 mt-8'>
                     <button 
                         onClick={() => setIsCancelModalOpen(true)}
-                        className='w-auto md:w-auto px-6 py-1.5 md:px-8 md:py-3 bg-[#D1345B] text-white font-jakarta font-semibold text-sm md:text-base rounded-lg transform hover:scale-105 transition-transform duration-200'>
+                        className='w-auto md:w-auto px-6 py-1.5 md:px-8 md:py-3 bg-cerise text-white font-jakarta font-semibold text-sm md:text-base rounded-lg transform hover:scale-105 transition-transform duration-200'>
                         CANCEL
                     </button>
 
                     <button 
                         onClick={() => setIsSaveModalOpen(true)} 
-                        className='w-auto md:w-auto px-6 py-1.5 md:px-8 md:py-3 bg-[#09814A] text-white font-jakarta font-semibold text-sm md:text-base rounded-lg transform hover:scale-105 transition-transform duration-200'>
+                        className='w-auto md:w-auto px-6 py-1.5 md:px-8 md:py-3 bg-hijau text-white font-jakarta font-semibold text-sm md:text-base rounded-lg transform hover:scale-105 transition-transform duration-200'>
                         SAVE
                     </button>
                 </div>
