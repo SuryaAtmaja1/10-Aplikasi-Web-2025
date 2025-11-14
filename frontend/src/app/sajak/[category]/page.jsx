@@ -2,7 +2,7 @@ import React from "react";
 import { notFound, redirect } from "next/navigation";
 import { CATEGORIES, CATEGORY_MAP } from "@/data/categories";
 import { HeroSajak } from "@/components/CategoryPage/HeroSajak";
-import { LatestContainer } from "@/components/CategoryPage/LatestSection/LatestContainer";
+import LatestSectionPage from "@/components/CategoryPage/LatestSection/LatestSectionPage";
 
 export async function generateStaticParams() {
   return CATEGORIES.map((c) => ({ category: c.slug }));
@@ -22,7 +22,7 @@ export default async function Page({ params }) {
   return (
     <div>
       <HeroSajak category={category} />
-      <LatestContainer />
+      <LatestSectionPage />
     </div>
   );
 }
