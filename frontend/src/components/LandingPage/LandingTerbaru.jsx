@@ -5,7 +5,7 @@ import LihatSemua from "../../../public/assets/landing/LihatSemua"
 
 export const LandingTerbaru = () => {
   return(
-    <div className="relative flex font-jakarta h-svh">
+    <div className="relative flex font-jakarta h-svh mt-12">
       <h1 className="absolute z-100 right-0 text-[2.25rem] md:text-[9.5rem] text-nowrap px-[3vw]">
         <span className="font-instrument">SAJAK </span><span className="font-bold">TERBARU</span>
       </h1>
