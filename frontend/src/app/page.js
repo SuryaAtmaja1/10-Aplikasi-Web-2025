@@ -1,3 +1,4 @@
+
 import React from "react";
 import { LandingHero } from "@/components/LandingPage/LandingHero";
 import { LandingTerbaru } from "@/components/LandingPage/LandingTerbaru";
@@ -10,7 +11,7 @@ export default function Home() {
       <LandingHero />
       <LandingTerbaru />
       {/* <LandingTerpopuler /> */}
-      <AgendaKomunitas />
+      <AgendaKomunitas id="agendaKomunitas" />
       <ReviewPenulis />
     </div>
   )
