@@ -9,10 +9,9 @@ export default function Home() {
     <div>
       <LandingHero />
       <LandingTerbaru />
-      <div className="pb-30 bg-hitam">aaaaaaaa</div>
+      {/* <LandingTerpopuler /> */}
       <AgendaKomunitas />
       <ReviewPenulis />
-      <div className="pb-30 bg-putih"> </div>
     </div>
   )
 }
