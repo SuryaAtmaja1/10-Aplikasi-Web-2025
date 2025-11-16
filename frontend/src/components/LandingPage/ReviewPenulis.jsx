@@ -25,7 +25,7 @@ export const ReviewPenulis = () => {
     <div className="parallax-container border-t relative overflow-hidden">
       <div className="parallax-group relative font-jakarta h-[75vh] md:h-[70vh] lg:h-[90vh] xl:h-[104.67vh] w-full">
         
-        {/* Layer 3: Deep background (moves fastest) */}
+        {/* Layer 3: Deep background (moves f stest) */}
         <div className="layer-deep absolute inset-0" style={{transform: `translateY(${offset * 0.67}px)`}}>
           <Image
             src={Kumbang}
