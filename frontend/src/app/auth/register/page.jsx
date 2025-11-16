@@ -1,4 +1,5 @@
 'use client';
+import api from "@/utils/axiosInstance";
 
 import React, { useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
@@ -12,9 +13,31 @@ export default function RegisterPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleRegister = useCallback(() => {
-        console.log('Register attempt:', { username, email, password });
-    }, [username, email, password]);
+    const handleRegister = useCallback(async () => {
+    try {
+        const res = await api.post("/auth/register", {
+            username,
+            email,
+            password,
+        });
+
+        console.log("REGISTER SUCCESS:", res.data);
+
+        alert("Register Berhasil!");
+        router.push("/auth/login");
+    } catch (err) {
+        console.error("REGISTER ERROR:", err);
+
+        if (err.response) {
+            alert(err.response.data.message || "Registration failed");
+        } else {
+            alert("Server error");
+        }
+    }
+    }, [username, email, password, router]);
+    // const handleRegister = useCallback(() => {
+    //     console.log('Register attempt:', { username, email, password });
+    // }, [username, email, password]);
 
     const handleLoginClick = useCallback(() => {
         router.push('/auth/login'); 

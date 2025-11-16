@@ -13,7 +13,10 @@ const app = express();
 connectDB();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:3000", // frontend origin
+  credentials: true
+}));
 app.use(cookieParser());
 app.use(express.json()); // Parse JSON requests
 app.use(passport.initialize());
