@@ -1,23 +1,53 @@
 'use client';
-
-import React, { useState, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
+import api from "@/utils/axiosInstance";
+import React, { useState, useCallback, useEffect } from 'react';
+import { useRouter,  useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import TextInput from '@/components/ReuseLoginRegister/TextInput'; 
 
 export default function LoginPage() {
     const router = useRouter();
+    const params = useSearchParams();
+    const googleStatus = params.get("googleLogin");
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleLogin = useCallback(() => {
-        console.log('Login attempt:', { email, password });
-    }, [email, password]);
+    useEffect(() => {
+        if (googleStatus) {
+            if (googleStatus === "failed")  
+                alert("Google login gagal. Silakan coba lagi.");
 
-    const handleGoogleLogin = useCallback(() => {
-        console.log('Google login attempt');
-    }, []);
+                // remove query param from URL
+            const newUrl = window.location.pathname;
+            window.history.replaceState({}, "", newUrl);
+        }
+    }, [googleStatus]);
+
+    const handleLogin = useCallback(async () => {
+    try {
+        const res = await api.post("/auth/login", {
+            email,
+            password
+        });
+
+        console.log("LOGIN SUCCESS:", res.data);
+
+        // alert("Login successful!");
+        router.push("/");   
+    } catch (err) {
+        if (err.response) {
+            alert(err.response.data.message);
+        } else {
+            alert("Server error");
+        }
+    }
+    }, [email, password, router]);
+
+    const handleGoogleLogin = () => {
+        window.location.href = "http://localhost:4000/auth/google";
+    };
+
 
     const handleRegisterClick = useCallback(() => {
         router.push('/auth/register'); 
