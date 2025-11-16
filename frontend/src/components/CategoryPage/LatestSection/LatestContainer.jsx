@@ -1,6 +1,7 @@
 import React from "react";
+import CategoryButton from "../CategoryButton";
 
-export const LatestContainer = ({ children, themeColor }) => {
+export const LatestContainer = ({ children, themeColor, alterColor }) => {
   return (
     <div className="flex flex-col gap-8 pt-16">
       <h2
@@ -9,7 +10,8 @@ export const LatestContainer = ({ children, themeColor }) => {
       >
         TERBARU
       </h2>
-      <div className="flex  flex-col gap-4">{children}</div>
+      <div className="flex flex-col gap-4">{children}</div>
+      <CategoryButton isResponsive={true} alterColor={alterColor} />
     </div>
   );
 };
