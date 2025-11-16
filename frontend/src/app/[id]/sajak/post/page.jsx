@@ -18,12 +18,12 @@ const Modal = ({ isOpen, title, onConfirm, onCancel }) => {
                 <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 mt-4">
                     <button 
                         onClick={onCancel}
-                        className='w-full sm:w-auto px-6 py-2 text-[#D1345B] border border-[#D1345B] font-jakarta font-semibold rounded-lg hover:bg-gray-100 transition duration-150'>
+                        className='w-full sm:w-auto px-6 py-2 text-cerise border border-cerise font-jakarta font-semibold rounded-lg hover:bg-gray-100 transition duration-150'>
                         Tidak
                     </button>
                     <button 
                         onClick={onConfirm}
-                        className='w-full sm:w-auto px-6 py-2 bg-[#09814A] text-white font-jakarta font-semibold rounded-lg hover:bg-[#076B3D] transition duration-150'>
+                        className='w-full sm:w-auto px-6 py-2 bg-hijau text-white font-jakarta font-semibold rounded-lg hover:bg-[#076B3D] transition duration-150'>
                         Iya
                     </button>
                 </div>
@@ -92,7 +92,7 @@ export default function EditSajakPage(){
                 <div className='mb-6 md:mb-8 space-y-5'> 
                     <button 
                         onClick={() => setIsCancelModalOpen(true)} 
-                        className='text-[#FA7921] text-5xl mr-3 transform hover:scale-120 transition-transform duration-200'>
+                        className='text-oren text-5xl mr-3 transform hover:scale-120 transition-transform duration-200'>
                         &lt;
                     </button>
                     
@@ -106,7 +106,7 @@ export default function EditSajakPage(){
                     <div className='flex flex-col md:flex-row md:items-center gap-4'>
                         <div className='relative inline-block w-auto'> 
                             <button onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                                className='flex items-center justify-between w-40 px-4 py-1.5 md:px-5 md:py-2 bg-[#FA7921] text-black text-sm md:text-base font-jakarta font-bold rounded-lg'>
+                                className='flex items-center justify-between w-40 px-4 py-1.5 md:px-5 md:py-2 bg-oren text-black text-sm md:text-base font-jakarta font-bold rounded-lg'>
                                 TAG
                                 <span className={`transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`}>
                                     ▼
@@ -114,7 +114,7 @@ export default function EditSajakPage(){
                             </button>
 
                             {isDropdownOpen && (
-                                <div className='absolute z-10 w-40 md:w-48 mt-2 bg-white rounded-lg border border-[#FA7921] shadow-lg'>
+                                <div className='absolute z-10 w-40 md:w-48 mt-2 bg-white rounded-lg border border-oren shadow-lg'>
                                     {ALL_TAGS.map((tag) => (
                                         <a key={tag} onClick={() => addTag(tag)}
                                             className='block px-4 py-1.5 md:py-2 text-sm md:text-base text-black font-jakarta hover:bg-[#F3F3F3] cursor-pointer'>
@@ -129,12 +129,12 @@ export default function EditSajakPage(){
                             {selectedTags.map((tag) => (
                                 tag !== '' && ( 
                                 <div key={tag}
-                                    className='flex items-center bg-white rounded-md px-2 py-0.5 md:px-3 md:py-1 text-sm md:text-base font-jakarta font-medium text-black border border-[#FA7921]'>
+                                    className='flex items-center bg-white rounded-md px-2 py-0.5 md:px-3 md:py-1 text-sm md:text-base font-jakarta font-medium text-black border border-oren'>
                                     
                                     <span>{tag}</span>
 
                                     <button onClick={() => removeTag(tag)}
-                                        className='ml-2 text-black hover:text-[#D1345B] font-jakarta font-bold'>
+                                        className='ml-2 text-black hover:text-cerise font-jakarta font-bold'>
                                         &times;
                                     </button>
                                 </div>
@@ -168,13 +168,13 @@ export default function EditSajakPage(){
                 <div className='flex flex-col-reverse md:flex-row md:justify-end items-end gap-3 mt-8'>
                     <button 
                         onClick={() => setIsCancelModalOpen(true)}
-                        className='w-auto md:w-auto px-6 py-1.5 md:px-8 md:py-3 bg-[#D1345B] text-white font-jakarta font-semibold text-sm md:text-base rounded-lg transform hover:scale-105 transition-transform duration-200'>
+                        className='w-auto md:w-auto px-6 py-1.5 md:px-8 md:py-3 bg-cerise text-white font-jakarta font-semibold text-sm md:text-base rounded-lg transform hover:scale-105 transition-transform duration-200'>
                         CANCEL
                     </button>
 
                     <button 
                         onClick={() => setIsPostModalOpen(true)} 
-                        className='w-auto md:w-auto px-6 py-1.5 md:px-8 md:py-3 bg-[#09814A] text-white font-jakarta font-semibold text-sm md:text-base rounded-lg transform hover:scale-105 transition-transform duration-200'>
+                        className='w-auto md:w-auto px-6 py-1.5 md:px-8 md:py-3 bg-hijau text-white font-jakarta font-semibold text-sm md:text-base rounded-lg transform hover:scale-105 transition-transform duration-200'>
                         POST
                     </button>
                 </div>
