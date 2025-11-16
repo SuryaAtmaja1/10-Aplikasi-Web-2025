@@ -34,19 +34,15 @@ exports.googleCallback = async (req, res) => {
       maxAge: refreshTokenMaxAge, // e.g., 7 days
     });
 
-    // Respond with user info and access token
-    res.status(200).json({
-      user: {
-        id: user._id,
-        username: user.username,
-        email: user.email,
-      },
-      accessToken,
-    });
+    // SUCCESS redirect
+    return res.redirect(`${process.env.FRONTEND_URL}`);
+
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: err.message });
-  }
+    console.error("Google Login Error:", err.message);
+
+    // FAILED redirect
+    return res.redirect(`${process.env.FRONTEND_URL}/auth/login/?googleLogin=failed`);
+  }  
 };
 
 exports.register = async (req, res) => {
