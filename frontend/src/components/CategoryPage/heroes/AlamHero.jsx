@@ -6,7 +6,7 @@ import Muncak from "../../../../public/assets/category-sajak/muncak.png"
 import IkanBiru from "../../../../public/assets/category-sajak/ikan_biru.png"
 
 export const AlamHero = () => {
-  return <div className="relative w-full h-[400px] md:h-[89vh] overflow-hidden bg-amber-100 border-b">
+  return <div className="relative w-full h-[400px] md:h-[89vh] overflow-hidden border-b">
     {/* gambar" */}
     <div className="absolute bottom-0 ml-[30vw] mb-9 md:mb-10 flex flex-row gap-2.5 md:gap-7">
       <Image
