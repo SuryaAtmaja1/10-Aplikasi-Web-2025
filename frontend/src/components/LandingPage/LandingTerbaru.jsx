@@ -12,15 +12,15 @@ export const LandingTerbaru = () => {
       <div className="relative flex items-center h-fit md:h-[88vh] w-full mt-10 md:mt-44">
         <Image
             src={KakekKakek}
-            className="absolute self-start z-100 origin-[0%_53.38%] w-[19.427vw] ml-2 md:ml-18 -translate-y-[8.7vw] mask-l-from-50% mask-l-to-50% transform transition duration-200 ease-in-out hover:-translate-x-20 active:translate-x-[100] focus:scale-110"
+            className="absolute self-start z-100 origin-[0%_53.38%] w-[19.427vw] ml-2 md:ml-18 -translate-y-[8.7vw] [clip-path:inset(0_0_0_50%)] transform transition duration-200 ease-in-out hover:translate-x-20 active:-translate-x-20"
             height={1000}
-            alt="kakek-kakek duduk membaca"
+            alt="kakek kanan"
           />
         <Image
             src={KakekKakek}
-            className="absolute self-start z-100 origin-[0%_53.38%] w-[19.427vw] ml-2 md:ml-18 -translate-y-[8.7vw] mask-r-from-50% mask-r-to-50% transform transition duration-200 ease-in-out hover:-translate-x-20 active:translate-x-[100] focus:scale-110"
+            className="absolute self-start z-100 origin-[0%_53.38%] w-[19.427vw] ml-2 md:ml-18 -translate-y-[8.7vw] [clip-path:inset(0_50%_0_0)] transform transition duration-200 ease-in-out hover:-translate-x-20 active:translate-x-20"
             height={1000}
-            alt="kakek-kakek duduk membaca"
+            alt="kakek kiri"
           />
         <div className="relative flex flex-row justify-end h-full w-full md:w-[73.75vw] bg-cerise pt-9 md:pt-14 px-5 md:px-12 pb-4 md:pb-10">
           {/* articles */}

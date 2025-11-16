@@ -37,17 +37,18 @@ export const LandingHero = () => {
           {/* <a href="" className="group relative flex md:grow overflow-hidden rounded-lg md:rounded-2xl h-full md:h-auto border transform transition duration-1000 motion-safe:transition-[clip-path] hover:[clip-path:polygon(0%_0%,88%_0%,100%_50%,88%_100%,50%_100%,0%_100%)] [clip-path:polygon(0%_0%,100%_0%,100%_50%,100%_100%,100%_100%,0%_100%)]"> */}
             <Image
                 src={Proklamasi}
-                className="hidden md:block absolute mask-l-from-49% mask-l-to-49% motion-safe:transition motion-safe:duration-1000 group-hover:-translate-x-68 group-hover:-translate-y-55 z-100"
+                className="hidden md:block absolute [clip-path:polygon(53%_0%,100%_0%,100%_100%,50.17%_100%)] motion-safe:transition motion-safe:duration-1000 group-hover:-translate-x-66 group-hover:-translate-y-58 z-100"
                 width={700}
                 alt="ilustrasi tangan menulis"
               />
             <div className="absolute inset-0 motion-safe:transition-[clip-path] motion-safe:duration-1000 group-hover:[clip-path:circle(10%_at_1%_-1%)] [clip-path:circle(80%_at_0%_0%)] z-10">
             <Image
                 src={Proklamasi}
-                className="hidden md:block absolute mask-r-from-51% mask-r-to-51%"
+                className="hidden md:block absolute [clip-path:polygon(0%_0%,53%_0%,50%_100%,0%_100%)]"
                 width={700}
                 alt="ilustrasi tangan menulis"
-              /></div>
+              />
+            </div>
             <Image
                 src={Proklamasi}
                 className="md:hidden absolute w-full h-[150%] -translate-x-[25%] -translate-y-[30%]"
