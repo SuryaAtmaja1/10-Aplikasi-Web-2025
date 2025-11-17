@@ -18,11 +18,17 @@ const userSchema = new mongoose.Schema({
     type: String,         // URL or base64 string
     default: null
   },
-    categoryPreference: {
+  categoryPreference: {
     type: [String],       // array of strings
     default: []           // empty array by default
   },
   googleId: { 
+    type: String 
+  },
+  bio: { 
+    type: String 
+  },
+  address: { 
     type: String 
   },
   password: {
