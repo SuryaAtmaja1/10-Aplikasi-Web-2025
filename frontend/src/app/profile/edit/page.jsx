@@ -6,7 +6,7 @@ import React, {useState, useCallback} from 'react';
 import ImageDropzone from '@/components/ReuseEditPost/ImageDropzone';
 import TextInput from '@/components/ReuseEditPost/TextInput';
 import Image from 'next/image';
-// import { useRouter } from 'next/navigation'; 
+import { useRouter } from 'next/navigation'; 
 
 const Modal = ({ isOpen, title, onConfirm, onCancel }) => {
     if (!isOpen) return null;
@@ -33,7 +33,7 @@ const Modal = ({ isOpen, title, onConfirm, onCancel }) => {
 
 
 export default function EditProfilePage(){
-    // const router = useRouter(); 
+    const router = useRouter(); 
 
     const [name, setName] = useState('');
     const [location, setLocation] = useState('');
@@ -51,8 +51,8 @@ export default function EditProfilePage(){
     const handleCancelConfirm = useCallback(() => {
         console.log('Batalkan edit profile.');
         setIsCancelModalOpen(false);
-        // router.push('/user/profile') // arahkan balik
-    }, []);
+        router.push('/profile') ;
+    }, [router]);
 
     return(
         <div className='relative min-h-screen pb-20'>
