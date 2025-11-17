@@ -82,7 +82,7 @@ export default function EditSajakPage() {
       />
       <Modal
         isOpen={isCancelModalOpen}
-        title="Batalkan?"
+        title="Kembali ke halaman profile?"
         onConfirm={handleCancelConfirm}
         onCancel={() => setIsCancelModalOpen(false)}
       />

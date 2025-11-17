@@ -1,9 +1,11 @@
 import React from "react";
 import { BsArrowRightCircle } from "react-icons/bs";
+import Link from "next/link";
 
 export default function CategoryButton({ isResponsive, alterColor }) {
   return (
-    <div
+    <Link
+      href="/sajak"
       style={{ "--alterColor": alterColor }}
       className={`flex items-center bg-(--alterColor) hover:cursor-pointer hover:brightness-70 transition duration-200 text-putih px-[18px] py-2 ${
         isResponsive
@@ -19,6 +21,6 @@ export default function CategoryButton({ isResponsive, alterColor }) {
       <div className="text-2xl sm:text-3xl md:text-[40px]">
         <BsArrowRightCircle />
       </div>
-    </div>
+    </Link>
   );
 }
