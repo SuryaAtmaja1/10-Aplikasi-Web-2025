@@ -22,12 +22,12 @@ export const AgendaKomunitas = () => {
     <div id="agendaKomunitas" className="relative font-jakarta border-b overflow-hidden">
       {/* Desktop */}
       <div className="hidden relative md:flex flex-col h-fit mt-28 mb-40 lg:mb-64">
-        <div className="absolute w-full h-[24vh] lg:h-[36vh] xl:h-[42vh] 2xl:h-[46.296vh] bg-oren translate-y-[90vh] lg:translate-y-[100vh] xl:translate-y-[103vh] 2xl:translate-y-[101vh] z-2" style={{transform: `translateY(-${offset * 0.267}px)`}}></div>
-        <h1 className="z-100 text-[4.5rem] lg:text-[7rem] xl:text-[9.5rem] text-nowrap px-6 xl:px-12">
+        <div className="absolute w-full h-[24vh] lg:h-[36vh] xl:h-[42vh] 2xl:h-[46.296vh] bg-oren translate-y-[90vh] lg:translate-y-[100vh] xl:translate-y-[103vh] 2xl:translate-y-[101vh] z-1" style={{transform: `translateY(-${offset * 0.267}px)`}}></div>
+        <h1 className="z-2 text-[4.5rem] lg:text-[7rem] xl:text-[9.5rem] text-nowrap px-6 xl:px-12">
           <span className="font-bold">Agenda </span><span className="font-instrument">Komunitas</span>
         </h1>
-        <div className="relative flex flex-row gap-6 lg:gap-12 2xl:gap-18 px-6 xl:px-12 z-100">
-          <article className="bg-background transform transition hover:scale-102">
+        <div className="relative flex flex-row gap-6 lg:gap-12 2xl:gap-18 px-6 xl:px-12 z-2">
+          <article className="bg-background transform transition hover:scale-102 active:scale-95">
             <Image
               src={Technocorner}
               className="w-[37.5vw]"
@@ -37,12 +37,12 @@ export const AgendaKomunitas = () => {
             <h1 className="text-3xl xl:text-6xl font-instrument w-fit pb-0.5 border-b-2 mt-1 xl:mt-3">Amerika, 2067</h1>
             <h2 className="text-base xl:text-2xl 2xl:text-4xl mt-1 xl:mt-2"><span className="italic">Last Gath </span><span>Komunitas Singkat Sajak</span></h2>
           </article>
-          <article className="bg-background transform transition hover:scale-102">
+          <article className="bg-background transform transition hover:scale-102 active:scale-95">
             <Image
               src={Firstgath}
               className="w-[37.5vw]"
               width={720}
-              alt="kakek-kakek duduk membaca"
+              alt="FIrstgath"
             />
             <h1 className="text-3xl xl:text-6xl font-instrument w-fit pb-0.5 border-b-2 mt-1 xl:mt-3">Yogyakarta, 2025</h1>
             <h2 className="text-base xl:text-2xl 2xl:text-4xl mt-1 xl:mt-2"><span className="italic">First Gath </span><span>Komunitas Singkat Sajak</span></h2>
@@ -56,7 +56,7 @@ export const AgendaKomunitas = () => {
       {/* Mobile */}
       <div className="md:hidden absolute w-full h-[254px] bg-oren translate-y-[124px]"></div>
       <div className="md:hidden relative flex flex-col h-fit mt-5 pb-10 px-5">
-        <h1 className="z-100 text-[2rem] text-nowrap">
+        <h1 className="z-3 text-[2rem] text-nowrap">
           <span className="font-bold">Agenda </span><span className="font-instrument">Komunitas</span>
         </h1>
         <div className="relative flex w-full mt-2 mb-11">

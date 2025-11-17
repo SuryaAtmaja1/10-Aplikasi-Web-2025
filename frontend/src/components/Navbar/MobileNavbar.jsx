@@ -182,7 +182,7 @@ export const MobileNavbar = React.memo(function MobileNavbar() {
                       role="menuitem"
                       href={cat.href}
                       onClick={closeMenu}
-                      className="block w-full text-center border-b-2 border-transparent py-3 uppercase text-sm font-medium hover:text-oren hover:bg-[#FFF6E8] active:bg-[#FFD08A] transition-colors"
+                      className="block w-full text-center border-b border-hitam py-3 uppercase text-sm font-medium active:text-oren active:bg-[#FFF6E8] active:bg-[#FFD08A] transition-colors"
                     >
                       {cat.name}
                     </a>
