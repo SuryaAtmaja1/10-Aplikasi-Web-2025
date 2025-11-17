@@ -5,38 +5,13 @@ import ImageDropzone from "@/components/ReuseEditPost/ImageDropzone";
 import TextInput from "@/components/ReuseEditPost/TextInput";
 import TextAreaInput from "@/components/ReuseEditPost/TextAreaInput";
 import Image from "next/image";
-import { useRouter } from 'next/navigation';
+import Modal from "@/components/Modal";
+import api from "@/utils/axiosInstance";
+import { useRouter, useParams } from "next/navigation";
 
 const ALL_TAGS = ["Alam", "Lokal", "Politik", "Sosial", "Ekonomi", "Teknologi"];
 
-const Modal = ({ isOpen, title, onConfirm, onCancel }) => {
-  if (!isOpen) return null;
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg p-6 shadow-2xl w-full max-w-sm">
-        <h2 className="text-xl font-jakarta font-bold text-black mb-4">
-          {title}
-        </h2>
-        <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 mt-4">
-          <button
-            onClick={onCancel}
-            className="w-full sm:w-auto px-6 py-2 text-cerise border border-cerise font-jakarta font-semibold rounded-lg hover:bg-gray-100 transition duration-150"
-          >
-            Tidak
-          </button>
-          <button
-            onClick={onConfirm}
-            className="w-full sm:w-auto px-6 py-2 bg-hijau text-white font-jakarta font-semibold rounded-lg hover:bg-[#076B3D] transition duration-150"
-          >
-            Iya
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default function EditSajakPage() {
+export default function EditSajakPage({ params }) {
   const router = useRouter();
 
   const [title, setTitle] = useState("");
@@ -69,7 +44,7 @@ export default function EditSajakPage() {
   const handleCancelConfirm = useCallback(() => {
     console.log("Batalkan post.");
     setIsCancelModalOpen(false);
-    router.push('/profile');
+    router.push("/profile");
   }, [router]);
 
   return (

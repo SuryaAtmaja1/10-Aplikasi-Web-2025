@@ -1,52 +1,36 @@
-// buat post sajak
 "use client";
 
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import ImageDropzone from "@/components/ReuseEditPost/ImageDropzone";
 import TextInput from "@/components/ReuseEditPost/TextInput";
 import TextAreaInput from "@/components/ReuseEditPost/TextAreaInput";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
+import Modal from "@/components/Modal";
+import api from "@/utils/axiosInstance";
 
 const ALL_TAGS = ["Alam", "Lokal", "Politik", "Sosial", "Ekonomi", "Teknologi"];
-
-const Modal = ({ isOpen, title, onConfirm, onCancel }) => {
-  if (!isOpen) return null;
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg p-6 shadow-2xl w-full max-w-sm">
-        <h2 className="text-xl font-jakarta font-bold text-black mb-4">
-          {title}
-        </h2>
-        <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 mt-4">
-          <button
-            onClick={onCancel}
-            className="w-full sm:w-auto px-6 py-2 text-cerise border border-cerise font-jakarta font-semibold rounded-lg hover:bg-gray-100 transition duration-150"
-          >
-            Tidak
-          </button>
-          <button
-            onClick={onConfirm}
-            className="w-full sm:w-auto px-6 py-2 bg-hijau text-white font-jakarta font-semibold rounded-lg hover:bg-[#076B3D] transition duration-150"
-          >
-            Iya
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 export default function EditSajakPage() {
   const router = useRouter();
 
+  // form states
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [imageFile, setImageFile] = useState(null);
 
+  // UI states
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
+  // auth states
+  const [checkingAuth, setCheckingAuth] = useState(true);
+  const [user, setUser] = useState(null);
+
+  // Tag helpers
   const removeTag = (tagToRemove) => {
     setSelectedTags(
       selectedTags.filter((tag) => tag !== tagToRemove && tag !== "")
@@ -60,17 +44,81 @@ export default function EditSajakPage() {
     setIsDropdownOpen(false);
   };
 
-  const handlePostConfirm = useCallback(() => {
-    console.log("Posting sajak:", { title, content, selectedTags });
-    setIsPostModalOpen(false);
-    // logic POST data ke backend
-  }, [title, content, selectedTags]);
+  const handleImageSelect = (file) => setImageFile(file ?? null);
+
+  useEffect(() => {
+    let mounted = true;
+
+    async function checkUser() {
+      try {
+        setCheckingAuth(true);
+        const res = await api.get("/user");
+        if (!mounted) return;
+        setUser(res.data);
+      } catch (err) {
+        const status = err?.response?.status;
+        if (status === 401) {
+          router.push("/auth/login");
+          return;
+        }
+        console.error("Error saat cek user:", err);
+        router.push("/auth/login");
+      } finally {
+        if (mounted) setCheckingAuth(false);
+      }
+    }
+
+    checkUser();
+
+    return () => {
+      mounted = false;
+    };
+  }, [router]);
+
+  const handlePostConfirm = useCallback(async () => {
+    setErrorMsg("");
+    setLoading(true);
+
+    try {
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("content", content);
+      formData.append("tags", selectedTags.join(","));
+      if (imageFile) formData.append("image", imageFile);
+
+      const res = await api.post("/sajak/", formData);
+
+      console.log("POST success:", res.data);
+      setIsPostModalOpen(false);
+      router.push("/profile");
+    } catch (err) {
+      console.error("Failed to post sajak:", err);
+      if (err?.response?.status === 401) {
+        router.push("/auth/login");
+        return;
+      }
+      setErrorMsg(err?.response?.data?.message || "Gagal mengirim sajak.");
+    } finally {
+      setLoading(false);
+    }
+  }, [title, content, selectedTags, imageFile, router]);
 
   const handleCancelConfirm = useCallback(() => {
-    console.log("Batalkan post.");
     setIsCancelModalOpen(false);
-    router.push('/profile');
+    router.push("/profile");
   }, [router]);
+
+  if (checkingAuth) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p>Memeriksa status login...</p>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return null;
+  }
 
   return (
     <div className="relative min-h-screen pb-20">
@@ -79,6 +127,9 @@ export default function EditSajakPage() {
         title="Post Sajak?"
         onConfirm={handlePostConfirm}
         onCancel={() => setIsPostModalOpen(false)}
+        confirmText={loading ? "Posting..." : "Ya, Post"}
+        cancelText="Batal"
+        disableConfirm={loading}
       />
       <Modal
         isOpen={isCancelModalOpen}
@@ -134,23 +185,21 @@ export default function EditSajakPage() {
             </div>
 
             <div className="flex flex-wrap gap-2">
-              {selectedTags.map(
-                (tag) =>
-                  tag !== "" && (
-                    <div
-                      key={tag}
-                      className="flex items-center bg-white rounded-md px-2 py-0.5 md:px-3 md:py-1 text-sm md:text-base font-jakarta font-medium text-black border border-oren"
+              {selectedTags.map((tag) =>
+                tag !== "" ? (
+                  <div
+                    key={tag}
+                    className="flex items-center bg-white rounded-md px-2 py-0.5 md:px-3 md:py-1 text-sm md:text-base font-jakarta font-medium text-black border border-oren"
+                  >
+                    <span>{tag}</span>
+                    <button
+                      onClick={() => removeTag(tag)}
+                      className="ml-2 text-black hover:text-cerise font-jakarta font-bold"
                     >
-                      <span>{tag}</span>
-
-                      <button
-                        onClick={() => removeTag(tag)}
-                        className="ml-2 text-black hover:text-cerise font-jakarta font-bold"
-                      >
-                        &times;
-                      </button>
-                    </div>
-                  )
+                      &times;
+                    </button>
+                  </div>
+                ) : null
               )}
             </div>
           </div>
@@ -158,7 +207,15 @@ export default function EditSajakPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-12 md:gap-6 lg:gap-10">
           <div className="mb-6 md:mb-0 md:col-span-5">
-            <ImageDropzone />
+            <ImageDropzone
+              onFileSelect={handleImageSelect}
+              initialFile={imageFile}
+            />
+            {imageFile && (
+              <p className="mt-2 text-sm text-gray-600">
+                Gambar terpilih: {imageFile.name}
+              </p>
+            )}
           </div>
 
           <div className="flex flex-col gap-6 md:col-span-7">
@@ -179,6 +236,10 @@ export default function EditSajakPage() {
           </div>
         </div>
 
+        {errorMsg && (
+          <div className="mt-4 text-sm text-red-600">{errorMsg}</div>
+        )}
+
         <div className="flex flex-col-reverse md:flex-row md:justify-end items-end gap-3 mt-8">
           <button
             onClick={() => setIsCancelModalOpen(true)}
@@ -191,7 +252,7 @@ export default function EditSajakPage() {
             onClick={() => setIsPostModalOpen(true)}
             className="w-auto md:w-auto px-6 py-1.5 md:px-8 md:py-3 bg-hijau text-white font-jakarta font-semibold text-sm md:text-base rounded-lg transform hover:scale-105 transition-transform duration-200"
           >
-            POST
+            {loading ? "Posting..." : "POST"}
           </button>
         </div>
       </main>
