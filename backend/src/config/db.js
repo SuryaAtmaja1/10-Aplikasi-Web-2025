@@ -1,26 +1,42 @@
 const mongoose = require("mongoose");
 
-let cachedConnection = null;
+const MONGO_URI = process.env.MONGODB_URI;
+if (!MONGO_URI) {
+  throw new Error("MONGODB_URI is not set in environment");
+}
+let cached = global._mongoConnection;
 
-const connectDB = async () => {
-  if (cachedConnection) {
-    console.log("Using cached database connection");
-    return cachedConnection;
+if (!cached) {
+  cached = global._mongoConnection = { conn: null, promise: null };
+}
+
+async function connectDB() {
+  if (cached.conn) {
+    return cached.conn;
   }
 
-  try {
-    const conn = await mongoose.connect(process.env.MONGODB_URI, {
+  if (!cached.promise) {
+    const opts = {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-    });
+      serverSelectionTimeoutMS: 30000,
+      socketTimeoutMS: 45000,
+      maxPoolSize: 10,
+    };
 
-    cachedConnection = conn;
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
-    return conn;
-  } catch (error) {
-    console.error(`Error: ${error.message}`);
-    process.exit(1);
+    cached.promise = mongoose
+      .connect(MONGO_URI, opts)
+      .then((mongooseInstance) => {
+        cached.conn = mongooseInstance;
+        return cached.conn;
+      })
+      .catch((err) => {
+        cached.promise = null;
+        throw err;
+      });
   }
-};
+
+  return cached.promise;
+}
 
 module.exports = connectDB;
