@@ -163,6 +163,23 @@ exports.editSajak = async (req, res) => {
   }
 };
 
+exports.getSajakByUser = async (req, res) => {
+  try {
+    const userId = req.params.userId; // ambil userId dari URL
+
+    const sajakList = await Sajak.find({ authorId: userId })
+      .sort({ createdAt: -1 }); // urutkan dari terbaru ke lama
+
+    if (!sajakList || sajakList.length === 0) {
+      return res.status(404).json({ message: "User belum menulis sajak" });
+    }
+
+    return res.status(200).json(sajakList);
+  } catch (error) {
+    console.error("Error fetching sajak by user:", error);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
 
 exports.getSajakById = async (req, res) => {
   try {

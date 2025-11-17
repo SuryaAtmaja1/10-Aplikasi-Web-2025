@@ -7,7 +7,7 @@ const {
 
 const COOKIE_OPTIONS = {
   httpOnly: true,
-  sameSite: "Strict",
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
   secure: process.env.NODE_ENV === "production",
   path: "/",
 };
