@@ -155,17 +155,21 @@ export const DesktopNavbar = React.memo(function DesktopNavbar() {
         </div>
       </header>
 
-      {/* SPACER: supaya konten halaman tidak naik di bawah header fixed */}
       <div style={{ height: `${TOTAL_HEIGHT}px` }} aria-hidden="true" />
+
       <Modal
         isOpen={isLogoutModalOpen}
-        title="Konfirmasi Logout"
-        onYes={handleConfirmLogout}
-        onNo={() => setIsLogoutModalOpen(false)}
-        onClose={() => setIsLogoutModalOpen(false)}
-      >
-        <p>Apakah Anda yakin ingin logout sekarang?</p>
-      </Modal>
+        title={
+          <>
+            <div>Konfirmasi Logout</div>
+            <p className="mt-2 text-base font-medium">
+              Apakah Anda yakin ingin logout sekarang?
+            </p>
+          </>
+        }
+        onConfirm={handleConfirmLogout}
+        onCancel={() => setIsLogoutModalOpen(false)}
+      />
     </>
   );
 });

@@ -18,12 +18,10 @@ export const MobileNavbar = React.memo(function MobileNavbar() {
   const toggleOpen = useCallback(() => setOpen((v) => !v), []);
   const closeMenu = useCallback(() => setOpen(false), []);
 
-  // auth state (added to mirror DesktopNavbar behavior)
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   const handleLogoutRequest = () => {
-    // close menu first so modal appears on top cleanly
     setOpen(false);
     setIsLogoutModalOpen(true);
   };
@@ -36,11 +34,9 @@ export const MobileNavbar = React.memo(function MobileNavbar() {
     }
     setIsLogoutModalOpen(false);
     setIsLoggedIn(false);
-    // redirect to login page
     window.location.href = "/auth/login";
   };
 
-  // check login on mount (same logic as DesktopNavbar)
   useEffect(() => {
     let mounted = true;
     const checkLogin = async () => {
@@ -67,11 +63,10 @@ export const MobileNavbar = React.memo(function MobileNavbar() {
     };
   }, []);
 
-  // Scroll hide/show behavior
   const [visible, setVisible] = useState(true);
   const lastScrollY = useRef(0);
   const ticking = useRef(false);
-  const NAV_HEIGHT = 64; // h-16 = 64px
+  const NAV_HEIGHT = 64;
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -83,8 +78,6 @@ export const MobileNavbar = React.memo(function MobileNavbar() {
           const currentY = window.scrollY || 0;
           const delta = currentY - lastScrollY.current;
           const THRESHOLD = 6;
-
-          // jika menu terbuka, jangan sembunyikan header agar menu tetap bisa diakses
           if (open) {
             setVisible(true);
             lastScrollY.current = currentY;
@@ -94,10 +87,8 @@ export const MobileNavbar = React.memo(function MobileNavbar() {
 
           if (Math.abs(delta) > THRESHOLD) {
             if (delta > 0 && currentY > 40) {
-              // scroll ke bawah => sembunyikan header
               setVisible(false);
             } else if (delta < 0) {
-              // scroll ke atas => tampilkan header
               setVisible(true);
             }
             lastScrollY.current = currentY;
@@ -125,7 +116,6 @@ export const MobileNavbar = React.memo(function MobileNavbar() {
       >
         <div className="flex items-center justify-between px-4 border-b h-16 bg-putih">
           <div className="flex items-center space-x-3">
-            {/* Brand only on header (profile moved into menu) */}
             <div className="flex font-playfair items-center font-bold text-[18px] space-x-2 hover:cursor-pointer">
               <div>Singkat</div>
               <LogoSingkatSajak className="text-hitam w-6" />
@@ -182,7 +172,7 @@ export const MobileNavbar = React.memo(function MobileNavbar() {
                       role="menuitem"
                       href={cat.href}
                       onClick={closeMenu}
-                      className="block w-full text-center border-b border-hitam py-3 uppercase text-sm font-medium active:text-oren active:bg-[#FFF6E8] active:bg-[#FFD08A] transition-colors"
+                      className="block w-full text-center border-b border-hitam py-3 uppercase text-sm font-medium active:text-oren active:bg-[#FFD08A] transition-colors"
                     >
                       {cat.name}
                     </a>
@@ -199,7 +189,6 @@ export const MobileNavbar = React.memo(function MobileNavbar() {
                   onLogoutRequest={() => {
                     handleLogoutRequest();
                   }}
-                  // tambahkan onClick closeMenu agar klik internal (login) tetap menutup menu bila perlu
                   onClick={closeMenu}
                   className="flex justify-center"
                 />
@@ -208,20 +197,20 @@ export const MobileNavbar = React.memo(function MobileNavbar() {
           </nav>
         )}
       </header>
-
-      {/* SPACER supaya konten tidak 'naik' di bawah header fixed */}
       <div style={{ height: `${NAV_HEIGHT}px` }} aria-hidden="true" />
-
-      {/* Logout confirmation modal (mirip DesktopNavbar) */}
       <Modal
         isOpen={isLogoutModalOpen}
-        title="Konfirmasi Logout"
-        onYes={handleConfirmLogout}
-        onNo={() => setIsLogoutModalOpen(false)}
-        onClose={() => setIsLogoutModalOpen(false)}
-      >
-        <p>Apakah Anda yakin ingin logout sekarang?</p>
-      </Modal>
+        title={
+          <>
+            <div>Konfirmasi Logout</div>
+            <p className="mt-2 text-base font-medium">
+              Apakah Anda yakin ingin logout sekarang?
+            </p>
+          </>
+        }
+        onConfirm={handleConfirmLogout}
+        onCancel={() => setIsLogoutModalOpen(false)}
+      />
     </>
   );
 });
