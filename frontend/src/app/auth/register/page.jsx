@@ -36,12 +36,10 @@ export default function RegisterPage() {
       }
     }
   }, [username, email, password, router]);
-  // const handleRegister = useCallback(() => {
-  //     console.log('Register attempt:', { username, email, password });
-  // }, [username, email, password]);
-
+  
   const handleGoogleLogin = () => {
-    window.location.href = "http://localhost:4000/auth/google";
+    const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+    window.location.href = `${API_URL}/auth/google`;
   };
 
   const handleLoginClick = useCallback(() => {
