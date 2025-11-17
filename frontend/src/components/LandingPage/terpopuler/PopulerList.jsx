@@ -4,6 +4,7 @@ import Image from "next/image";
 import WhiteBox from "@/components/CategoryPage/ChoiceSection/WhiteBox";
 import RomanBath from "../../../../public/assets/landing/roman_bath.png";
 import { useEffect, useState } from "react";
+import PageLoading from "@/components/PageLoading";
 import api from "@/utils/axiosInstance";
 
 export default function PopulerList() {
@@ -43,6 +44,7 @@ export default function PopulerList() {
 
     fetchSajakAndAuthors();
   }, []);
+  if (loading) return <PageLoading message="Memuat konten terbaru..." />;
   return (
     <div className="w-full flex flex-col items-center md:flex-row md:justify-center gap-6">
       <Image

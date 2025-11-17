@@ -5,6 +5,7 @@ import Link from "next/link";
 import KakekKakek from "../../../public/assets/landing/kakek-duduk.png";
 import LihatSemua from "../../../public/assets/landing/LihatSemua";
 import { useEffect, useState } from "react";
+import PageLoading from "../PageLoading";
 import api from "@/utils/axiosInstance";
 
 export const LandingTerbaru = () => {
@@ -44,6 +45,7 @@ export const LandingTerbaru = () => {
 
     fetchSajakAndAuthors();
   }, []);
+  if (loading) return <PageLoading message="Memuat konten terbaru..." />;
 
   return (
     <div className="relative flex font-jakarta h-fit mt-12">

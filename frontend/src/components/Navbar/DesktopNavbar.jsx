@@ -7,6 +7,7 @@ import LoginButton from "./LoginButton";
 import { FaRegUserCircle } from "react-icons/fa";
 import api from "@/utils/axiosInstance";
 import Modal from "../Modal";
+import toast from "react-hot-toast";
 
 export const DesktopNavbar = React.memo(function DesktopNavbar() {
   const [visible, setVisible] = useState(true);
@@ -28,8 +29,10 @@ export const DesktopNavbar = React.memo(function DesktopNavbar() {
         } else {
           setIsLoggedIn(false);
         }
+        toast.success("Berhasil login.");
       } catch (err) {
         setIsLoggedIn(false);
+        toast.error("Anda belum login.");
       }
     };
 
@@ -40,8 +43,10 @@ export const DesktopNavbar = React.memo(function DesktopNavbar() {
   const handleConfirmLogout = async () => {
     try {
       await api.post("/auth/logout");
+      toast.success("Berhasil logout.");
     } catch (e) {
       console.error(e);
+      toast.error("Gagal logout. Coba lagi.");
     }
     setIsLogoutModalOpen(false);
     setIsLoggedIn(false);
