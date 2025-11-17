@@ -40,6 +40,10 @@ export default function RegisterPage() {
   //     console.log('Register attempt:', { username, email, password });
   // }, [username, email, password]);
 
+  const handleGoogleLogin = () => {
+    window.location.href = "http://localhost:4000/auth/google";
+  };
+
   const handleLoginClick = useCallback(() => {
     router.push("/auth/login");
   }, [router]);
@@ -56,16 +60,16 @@ export default function RegisterPage() {
       />
 
       {/* Overlay Gelap */}
-      <div className="absolute inset-0 bg-black opacity-35 -z-10"></div>
+      <div className="absolute inset-0 bg-hitam opacity-35 -z-10"></div>
 
-      <div className="relative w-full max-w-sm md:max-w-4xl bg-white bg-opacity-75 backdrop-blur-md rounded-2xl shadow-2xl p-8 md:p-12">
+      <div className="relative w-full max-w-sm md:max-w-4xl bg-putih bg-opacity-75 backdrop-blur-md rounded-2xl shadow-2xl p-8 md:p-12">
         <button
           onClick={() => router.back()}
           className="absolute top-6 right-6 text-hitam hover:text-gray-600 text-3xl"
         >
           <FaXmark />
         </button>
-        <h1 className="text-3xl md:text-4xl font-jakarta font-extrabold text-black text-center mb-8">
+        <h1 className="text-3xl md:text-4xl font-jakarta font-extrabold text-hitam text-center mb-8">
           REGISTER
         </h1>
 
@@ -94,7 +98,7 @@ export default function RegisterPage() {
             />
             <button
               onClick={handleRegister}
-              className="w-full bg-black text-white font-jakarta font-semibold py-3 rounded-lg transform hover:scale-105 transition-transform duration-200"
+              className="w-full bg-hitam text-putih font-jakarta font-semibold py-3 rounded-lg transform hover:scale-105 transition-transform duration-200"
             >
               SIGN UP
             </button>
@@ -105,7 +109,14 @@ export default function RegisterPage() {
           </div>
 
           <div className="flex flex-col items-center justify-center gap-4 mt-6 md:mt-0">
-            <p className="text-black font-jakarta text-center">
+            <button
+              onClick={handleGoogleLogin}
+              className="flex items-center justify-center gap-2 w-full max-w-xs bg-hitam text-white font-jakarta font-semibold py-3 rounded-lg transform hover:scale-105 transition-transform duration-200"
+            >
+              <Image src="/google.svg" alt="Google" width={20} height={20} />
+              <span>Login with Google</span>
+            </button>
+            <p className="text-hitam font-jakarta text-center">
               Already have an account?{" "}
               <span
                 onClick={handleLoginClick}
