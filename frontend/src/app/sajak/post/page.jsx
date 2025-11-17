@@ -5,7 +5,7 @@ import React, { useState, useCallback } from "react";
 import ImageDropzone from "@/components/ReuseEditPost/ImageDropzone";
 import TextInput from "@/components/ReuseEditPost/TextInput";
 import TextAreaInput from "@/components/ReuseEditPost/TextAreaInput";
-// import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 const ALL_TAGS = ["Alam", "Lokal", "Politik", "Sosial", "Ekonomi", "Teknologi"];
 
@@ -37,7 +37,7 @@ const Modal = ({ isOpen, title, onConfirm, onCancel }) => {
 };
 
 export default function EditSajakPage() {
-  // const router = useRouter();
+  const router = useRouter();
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -69,8 +69,8 @@ export default function EditSajakPage() {
   const handleCancelConfirm = useCallback(() => {
     console.log("Batalkan post.");
     setIsCancelModalOpen(false);
-    // router.push('/user/profile') kmna ini
-  }, []);
+    router.push('/profile');
+  }, [router]);
 
   return (
     <div className="relative min-h-screen pb-20">
@@ -82,7 +82,7 @@ export default function EditSajakPage() {
       />
       <Modal
         isOpen={isCancelModalOpen}
-        title="Batalkan?"
+        title="Kembali ke halaman profile?"
         onConfirm={handleCancelConfirm}
         onCancel={() => setIsCancelModalOpen(false)}
       />

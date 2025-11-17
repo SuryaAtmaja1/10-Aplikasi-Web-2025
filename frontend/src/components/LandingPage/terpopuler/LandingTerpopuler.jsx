@@ -46,7 +46,7 @@ export default function LandingTerpopuler() {
 
           <PopulerList />
 
-          <Link href={"/"} className="place-self-center z-20">
+          <Link href={"/sajak"} className="place-self-center z-20">
             <button className="flex items-center gap-3 py-3 px-16 md:px-8  font-jakarta font-bold text-putih bg-cerise rounded-2xl border border-hitam hover:underline underline-offset-3 hover:cursor-pointer hover:shadow-md active:bg-hitam">
               Lihat semua
               <div className="w-8 h-8 rounded-full flex items-center justify-center border-2 border-putih">
