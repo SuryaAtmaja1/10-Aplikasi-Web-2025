@@ -10,7 +10,8 @@ const {
   getSajakByTag,
   getRecentSajak,
   deleteSajak,
-  searchSajak
+  searchSajak,
+  getSajakByUser
 } = require("../controllers/sajakController");
 const { verifyUser } = require("../middlewares/auth");
 const upload = require("../middlewares/upload")
@@ -41,6 +42,9 @@ router.get("/trending/tag/:tag", getTrendingByTag); //done
 
 // GET /sajak/:id
 router.get("/:id", getSajakById); //done
+
+// GET /sajak/user/:id
+router.get("/user/:id", getSajakByUser); //done
 
 // DELETE /sajak/:id
 router.delete("/:id", verifyUser, deleteSajak);
