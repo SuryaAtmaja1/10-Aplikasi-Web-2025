@@ -38,12 +38,13 @@ export const Footer = () => {
             <h2 className="font-bold text-[18px] lg:text-2xl">SAJAK-SAJAK</h2>
             <div className="flex flex-col gap-3">
               {CATEGORIES.map((item, index) => (
-                <div
+                <a
                   key={index}
+                  href={item.href}
                   className="hover:cursor-pointer hover:underline text-[14px]"
                 >
                   {item.name}
-                </div>
+                </a>
               ))}
             </div>
           </div>
