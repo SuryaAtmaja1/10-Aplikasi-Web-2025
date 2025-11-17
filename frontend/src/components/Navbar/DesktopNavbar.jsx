@@ -18,7 +18,8 @@ export const DesktopNavbar = React.memo(function DesktopNavbar() {
   useEffect(() => {
     const checkLogin = async () => {
       try {
-        const res = await api.post("/auth/refresh-token");
+        const res = await api.get("/user");
+        console.log("REFRESH TOKEN RESPONSE:", res);
         if (
           res?.data &&
           (res.data.user || res.data.loggedIn || res.status === 200)

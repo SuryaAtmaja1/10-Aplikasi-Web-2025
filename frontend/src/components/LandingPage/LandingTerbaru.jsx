@@ -32,7 +32,6 @@ export const LandingTerbaru = () => {
           author: authorMap[item.authorId] || null,
         }));
         setRecentPosts(merged);
-        console.log("Sajak terbaru dan penulis berhasil diambil:", merged);
       } catch (err) {
         console.error(
           "Gagal mengambil sajak terbaru:",

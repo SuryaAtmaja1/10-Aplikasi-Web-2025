@@ -13,7 +13,7 @@ export default function PopulerList() {
   useEffect(() => {
     async function fetchSajakAndAuthors() {
       try {
-        const res = await api.get("/sajak/recent");
+        const res = await api.get("/sajak/trending");
         const sajakList = res.data.data;
 
         const authorIds = [...new Set(sajakList.map((s) => s.authorId))];
@@ -31,7 +31,6 @@ export default function PopulerList() {
           author: authorMap[item.authorId] || null,
         }));
         setTrendingPosts(merged);
-        console.log("Sajak terbaru dan penulis berhasil diambil:", merged);
       } catch (err) {
         console.error(
           "Gagal mengambil sajak terbaru:",
