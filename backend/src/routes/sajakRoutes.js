@@ -43,8 +43,8 @@ router.get("/trending/tag/:tag", getTrendingByTag); //done
 // GET /sajak/:id
 router.get("/:id", getSajakById); //done
 
-// GET /sajak/user/:id
-router.get("/user/:id", getSajakByUser); //done
+// GET /sajak/user/:userid
+router.get("/user/:userId", getSajakByUser); //done
 
 // DELETE /sajak/:id
 router.delete("/:id", verifyUser, deleteSajak);
