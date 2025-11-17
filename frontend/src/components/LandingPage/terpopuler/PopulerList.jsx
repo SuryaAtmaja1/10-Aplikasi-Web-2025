@@ -1,9 +1,49 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import WhiteBox from "@/components/CategoryPage/ChoiceSection/WhiteBox";
-import RomanBath from "../../../../public/assets/landing/roman_bath.png"
+import RomanBath from "../../../../public/assets/landing/roman_bath.png";
+import { useEffect, useState } from "react";
+import api from "@/utils/axiosInstance";
 
 export default function PopulerList() {
+  const [trendingPosts, setTrendingPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchSajakAndAuthors() {
+      try {
+        const res = await api.get("/sajak/recent");
+        const sajakList = res.data.data;
+
+        const authorIds = [...new Set(sajakList.map((s) => s.authorId))];
+
+        const userRequests = authorIds.map((id) => api.get(`/user/${id}`));
+        const userResponses = await Promise.all(userRequests);
+
+        const authorMap = {};
+        userResponses.forEach((res) => {
+          authorMap[res.data._id] = res.data;
+        });
+
+        const merged = sajakList.map((item) => ({
+          ...item,
+          author: authorMap[item.authorId] || null,
+        }));
+        setTrendingPosts(merged);
+        console.log("Sajak terbaru dan penulis berhasil diambil:", merged);
+      } catch (err) {
+        console.error(
+          "Gagal mengambil sajak terbaru:",
+          err?.response?.data || err
+        );
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchSajakAndAuthors();
+  }, []);
   return (
     <div className="w-full flex flex-col items-center md:flex-row md:justify-center gap-6">
       <Image
@@ -15,16 +55,40 @@ export default function PopulerList() {
       />
 
       <div className="md:hidden flex flex-col items-center gap-7">
-        <WhiteBox isPhone={true} />
+        <WhiteBox
+          isPhone={true}
+          title={trendingPosts[0]?.title}
+          author={trendingPosts[0]?.author?.username}
+        />
         <div className="flex flex-row justify-center gap-12">
-          <WhiteBox isPhone={true} />
-          <WhiteBox isPhone={true} />
+          <WhiteBox
+            isPhone={true}
+            title={trendingPosts[1]?.title}
+            author={trendingPosts[1]?.author?.username}
+          />
+          <WhiteBox
+            isPhone={true}
+            title={trendingPosts[2]?.title}
+            author={trendingPosts[2]?.author?.username}
+          />
         </div>
       </div>
       <div className="hidden md:flex flex-row gap-20">
-        <WhiteBox isPhone={false} />
-        <WhiteBox isPhone={false} />
-        <WhiteBox isPhone={false} />
+        <WhiteBox
+          isPhone={false}
+          title={trendingPosts[0]?.title}
+          author={trendingPosts[0]?.author?.username}
+        />
+        <WhiteBox
+          isPhone={false}
+          title={trendingPosts[1]?.title}
+          author={trendingPosts[1]?.author?.username}
+        />
+        <WhiteBox
+          isPhone={false}
+          title={trendingPosts[2]?.title}
+          author={trendingPosts[2]?.author?.username}
+        />
       </div>
     </div>
   );
