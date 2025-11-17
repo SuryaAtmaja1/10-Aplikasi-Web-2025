@@ -87,10 +87,6 @@ export default function EditSajakPage() {
         onCancel={() => setIsCancelModalOpen(false)}
       />
 
-      <div className="absolute top-0 right-0 p-4 opacity-30 -z-0">
-        <p className="text-sm">[placeholder: GambarBabi]</p>
-      </div>
-
       <main className="relative container mx-auto pt-8 px-5 md:px-20">
         <div className="mb-6 md:mb-8 space-y-5">
           <button

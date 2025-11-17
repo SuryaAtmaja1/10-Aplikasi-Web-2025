@@ -10,5 +10,8 @@ export default function MaybeFooter() {
   useEffect(() => setMounted(true), []);
   if (!pathname) return null;
   if (pathname.startsWith("/auth")) return null;
+  if (pathname.startsWith("/profile/edit")) return null;
+  if (pathname.startsWith("/sajak/edit")) return null;
+  if (pathname.startsWith("/sajak/post")) return null;
   return <Footer />;
 }
