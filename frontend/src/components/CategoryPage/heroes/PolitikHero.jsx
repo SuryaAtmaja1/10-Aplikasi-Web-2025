@@ -13,7 +13,6 @@ export const PolitikHero = () => {
         width={1920}
         height={800}
         alt="PolitikHeroImg"
-        oncontextmenu="return false;"
       />
       <div className="h-fit px-4 md:px-16 mt-7 md:mt-0">
         <h1 className="font-jakarta font-semibold text-5xl md:text-9xl mb-2 md:mb-5">politik.</h1>
