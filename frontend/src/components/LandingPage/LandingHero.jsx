@@ -33,7 +33,7 @@ export const LandingHero = () => {
         {/* ---- kolom kanan ---- */}
         <div className="h-full flex flex-col gap-2 md:gap-4 lg:gap-5">
           {/* Tulis Sajak */}
-          <a href="" className="group relative flex md:grow overflow-hidden rounded-lg md:rounded-2xl h-full md:h-auto border transform transition duration-1000 ease-in-out hover:scale-105">
+          <Link href="/sajak/post" className="group relative flex md:grow overflow-hidden rounded-lg md:rounded-2xl h-full md:h-auto border transform transition duration-1000 ease-in-out hover:scale-105">
           {/* <a href="" className="group relative flex md:grow overflow-hidden rounded-lg md:rounded-2xl h-full md:h-auto border transform transition duration-1000 motion-safe:transition-[clip-path] hover:[clip-path:polygon(0%_0%,88%_0%,100%_50%,88%_100%,50%_100%,0%_100%)] [clip-path:polygon(0%_0%,100%_0%,100%_50%,100%_100%,100%_100%,0%_100%)]"> */}
             <Image
                 src={Proklamasi}
@@ -64,7 +64,7 @@ export const LandingHero = () => {
             </div>
             <h1 className="md:hidden absolute bottom-0 right-0 font-jakarta font-bold text-2xl text-nowrap">TULIS SAJAK</h1>
             <WritePlus className="md:hidden absolute right-0 top-0 h-[30px] md:h-12 2xl:h-[72px] w-auto" />
-          </a>
+          </Link>
           {/* bantuan */}
           <a href="" className="group relative flex flex-row items-center justify-between gap-3 overflow-hidden rounded-lg md:rounded-2xl h-fit py-2.5 md:py-4 px-2.5 md:px-6 border hover:-translate-y-1 active:bg-oren transform transition">
             <p className="font-instrument italic text-sm md:text-base xl:text-2xl">Pertama kali menulis sajak?</p>

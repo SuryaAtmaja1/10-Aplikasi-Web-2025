@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import KakekKakek from "../../../public/assets/landing/kakek-duduk.png"
 import LihatSemua from "../../../public/assets/landing/LihatSemua"
 
@@ -50,12 +51,12 @@ export const LandingTerbaru = () => {
               <h2 className="font-instrument md:text-xl text-nowrap">Nama Penulis</h2>
             </a>
             {/* show more */}
-            <a href="" className="bg-hitam text-putih font-bold text-base md:text-xl col-span-3 lg:col-span-1 h-fit text-center py-3 rounded-2xl mt-1 hover:underline active:bg-black focus:text-cerise">SHOW MORE...</a>
+            <Link href="/sajak" className="bg-hitam text-putih font-bold text-base md:text-xl col-span-3 lg:col-span-1 h-fit text-center py-3 rounded-2xl mt-1 hover:underline active:bg-black focus:text-cerise">SHOW MORE...</Link>
           </div>
         </div>
-        <a href="" className="hidden md:flex items-center justify-center h-full w-[26.25vw] px-6 md:bg-foreground lg:bg-background hover:bg-hitam focus:bg-cerise active:bg-black">
+        <Link href="/sajak" className="hidden md:flex items-center justify-center h-full w-[26.25vw] px-6 md:bg-foreground lg:bg-background hover:bg-hitam focus:bg-cerise active:bg-black">
           <LihatSemua className="w-[23vw]" />
-        </a>
+        </Link>
       </div>
     </div>
   )
