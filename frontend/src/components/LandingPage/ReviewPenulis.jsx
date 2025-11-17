@@ -25,32 +25,32 @@ export const ReviewPenulis = () => {
     <div className="parallax-container border-t relative overflow-hidden">
       <div className="parallax-group relative font-jakarta h-[75vh] md:h-[70vh] lg:h-[90vh] xl:h-[104.67vh] w-full">
         
-        {/* Layer 3: Deep background (moves fastest) */}
+        {/* Layer 3: Deep background (moves f stest) */}
         <div className="layer-deep absolute inset-0" style={{transform: `translateY(${offset * 0.67}px)`}}>
           <Image
             src={Kumbang}
-            className="absolute w-[50vw] md:w-[34.657vw] rotate-[-24.3deg] top-[-155vh] md:top-[-185vh] lg:top-[-210vh] xl:top-[-220vh] left-[-6.7vw]"
+            className="absolute w-[50vw] md:w-[34.657vw] rotate-[-24.3deg] top-[-210vh] md:top-[-250vh] lg:top-[-280vh] xl:top-[-295vh] left-[-6.7vw]"
             width={600}
             height={400}
             alt="Kumbang"
           />
           <Image
             src={BungaHijau}
-            className="absolute w-[60vw] md:w-[30.933vw] rotate-180 top-[-165vh] md:top-[-192vh] lg:top-[-213vh] xl:top-[-225vh] 2xl:top-[-225vh] left-[30vw] md:left-[16.3vw] mt-10 lg:mt-0"
+            className="absolute w-[60vw] md:w-[30.933vw] rotate-180 top-[-218vh] md:top-[-256vh] lg:top-[-284vh] xl:top-[-300vh] 2xl:top-[-300vh] left-[30vw] md:left-[16.3vw] mt-10 lg:mt-0"
             width={530}
             height={400}
             alt="BungaHijau"
           />
           <Image
             src={JempolMic}
-            className="hidden md:block absolute w-[19.3vw] top-[-185vh]"
+            className="hidden md:block absolute w-[19.3vw] top-[-230vh] lg:top-[-258vh]"
             width={330}
             height={400}
             alt="JempolMic"
           />
           <Image
             src={PencilCup}
-            className="absolute w-[37.699vw] bottom-[219vh] right-[3vh]"
+            className="absolute w-[37.699vw] bottom-[215vh] md:bottom-[250vh] lg:bottom-[275vh] xl:bottom-[292vh] right-[3vh]"
             width={645}
             height={570}
             alt="PencilCup"
@@ -61,14 +61,14 @@ export const ReviewPenulis = () => {
         <div className="layer-back absolute inset-0" style={{transform: `translateY(${offset * 0.267}px)`}}>
           <Image
             src={Pnulis}
-            className="absolute bottom-12 md:bottom-[75vh] lg:bottom-[90vh] xl:bottom-[100vh] left-0 md:left-[11.875vw] w-[50vw] md:h-auto md:w-[38.177vw]"
+            className="absolute z-10 bottom-200 md:bottom-[100vh] lg:bottom-[110vh] xl:bottom-[132vh] left-0 md:left-[11.875vw] w-[50vw] md:h-auto md:w-[38.177vw]"
             width={653}
             height={700}
             alt="Pnulis"
           />
           <Image
             src={KursiOren}
-            className="absolute w-[43.446vw] rotate-[-78.41deg] bottom-[-10vw] md:bottom-[55vh] left-[8.5vw]"
+            className="absolute w-[43.446vw] rotate-[-78.41deg] bottom-180 md:bottom-[87vh] left-[8.5vw]"
             width={740}
             height={1000}
             alt="KursiOren"

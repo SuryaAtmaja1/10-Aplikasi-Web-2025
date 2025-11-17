@@ -22,7 +22,7 @@ export const AgendaKomunitas = () => {
     <div id="agendaKomunitas" className="relative font-jakarta border-b overflow-hidden">
       {/* Desktop */}
       <div className="hidden relative md:flex flex-col h-fit mt-28 mb-40 lg:mb-64">
-        <div className="absolute w-full h-[24vh] lg:h-[36vh] xl:h-[42vh] 2xl:h-[46.296vh] bg-oren translate-y-[63vh] lg:translate-y-[66.7vh] xl:translate-y-[73vh] 2xl:translate-y-[72vh] z-2" style={{transform: `translateY(-${offset * 0.267}px)`}}></div>
+        <div className="absolute w-full h-[24vh] lg:h-[36vh] xl:h-[42vh] 2xl:h-[46.296vh] bg-oren translate-y-[90vh] lg:translate-y-[100vh] xl:translate-y-[103vh] 2xl:translate-y-[101vh] z-2" style={{transform: `translateY(-${offset * 0.267}px)`}}></div>
         <h1 className="z-100 text-[4.5rem] lg:text-[7rem] xl:text-[9.5rem] text-nowrap px-6 xl:px-12">
           <span className="font-bold">Agenda </span><span className="font-instrument">Komunitas</span>
         </h1>

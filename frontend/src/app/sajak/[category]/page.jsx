@@ -5,6 +5,8 @@ import { HeroSajak } from "@/components/CategoryPage/HeroSajak";
 import LatestSectionPage from "@/components/CategoryPage/LatestSection/LatestSectionPage";
 import PopularSectionPage from "@/components/CategoryPage/PopularSection/PopularSectionPage";
 import ChoiceSection from "@/components/CategoryPage/ChoiceSection/ChoiceSection";
+import { QuoteAlam } from "@/components/CategoryPage/QuoteSection/QuoteAlam";
+import { KataPenulis } from "@/components/CategoryPage/KataPenulis";
 
 export async function generateStaticParams() {
   return CATEGORIES.map((c) => ({ category: c.slug }));
@@ -41,6 +43,7 @@ export default async function Page({ params }) {
         alterColor={alterColor}
         backgroundImage={backgroundImage}
       />
+      <KataPenulis category={category} />
     </div>
   );
 }
