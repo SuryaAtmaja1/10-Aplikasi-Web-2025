@@ -141,9 +141,12 @@ export const DesktopNavbar = React.memo(function DesktopNavbar() {
             {CATEGORIES.map((item, index) => (
               <a
                 key={index}
-                style={{ paddingInline: "clamp(4px, 2.5vw, 100px)" }}
+                style={{
+                  paddingInline: "clamp(4px, 2.5vw, 100px)",
+                  "--hoverColor": item.themeColor,
+                }}
                 href={item.href}
-                className="flex justify-center py-3 uppercase text-[16px] font-medium border-b-4 border-transparent hover:cursor-pointer hover:text-oren hover:border-oren transition-colors duration-200 ease-in-out"
+                className={`flex justify-center py-3 uppercase text-[16px] font-medium border-b-4 border-transparent hover:cursor-pointer transition-colors duration-200 ease-in-out hover:text-(--hoverColor) hover:border-(--hoverColor)`}
               >
                 <div>{item.name}</div>
               </a>

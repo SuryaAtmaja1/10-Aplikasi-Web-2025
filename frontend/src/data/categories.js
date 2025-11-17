@@ -3,7 +3,7 @@ export const CATEGORIES = [
     name: "Semua Sajak",
     slug: "semua",
     href: "/sajak",
-    themeColor: "",
+    themeColor: "#fa7921",
     alterColor: "",
     imgBackground: "",
     isIndex: false,
