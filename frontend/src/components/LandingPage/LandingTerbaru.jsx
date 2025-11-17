@@ -6,19 +6,19 @@ import LihatSemua from "../../../public/assets/landing/LihatSemua"
 export const LandingTerbaru = () => {
   return(
     <div className="relative flex font-jakarta h-fit mt-12">
-      <h1 className="absolute z-100 right-0 text-[2.25rem] md:text-[9.5rem] text-nowrap px-[3vw]">
+      <h1 className="absolute z-5 right-0 text-[2.25rem] md:text-[9.5rem] text-nowrap px-[3vw]">
         <span className="font-instrument">SAJAK </span><span className="font-bold">TERBARU</span>
       </h1>
       <div className="relative flex items-center h-fit md:h-[88vh] w-full mt-10 md:mt-44">
         <Image
             src={KakekKakek}
-            className="absolute self-start z-100 origin-[0%_53.38%] w-[19.427vw] ml-2 md:ml-18 -translate-y-[8.7vw] [clip-path:inset(0_0_0_50%)] transform transition duration-200 ease-in-out hover:translate-x-20 active:-translate-x-20"
+            className="absolute self-start z-5 origin-[0%_53.38%] w-[19.427vw] ml-2 md:ml-18 -translate-y-[8.7vw] [clip-path:inset(0_0_0_50%)] transform transition duration-200 ease-in-out hover:translate-x-20 active:-translate-x-20"
             height={1000}
             alt="kakek kanan"
           />
         <Image
             src={KakekKakek}
-            className="absolute self-start z-100 origin-[0%_53.38%] w-[19.427vw] ml-2 md:ml-18 -translate-y-[8.7vw] [clip-path:inset(0_50%_0_0)] transform transition duration-200 ease-in-out hover:-translate-x-20 active:translate-x-20"
+            className="absolute self-start z-5 origin-[0%_53.38%] w-[19.427vw] ml-2 md:ml-18 -translate-y-[8.7vw] [clip-path:inset(0_50%_0_0)] transform transition duration-200 ease-in-out hover:-translate-x-20 active:translate-x-20"
             height={1000}
             alt="kakek kiri"
           />

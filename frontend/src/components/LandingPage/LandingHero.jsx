@@ -37,7 +37,7 @@ export const LandingHero = () => {
           {/* <a href="" className="group relative flex md:grow overflow-hidden rounded-lg md:rounded-2xl h-full md:h-auto border transform transition duration-1000 motion-safe:transition-[clip-path] hover:[clip-path:polygon(0%_0%,88%_0%,100%_50%,88%_100%,50%_100%,0%_100%)] [clip-path:polygon(0%_0%,100%_0%,100%_50%,100%_100%,100%_100%,0%_100%)]"> */}
             <Image
                 src={Proklamasi}
-                className="hidden md:block absolute [clip-path:polygon(53%_0%,100%_0%,100%_100%,50.17%_100%)] motion-safe:transition motion-safe:duration-1000 group-hover:-translate-x-66 group-hover:-translate-y-58 z-100"
+                className="hidden md:block absolute [clip-path:polygon(53%_0%,100%_0%,100%_100%,50.17%_100%)] motion-safe:transition motion-safe:duration-1000 group-hover:-translate-x-66 group-hover:-translate-y-58 z-10"
                 width={700}
                 alt="ilustrasi tangan menulis"
               />
