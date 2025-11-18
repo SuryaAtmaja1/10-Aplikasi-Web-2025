@@ -5,7 +5,7 @@ import SosialHeroImgMobile from "../../../../public/assets/category-sajak/sosial
 
 export const SosialHero = () => {
   return (
-  <div className="relative flex w-screen overflow-hidden border-b">
+  <div className="relative flex w-full overflow-hidden border-b">
     {/* Desktop */}
     <div className="hidden md:block">
       <Image

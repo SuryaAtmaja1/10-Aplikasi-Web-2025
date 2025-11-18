@@ -5,7 +5,7 @@ import EkonomiHeroImgMobile from "../../../../public/assets/category-sajak/ekono
 
 export const EkonomiHero = () => {
   return (
-  <div className="relative flex w-screen overflow-hidden border-b">
+  <div className="relative flex w-full overflow-hidden border-b">
     {/* Desktop */}
     <div className="hidden md:block">
       <Image

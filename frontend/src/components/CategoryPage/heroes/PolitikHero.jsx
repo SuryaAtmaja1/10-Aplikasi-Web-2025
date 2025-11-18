@@ -4,12 +4,12 @@ import PolitikHeroImg from "../../../../public/assets/category-sajak/politik-her
 
 export const PolitikHero = () => {
   return (
-  <div className="relative flex w-screen overflow-hidden border-b">
+  <div className="relative flex w-full overflow-hidden border-b">
     {/* Desktop */}
     <div className="mt-2">
       <Image
         src={PolitikHeroImg}
-        className="w-screen md:w-full rotate-20 md:rotate-0 mt-16 md:mt-0 transform transition duration-700 scale-125 hover:scale-120 active:scale-x-150 cursor-pointer"
+        className="w-full rotate-20 md:rotate-0 mt-16 md:mt-0 transform transition duration-700 scale-125 hover:scale-120 active:scale-x-150 cursor-pointer"
         width={1920}
         height={800}
         alt="PolitikHeroImg"
