@@ -16,33 +16,51 @@ export const LandingHero = () => {
     }
   };
 
+  const sajakSnippet = `
+Kalau sampai waktuku
+Ku mau tak seorangkan merayu
+Tidak juga kau
+
+Tak perlu sedu sedan itu
+
+Aku ini binatang jalang
+Dari kumpulannya terbuang
+
+Biar peluru menembus kulitku
+Aku tetap meradang menerjang
+Luka dan bisa kubawa berlari
+Berlari
+Hingga hilang pedih peri
+Dan aku akan lebih tidak perduli
+Aku mau hidup seribu tahun lagi.
+  `;
+
   return (
     <div className="font-jakarta w-[88.889vw] md:w-[75.833vw] h-[75vh] place-self-center mt-10 md:mb-24 ">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4 lg:gap-5 h-full duration-300 ease-in-out">
         {/* Sajak Hari Ini */}
-        <div className="group h-full flex flex-col transform transition duration-700 hover:scale-102">
-          <a
-            href=""
-            className="group relative flex flex-col items-center grow overflow-hidden rounded-lg md:rounded-2xl border bg-gray-950 text-background pt-2 md:pt-4 pb-12 px-4"
-          >
+        <div className="group h-[75vh] flex flex-col transform transition duration-700 hover:scale-102">
+          <div className="group relative flex flex-col items-center grow overflow-hidden rounded-lg md:rounded-2xl border bg-gray-950 text-background pt-2 md:pt-4 px-4">
             <div className="absolute inset-0"></div>
             <h1 className="text-4xl md:text-4xl lg:text-5xl 2xl:text-8xl text-nowrap mb-6 md:mb-8">
               <span className="font-instrument">SAJAK</span>
               <span className="font-bold"> HARI INI</span>
             </h1>
             <h2 className="font-instrument italic text-2xl md:text-3xl xl:text-5xl">
-              judul
+              Aku
             </h2>
             <h3 className="text-lg xl:text-2xl font-extralight mb-4 md:mb-8">
-              nama penulis
+              Chairil Anwar
             </h3>
-            <p className="font-instrument text-md xl:text-3xl">
-              placeholder placeholder placeholder
-            </p>
-            <h4 className="absolute bg-cerise bottom-0 right-0 mr-4 mb-4 xl:mr-6 xl:mb-6 px-4 md:px-6 py-2.5 rounded-lg md:rounded-2xl text-sm xl:text-xl font-bold hover:underline transform transition group-hover:-translate-y-1">
-              Baca Selengkapnya ...
-            </h4>
-          </a>
+            <div className="leading-relaxed font-instrument mask-b-from-50% mask-b-to-70%">
+              <pre className="whitespace-pre-wrap">{sajakSnippet}</pre>
+            </div>
+            <Link href="https://singkat-sajak.vercel.app/sajak/umum/691c464213711000360e4184">
+              <h4 className="absolute bg-cerise bottom-0 right-0 mr-4 mb-4 xl:mr-6 xl:mb-6 px-4 md:px-6 py-2.5 rounded-lg md:rounded-2xl text-sm xl:text-xl font-bold hover:underline transform transition group-hover:-translate-y-1">
+                Baca Selengkapnya ...
+              </h4>
+            </Link>
+          </div>
         </div>
         {/* ---- kolom kanan ---- */}
         <div className="h-full flex flex-col gap-2 md:gap-4 lg:gap-5">

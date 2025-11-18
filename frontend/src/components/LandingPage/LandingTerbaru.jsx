@@ -79,7 +79,7 @@ export const LandingTerbaru = () => {
               className="bg-putih relative flex flex-col justify-between w-full h-full py-1.5 md:py-4 px-1.5 md:px-4 hover:-translate-2 hover:shadow-[6px_6px_0_black] active:scale-90"
             >
               <h1 className="md:text-3xl font-bold">
-                {truncateText(recentPosts[0]?.title, 60)}
+                {truncateText(recentPosts[0]?.title)}
               </h1>
               <h2 className="font-instrument md:text-xl text-nowrap">
                 {recentPosts[0]?.author?.username}
@@ -90,7 +90,7 @@ export const LandingTerbaru = () => {
               className="bg-putih relative flex flex-col justify-between w-full h-full py-1.5 md:py-4 px-1.5 md:px-4 hover:-translate-2 hover:shadow-[6px_6px_0_black] active:scale-90"
             >
               <h1 className="md:text-3xl font-bold">
-                {truncateText(recentPosts[1]?.title, 60)}
+                {truncateText(recentPosts[1]?.title)}
               </h1>
               <h2 className="font-instrument md:text-xl text-nowrap">
                 {recentPosts[1]?.author?.username}
@@ -101,7 +101,7 @@ export const LandingTerbaru = () => {
               className="bg-putih relative flex flex-col justify-between w-full h-full py-1.5 md:py-4 px-1.5 md:px-4 hover:-translate-2 hover:shadow-[6px_6px_0_black] active:scale-90"
             >
               <h1 className="md:text-3xl font-bold">
-                {truncateText(recentPosts[2]?.title, 60)}
+                {truncateText(recentPosts[2]?.title)}
               </h1>
               <h2 className="font-instrument md:text-xl text-nowrap">
                 {recentPosts[2]?.author?.username}
@@ -112,7 +112,7 @@ export const LandingTerbaru = () => {
               className="bg-putih relative flex flex-col justify-between w-full h-full py-1.5 md:py-4 px-1.5 md:px-4 hover:-translate-2 hover:shadow-[6px_6px_0_black] active:scale-90"
             >
               <h1 className="md:text-3xl font-bold">
-                {truncateText(recentPosts[3]?.title, 60)}
+                {truncateText(recentPosts[3]?.title)}
               </h1>
               <h2 className="font-instrument md:text-xl text-nowrap">
                 {recentPosts[3]?.author?.username}
@@ -123,7 +123,7 @@ export const LandingTerbaru = () => {
               className="bg-putih relative flex flex-col justify-between w-full h-full py-1.5 md:py-4 px-1.5 md:px-4 hover:-translate-2 hover:shadow-[6px_6px_0_black] active:scale-90"
             >
               <h1 className="md:text-3xl font-bold">
-                {truncateText(recentPosts[4]?.title, 60)}
+                {truncateText(recentPosts[4]?.title)}
               </h1>
               <h2 className="font-instrument md:text-xl text-nowrap">
                 {recentPosts[4]?.author?.username}
@@ -134,7 +134,7 @@ export const LandingTerbaru = () => {
               className="bg-putih relative flex flex-col justify-between w-full h-full py-1.5 md:py-4 px-1.5 md:px-4 hover:-translate-2 hover:shadow-[6px_6px_0_black] active:scale-90"
             >
               <h1 className="md:text-3xl font-bold">
-                {truncateText(recentPosts[5]?.title, 60)}
+                {truncateText(recentPosts[5]?.title)}
               </h1>
               <h2 className="font-instrument md:text-xl text-nowrap">
                 {recentPosts[5]?.author?.username}
