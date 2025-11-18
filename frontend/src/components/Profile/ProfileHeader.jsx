@@ -2,9 +2,11 @@
 
 import React from "react";
 import Link from "next/link";
+import toast from "react-hot-toast";
 import { FiMapPin } from "react-icons/fi";
 
 export default function ProfileHeader({ user, formatJoinDate }) {
+
   if (!user) return null;
 
   return (
@@ -14,7 +16,7 @@ export default function ProfileHeader({ user, formatJoinDate }) {
           <div className="flex flex-row md:flex-col gap-4 md:gap-0 items-center md:items-start shrink-0">
             {user.profilePhoto ? (
               <img
-                src={user.profilePhoto}
+                src={(user.profilePhoto)}
                 alt={user.username}
                 className="w-16 h-16 md:w-32 md:h-32 rounded-full object-cover bg-[#363231]"
               />
@@ -39,11 +41,11 @@ export default function ProfileHeader({ user, formatJoinDate }) {
                 {user.name || user.username}
               </h2>
               <p className="text-[14px] text-[#363231] mb-2">
-                @{user.username}
+                {user.email}
               </p>
               <div className="flex items-center gap-2 text-[#363231] text-[14px]">
                 <FiMapPin className="w-4 h-4" />
-                <span>Yogyakarta, Indonesia</span>
+                <span>{user.address || "Alamat belum diatur"}</span>
               </div>
             </div>
           </div>
@@ -52,10 +54,10 @@ export default function ProfileHeader({ user, formatJoinDate }) {
             <h2 className="text-3xl md:text-4xl font-bold text-[#363231] mb-2">
               {user.name || user.username}
             </h2>
-            <p className="text-lg text-[#363231] mb-3">@{user.username}</p>
+            <p className="text-lg text-[#363231] mb-3">{user.email}</p>
             <div className="flex items-center gap-2 text-[#363231] mb-6">
               <FiMapPin className="w-5 h-5" />
-              <span>Yogyakarta, Indonesia</span>
+              <span>{user.address || "Alamat belum diatur"}</span>
             </div>
           </div>
         </div>
@@ -65,7 +67,7 @@ export default function ProfileHeader({ user, formatJoinDate }) {
         <div className="h-44 flex-1 flex flex-col gap-3 justify-between py-4">
           <div className="flex-1">
             <p className="text-[#363231] text-[14px] md:text-base  font-jakarta">
-              {user.bio || "Penulis sajak tentang kehidupan dan alam"}
+              {user.bio || "Bio belum diatur"}
             </p>
             <p className="text-[#363231] text-[14px] md:text-base font-jakarta">
               Bergabung: {formatJoinDate(user.createdAt)}
