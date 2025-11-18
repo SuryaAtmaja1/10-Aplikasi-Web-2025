@@ -12,6 +12,7 @@ app.use((req, res, next) => {
   const origin = req.headers.origin;
   const allowedOrigins = [
     process.env.FRONTEND_URL,
+    "https://singkat-sajak.vercel.app",
     "http://localhost:3000",
     "https://studio.apollographql.com",
   ].filter(Boolean);
