@@ -1,9 +1,15 @@
+// components/BoxSajak.jsx
+"use client";
+
 import React from "react";
-import Image from "next/image";
+// import Image from "next/image";   // tidak diperlukan lagi
 import { PiHeart } from "react-icons/pi";
 import { FaRegComment } from "react-icons/fa6";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { RiShareForwardLine } from "react-icons/ri";
+
+import GDriveImage from "@/components/GDriveImage";
+import extractDriveId from "@/components/extractDriverId"; // sesuai yang kamu pakai di ProfileHeader
 
 export default function BoxSajak({ sajak }) {
   const dateString = sajak.createdAt;
@@ -14,15 +20,29 @@ export default function BoxSajak({ sajak }) {
     month: "long",
     year: "numeric",
   }).format(date);
+
+  // ekstrak fileId dari mapped.image (jika ada)
+  const rawImage = sajak.image;
+  const driveId = extractDriveId(rawImage);
+
   return (
     <div className="max-w-full flex p-4 bg-white border items-center border-cerise/25 rounded-[20px] gap-10">
       <div className="min-w-[120px] sm:min-w-40 md:min-w-[20vw] h-36 sm:h-[200px] overflow-hidden rounded-lg relative">
-        <Image
-          src="/assets/category-sajak/SajakDefaultPicture.jpg"
-          alt="Sajak Picture"
-          fill
-          className="object-cover"
-        />
+        {/* Jika ada driveId gunakan GDriveImage (yang kamu punya) */}
+        {driveId ? (
+          <GDriveImage
+            fileId={driveId}
+            alt={sajak.title || "Sajak Picture"}
+            className="object-cover w-full h-full"
+          />
+        ) : (
+          // fallback ke aset lokal bila tidak ada driveId / image
+          <img
+            src={rawImage || "/assets/category-sajak/SajakDefaultPicture.jpg"}
+            alt={sajak.title || "Sajak Picture"}
+            className="object-cover w-full h-full"
+          />
+        )}
       </div>
       <div className="flex flex-col gap-3 flex-initial">
         <h3 className="font-instrument text-[16px] sm:text-[24px] md:text-[32px] flex-none">
@@ -37,7 +57,7 @@ export default function BoxSajak({ sajak }) {
           </div>
         </div>
         <p className="flex-1 text-[10px] sm:text-[14px] md:text-[16px]">
-          {sajak.content.length > 200
+          {sajak.content?.length > 200
             ? sajak.content.slice(0, 200) + "..."
             : sajak.content}
         </p>

@@ -1,3 +1,4 @@
+// file: components/CategoryPage/ChoiceSection/ChoiceSection.jsx
 import React from "react";
 import ChoiceContainer from "./ChoiceContainer";
 import ChoiceList from "./ChoiceList";
@@ -6,6 +7,8 @@ export default function ChoiceSection({
   themeColor,
   alterColor,
   backgroundImage,
+  trendingList,
+  category,
 }) {
   return (
     <ChoiceContainer
@@ -13,7 +16,7 @@ export default function ChoiceSection({
       alterColor={alterColor}
       backgroundImage={backgroundImage}
     >
-      <ChoiceList />
+      <ChoiceList trendingList={trendingList} category={category} />
     </ChoiceContainer>
   );
 }

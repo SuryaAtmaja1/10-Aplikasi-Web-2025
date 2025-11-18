@@ -1,12 +1,7 @@
 import React from "react";
 import { notFound, redirect } from "next/navigation";
 import { CATEGORIES, CATEGORY_MAP } from "@/data/categories";
-import { HeroSajak } from "@/components/CategoryPage/HeroSajak";
-import LatestSectionPage from "@/components/CategoryPage/LatestSection/LatestSectionPage";
-import PopularSectionPage from "@/components/CategoryPage/PopularSection/PopularSectionPage";
-import ChoiceSection from "@/components/CategoryPage/ChoiceSection/ChoiceSection";
-import { QuoteAlam } from "@/components/CategoryPage/QuoteSection/QuoteAlam";
-import { KataPenulis } from "@/components/CategoryPage/KataPenulis";
+import CategoryClient from "./CategoryClient";
 
 export async function generateStaticParams() {
   return CATEGORIES.map((c) => ({ category: c.slug }));
@@ -14,36 +9,14 @@ export async function generateStaticParams() {
 
 export default async function Page({ params }) {
   const { category } = await params;
-  if (!category) notFound();
+
+  if (!category) return notFound();
 
   const cfg = CATEGORY_MAP[category];
-  if (!cfg) notFound();
-  const themeColor = cfg.themeColor;
-  const alterColor = cfg.alterColor;
-  const backgroundImage = cfg.imgBackground;
+  if (!cfg) return notFound();
 
   if (category === "semua") {
     redirect("/sajak");
   }
-
-  return (
-    <div>
-      <HeroSajak category={category} />
-      <div className="flex flex-col md:items-center lg:flex-row lg:items-stretch gap-9 px-[4.17vw] ">
-        <div className="flex lg:max-w-2/3 lg:pb-20">
-          <LatestSectionPage themeColor={themeColor} alterColor={alterColor} />
-        </div>
-        <div className="min-w-0.5 lg:self-stretch bg-[#363231]" />
-        <div className="flex lg:pb-20">
-          <PopularSectionPage themeColor={themeColor} />
-        </div>
-      </div>
-      <ChoiceSection
-        themeColor={themeColor}
-        alterColor={alterColor}
-        backgroundImage={backgroundImage}
-      />
-      <KataPenulis category={category} />
-    </div>
-  );
+  return <CategoryClient />;
 }
