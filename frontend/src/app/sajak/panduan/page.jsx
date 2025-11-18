@@ -47,7 +47,32 @@ export default function ArticlePage() {
     console.log("SEND REPLY TO:", commentId, "TEXT:", replyText);
     setReplyText("");
     setReplyingTo(null);
+
   };
+
+  const codeSnippet = `
+**Panduan Singkat Sajak** 
+
+Selamat datang di Singkat Sajak. Singkat Sajak adalah sebuah platform dimana kamu bisa mencurahkan isi pikiran dan berbagi ke khalayak ramai. Sebelum bisa posting sajak, teman-teman harus memiliki akun terlebih dahulu ya! Yuk ikuti panduan di bawah ini,
+
+**Membuat Akun**
+1) Klik button Login di pojok kanan atas 
+2) Pilih “Registrasi” silahkan teman-teman membuat akun terlebih dahulu
+3) Login menggunakan akun yang sudah dibuat
+
+**Upload Sajak**
+1) Login dengan akun yang sudah dibuat, jika belum silahkan ikuti panduan “membuat akun”
+2) Klik logo profile di bagian pojok kiri atas. Logo ini akan mengarahkan teman-teman ke halaman profile user
+3) Untuk meng-upload sajak, teman-teman cukup klik button (+) di bagian kanan bawah. Setelah itu teman-teman bisa mengisi judul sajak, konten, serta menambahkan gambar atau gif sebagai pelengkap.
+4) Jika dirasa sudah cukup, silahkan klik button “POST”
+
+**Edit Sajak**
+1) Login dengan akun yang sudah dibuat, jika belum silahkan ikuti panduan “membuat akun”
+2) Klik logo profile di bagian pojok kiri atas. Logo ini akan mengarahkan teman-teman ke halaman profile user
+3) Pada halaman profile ini, teman-teman akan melihat kumpulan sajak yang sudah di post dalam bentuk list.
+4) Klik pada logo edit di bagian sajak yang ingin di edit. yang terdapat di halaman profil user.
+5) Jika dirasa sudah cukup, silahkan klik button “SAVE”
+  `;
 
   return (
     <main className="w-full min-h-screen px-4 md:px-8 lg:px-24 py-10 bg-background text-foreground">
@@ -55,7 +80,7 @@ export default function ArticlePage() {
       {/* BREADCRUMB — clickable category */}
       <p
         className="text-xs tracking-wide text-hitam uppercase mb-4 cursor-pointer"
-        onClick={() => router.push("/sajak/alam")}
+        onClick={() => router.push("/kategori/alam")}
       >
         LOKAL | ALAM | INI TAG KATEGORI NYA MWAH
       </p>
@@ -63,9 +88,9 @@ export default function ArticlePage() {
       {/* TITLE — go to sajak */}
       <h1
         className="font-playfair text-3xl md:text-4xl font-semibold leading-tight mb-4 cursor-pointer"
-        onClick={() => router.push("/sajak/123")}
+        onClick={() => router.push("/sajak/panduan")}
       >
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Panduan Singkat Sajak
       </h1>
 
       {/* AUTHOR */}
@@ -78,29 +103,29 @@ export default function ArticlePage() {
           className="cursor-pointer"
           onClick={() => router.push("/profil/author123")}
         >
-          hai ini nama author | 22 November 2025
+          Tim Singkat Sajak | 18 November 2025
         </p>
       </div>
 
       {/* THUMBNAIL — go to sajak */}
       <div
         className="relative w-full aspect-[1746/605] mb-10 cursor-pointer"
-        onClick={() => router.push("/sajak/123")}
+        onClick={() => router.push("/sajak/panduan")}
       >
         <Image
-          src="/assets/category-sajak/SajakDefaultPicture.jpg"
+          src="/assets/monyet.jpeg"
           alt="thumbnail"
           fill
-          className="object-cover"
+          className=""
         />
       </div>
 
       {/* ARTICLE + SIDEBAR */}
       <section className="hidden lg:grid grid-cols-4 gap-10">
         <div className="col-span-3 space-y-6 leading-relaxed text-[15px]">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
-          <p>Quisque sagittis orci ut diam condimentum...</p>
+          <pre className="whitespace-pre-wrap overflow-auto p-4">
+            {codeSnippet}
+          </pre>
         </div>
 
         <aside className="col-span-1">
