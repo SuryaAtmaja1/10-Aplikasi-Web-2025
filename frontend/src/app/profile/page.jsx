@@ -7,6 +7,7 @@ import ProfileHeader from "@/components/Profile/ProfileHeader";
 import SajakList from "@/components/Profile/SajakList";
 import FloatingCreateButton from "@/components/Profile/FloatingCreateButton";
 import toast from "react-hot-toast";
+import PageLoading from "../loading";
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -170,21 +171,11 @@ const handleLike = async (id) => {
 
 
   if (loading) {
-    return (
-      <div className="min-h-screen bg-[#FFF9F4] flex items-center justify-center">
-        <p className="text-[#363231]">Memuat data...</p>
-      </div>
-    );
+    return <PageLoading message="Memuat data..."/>
   }
 
   if (user === null && !loading) {
-    return (
-      <div className="min-h-screen bg-[#FFF9F4] flex items-center justify-center">
-        <p className="text-[#363231] text-center">
-          Sesi Anda telah berakhir.<br />Mengalihkan ke halaman login...
-        </p>
-      </div>
-    );
+    return <PageLoading message="Sesi Anda telah berakhir. Mengalihkan ke halaman login..."/>
   }
 
   return (
