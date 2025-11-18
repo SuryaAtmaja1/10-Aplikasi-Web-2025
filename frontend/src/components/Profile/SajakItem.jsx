@@ -66,7 +66,7 @@ export default function SajakItem({ sajak, onDelete, onLike }) {
           </span>
         </div>
 
-        <Link href={`/sajak/${sajak._id}#comments`}>
+        <Link href={`/sajak/${sajak.hashtags[0]}/${sajak._id}#comments`}>
           <button className="flex items-center gap-2 md:gap-3 text-[#363231] hover:text-biru transition-all">
             <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>

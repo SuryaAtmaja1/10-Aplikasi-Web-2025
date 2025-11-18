@@ -2,7 +2,8 @@
 
 import React from "react";
 import Link from "next/link";
-import toast from "react-hot-toast";
+import GDriveImage from "@/components/GDriveImage";
+import extractDriveId from "@/components/extractDriverId";
 import { FiMapPin } from "react-icons/fi";
 
 export default function ProfileHeader({ user, formatJoinDate }) {
@@ -15,8 +16,8 @@ export default function ProfileHeader({ user, formatJoinDate }) {
         <div className="flex flex-1 gap-4">
           <div className="flex flex-row md:flex-col gap-4 md:gap-0 items-center md:items-start shrink-0">
             {user.profilePhoto ? (
-              <img
-                src={(user.profilePhoto)}
+              <GDriveImage
+                fileId={extractDriveId(user.profilePhoto)}
                 alt={user.username}
                 className="w-16 h-16 md:w-32 md:h-32 rounded-full object-cover bg-[#363231]"
               />
