@@ -349,7 +349,7 @@ export default function ArticlePage() {
 
       <p
         className="text-xs tracking-wide text-hitam uppercase mb-4 cursor-pointer"
-        onClick={() => router.push(`/kategori/${params?.category ?? "alam"}`)}
+        onClick={() => router.push("/sajak/alam")}
       >
         LOKAL |{" "}
         {(sajak.hashtags && sajak.hashtags.join(", ").toUpperCase()) || "ALAM"}

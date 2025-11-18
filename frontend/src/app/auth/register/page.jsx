@@ -1,6 +1,6 @@
 "use client";
 import api from "@/utils/axiosInstance";
-
+import toast from "react-hot-toast";
 import React, { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -22,17 +22,17 @@ export default function RegisterPage() {
         password,
       });
 
-      console.log("REGISTER SUCCESS:", res.data);
+      // console.log("REGISTER SUCCESS:", res.data);
 
-      alert("Register Berhasil!");
+      toast.success("Register Berhasil!");
       router.push("/auth/login");
     } catch (err) {
       console.error("REGISTER ERROR:", err);
 
       if (err.response) {
-        alert(err.response.data.message || "Registration failed");
+        toast.error(err.response.data.message || "Registration failed");
       } else {
-        alert("Server error");
+        toast.error("Server error");
       }
     }
   }, [username, email, password, router]);

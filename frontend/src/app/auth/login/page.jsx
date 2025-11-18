@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import TextInput from "@/components/ReuseLoginRegister/TextInput";
 import { FaXmark } from "react-icons/fa6";
+import toast from "react-hot-toast";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -17,7 +18,7 @@ export default function LoginPage() {
   useEffect(() => {
     if (googleStatus) {
       if (googleStatus === "failed")
-        alert("Google login gagal. Silakan coba lagi.");
+        toast.error("Google login gagal. Silakan coba lagi.");
 
       // remove query param from URL
       const newUrl = window.location.pathname;
@@ -32,15 +33,15 @@ export default function LoginPage() {
         password,
       });
 
-      console.log("LOGIN SUCCESS:", res.data);
+      // console.log("LOGIN SUCCESS:", res.data);
 
-      // alert("Login successful!");
+      toast.success("Login successful!");
       router.push("/");
     } catch (err) {
       if (err.response) {
-        alert(err.response.data.message);
+        toast.error(err.response.data.message);
       } else {
-        alert("Server error");
+        toast.error("Server error");
       }
     }
   }, [email, password, router]);

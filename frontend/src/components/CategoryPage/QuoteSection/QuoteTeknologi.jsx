@@ -5,7 +5,7 @@ import QuoteTeknologiImgMobile from "../../../../public/assets/category-sajak/qu
 
 export const QuoteTeknologi = () => {
   return (
-  <div className="relative flex w-screen overflow-hidden border-b">
+  <div className="relative w-full overflow-hidden border-b">
     {/* Desktop */}
     <div className="hidden md:block">
       <Image

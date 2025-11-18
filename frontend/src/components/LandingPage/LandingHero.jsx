@@ -67,10 +67,10 @@ export const LandingHero = () => {
           </Link>
           {/* bantuan */}
           <a href="" className="group relative flex flex-row items-center justify-between gap-3 overflow-hidden rounded-lg md:rounded-2xl h-fit py-2.5 md:py-4 px-2.5 md:px-6 border hover:-translate-y-1 active:bg-oren transform transition">
-            <p className="font-instrument italic text-sm md:text-base xl:text-2xl">Pertama kali menulis sajak?</p>
+            <p className="font-instrument italic text-sm md:text-base xl:text-2xl">Pertama kali di sini?</p>
             <div className="flex items-center gap-2 xl:gap-5 justify-center">
               <p className="font-jakarta font-bold group-hover:underline text-xs md:text-sm xl:text-lg text-oren group-active:text-putih justify-center">Ikuti panduan kami.</p>
-              <ArrowRightCircle className="h-6 w-6 xl:h-10 xl:w-10 text-oren group-active:text-white" />
+              <ArrowRightCircle className="h-6 w-6 xl:h-10 xl:w-10 text-oren group-active:text-putih" />
             </div>
           </a>
           {/* ---------- bottom grid ---------- */}

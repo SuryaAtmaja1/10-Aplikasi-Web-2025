@@ -17,9 +17,11 @@ export default function SajakItem({ sajak, onDelete, onLike }) {
   return (
     <article className="flex flex-col">
       <div className="flex items-start justify-between gap-3 md:gap-6 mb-4 md:mb-6">
-        <h3 className="font-instrument font-normal text-4xl md:text-5xl text-[#363231] flex-1 leading-tight">
-          {sajak.title}
-        </h3>
+        <Link href={`/sajak/${sajak.hashtags[0]}/${sajak._id}`}>
+          <h3 className="font-instrument font-normal text-4xl md:text-5xl text-[#363231] flex-1 leading-tight hover:text-biru transition-colors cursor-pointer">
+            {sajak.title}
+          </h3>
+        </Link>
 
         <div className="flex gap-3 shrink-0 pt-2">
           <Link href={`/sajak/edit/${sajak._id}`}>
@@ -66,7 +68,7 @@ export default function SajakItem({ sajak, onDelete, onLike }) {
           </span>
         </div>
 
-        <Link href={`/sajak/${sajak._id}#comments`}>
+        <Link href={`/sajak/${sajak.hashtags[0]}/${sajak._id}#comments`}>
           <button className="flex items-center gap-2 md:gap-3 text-[#363231] hover:text-biru transition-all">
             <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>

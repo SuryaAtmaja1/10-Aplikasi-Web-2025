@@ -5,7 +5,7 @@ import PopularList from "./PopularList";
 export default function PopularSectionPage({ themeColor }) {
   return (
     <PopularContainer themeColor={themeColor}>
-      <PopularList />
+      <PopularList themeColor={themeColor}/>
     </PopularContainer>
   );
 }

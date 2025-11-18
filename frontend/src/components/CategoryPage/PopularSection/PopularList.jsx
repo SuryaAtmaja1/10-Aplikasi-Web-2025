@@ -107,12 +107,13 @@ const Sajak = [
     commentCount: 123,
   },
 ];
-export default function PopularList() {
+export default function PopularList({ themeColor }) {
   return (
     <div className="flex flex-col  md:gap-8">
       {Sajak.slice(0, 10).map((item, index) => (
         <div
-          className="flex items-center gap-7 sm:gap-10 md:gap-14"
+          style={{ "--themeColor": themeColor }}
+          className="flex items-center gap-7 sm:gap-10 md:gap-14 hover:text-(--themeColor) hover:cursor-pointer"
           key={index}
         >
           <p className="font-instrument text-[54px] sm:text-[72px] md:text-8xl">
