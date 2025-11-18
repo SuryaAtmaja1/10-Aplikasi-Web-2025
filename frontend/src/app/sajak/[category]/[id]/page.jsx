@@ -56,7 +56,7 @@ export default function ArticlePage() {
       {/* BREADCRUMB — clickable category */}
       <p
         className="text-xs tracking-wide text-hitam uppercase mb-4 cursor-pointer"
-        onClick={() => router.push("/kategori/alam")}
+        onClick={() => router.push("/sajak/alam")}
       >
         LOKAL | ALAM | INI TAG KATEGORI NYA MWAH
       </p>

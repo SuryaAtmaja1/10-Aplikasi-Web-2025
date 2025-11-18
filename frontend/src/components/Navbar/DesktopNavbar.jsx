@@ -152,7 +152,7 @@ export const DesktopNavbar = React.memo(function DesktopNavbar() {
                   "--hoverColor": item.themeColor,
                 }}
                 href={item.href}
-                className={`flex justify-center py-3 uppercase text-[16px] font-medium border-b-4 border-transparent hover:cursor-pointer transition-colors duration-200 ease-in-out hover:text-(--hoverColor) hover:border-(--hoverColor)`}
+                className={`flex justify-center py-3 uppercase text-[12px] lg:text-[16px] font-medium text-nowrap border-b-4 border-transparent hover:cursor-pointer transition-colors duration-200 ease-in-out hover:text-(--hoverColor) hover:border-(--hoverColor)`}
               >
                 <div>{item.name}</div>
               </a>
