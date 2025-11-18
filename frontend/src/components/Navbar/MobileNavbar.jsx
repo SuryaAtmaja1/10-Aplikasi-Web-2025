@@ -54,11 +54,9 @@ export const MobileNavbar = React.memo(function MobileNavbar() {
         } else {
           setIsLoggedIn(false);
         }
-        toast.success("Berhasil login.");
       } catch (err) {
         if (!mounted) return;
         setIsLoggedIn(false);
-        toast.error("Anda belum login.");
       }
     };
 

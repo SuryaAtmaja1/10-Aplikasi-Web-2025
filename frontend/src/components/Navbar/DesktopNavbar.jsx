@@ -29,10 +29,8 @@ export const DesktopNavbar = React.memo(function DesktopNavbar() {
         } else {
           setIsLoggedIn(false);
         }
-        toast.success("Berhasil login.");
       } catch (err) {
         setIsLoggedIn(false);
-        toast.error("Anda belum login.");
       }
     };
 
