@@ -1,7 +1,14 @@
+// file: components/CategoryPage/ChoiceSection/WhiteBox.jsx
 import React from "react";
+import Link from "next/link";
 
-export default function WhiteBox({ isPhone, title, author }) {
-  return (
+export default function WhiteBox({
+  isPhone,
+  title = "",
+  author = "",
+  href = "",
+}) {
+  const content = (
     <div
       className={`
         bg-putih relative flex flex-col justify-between 
@@ -26,4 +33,15 @@ export default function WhiteBox({ isPhone, title, author }) {
       </h2>
     </div>
   );
+
+  // jika ada href, jadikan Link (klik), kalau tidak, render div biasa
+  if (href) {
+    return (
+      <Link href={href} className="inline-block">
+        {content}
+      </Link>
+    );
+  }
+
+  return content;
 }
