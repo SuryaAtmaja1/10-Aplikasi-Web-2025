@@ -12,7 +12,7 @@
 
 ## Singkat Sajak -- Website
 
-**[Singkat Sajak](https://singkat-sajak.vercel.app)**
+**[https://singkat-sajak.vercel.app](https://singkat-sajak.vercel.app)**
 
 ## 📚 Deskripsi Aplikasi
 
