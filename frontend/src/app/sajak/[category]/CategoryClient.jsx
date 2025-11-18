@@ -42,68 +42,75 @@ export default function CategoryClient() {
   async function attachAuthorNames(items, mounted) {
     if (!Array.isArray(items)) return [];
 
-    // collect unique author ids (skip falsy)
     const authorIds = Array.from(
       new Set(
         items
           .map((it) => {
-            // author can be _id string or populated object
             if (!it) return null;
             if (typeof it.authorId === "string") return it.authorId;
             if (it.authorId && typeof it.authorId === "object")
               return it.authorId._id ?? it.authorId.id;
-            // fallback: maybe `author` field contains id or name
             return null;
           })
           .filter(Boolean)
       )
     );
 
-    // check which ids we still need to fetch
     const idsToFetch = authorIds.filter((id) => !userCacheRef.current[id]);
 
-    // fetch missing users in parallel
     if (idsToFetch.length > 0) {
       try {
         const promises = idsToFetch.map((id) =>
           api
             .get(`/user/${id}`)
-            .then((r) => ({ id, data: r.data }))
+            .then((r) => ({ id, data: r.data?.data ?? r.data }))
             .catch((err) => {
               console.error("Gagal fetch user", id, err);
               return { id, data: null };
             })
         );
         const results = await Promise.all(promises);
-        if (!mounted) return items.map((it) => ({ ...it })); // bail out safely
+        if (!mounted) return items.map((it) => ({ ...it }));
 
-        // store in cache (only when data present)
         for (const res of results) {
-          if (res.data) userCacheRef.current[res.id] = res.data;
+          userCacheRef.current[res.id] = res.data ?? null;
         }
       } catch (err) {
         console.error("Error saat fetch authors:", err);
       }
     }
 
-    // now map items to include authorName
     const mapped = items.map((it) => {
       if (!it) return it;
       let authorName = "Penulis";
+      let authorProfilePhoto = null;
 
       if (it.authorId && typeof it.authorId === "object") {
-        // populated author object
         authorName =
           it.authorId.username ??
           it.authorId.name ??
           it.authorId.fullname ??
           authorName;
+
+        authorProfilePhoto =
+          it.authorId.profilePhoto ??
+          it.authorId.profile_picture ??
+          it.authorId.profilePicture ??
+          it.authorId.photo ??
+          it.authorId.avatar ??
+          null;
       } else if (typeof it.authorId === "string") {
         const cached = userCacheRef.current[it.authorId];
         if (cached) {
           authorName = cached.username ?? cached.name ?? authorName;
+          authorProfilePhoto =
+            cached.profilePhoto ??
+            cached.profile_picture ??
+            cached.profilePicture ??
+            cached.photo ??
+            cached.avatar ??
+            null;
         } else {
-          // if not cached (and not fetched for some reason), show the id as fallback
           authorName = it.authorId;
         }
       } else if (it.author) {
@@ -116,6 +123,8 @@ export default function CategoryClient() {
       return {
         ...it,
         authorName,
+        author: authorName,
+        authorProfilePhoto,
       };
     });
 

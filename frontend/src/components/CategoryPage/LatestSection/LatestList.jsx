@@ -5,61 +5,98 @@ import BoxSajak from "../BoxSajak";
 // Optional: fallback minimal bila tidak ada data
 const FALLBACK = [];
 
+function resolveAuthorFromItem(item) {
+  // return { name, profilePhoto }
+  if (!item) return { name: "Penulis", profilePhoto: null };
+
+  // 1) Prefer already-attached authorName / authorProfilePhoto
+  if (item.authorName || item.authorProfilePhoto) {
+    return {
+      name: item.authorName ?? item.author ?? "Penulis",
+      profilePhoto: item.authorProfilePhoto ?? null,
+    };
+  }
+
+  // 2) If authorId is populated object, extract
+  if (item.authorId && typeof item.authorId === "object") {
+    const name =
+      item.authorId.username ??
+      item.authorId.name ??
+      item.authorId.fullname ??
+      item.author ??
+      "Penulis";
+    const profilePhoto =
+      item.authorId.profilePhoto ??
+      item.authorId.profile_picture ??
+      item.authorId.profilePicture ??
+      item.authorId.photo ??
+      item.authorId.avatar ??
+      null;
+    return { name, profilePhoto };
+  }
+
+  // 3) If author is a string, use it
+  if (item.author && typeof item.author === "string") {
+    return { name: item.author, profilePhoto: null };
+  }
+
+  // 4) If top-level profile fields exist (some APIs put profile on root)
+  const profileFromRoot =
+    item.profilePhoto ??
+    item.profile_picture ??
+    item.profilePicture ??
+    item.photo ??
+    item.avatar ??
+    null;
+  if (profileFromRoot) {
+    const name = item.author ?? item.authorName ?? "Penulis";
+    return { name, profilePhoto: profileFromRoot };
+  }
+
+  // 5) fallback: if authorId is string, show id (will be resolved elsewhere)
+  if (typeof item.authorId === "string") {
+    return { name: item.author ?? item.authorId, profilePhoto: null };
+  }
+
+  return { name: "Penulis", profilePhoto: null };
+}
+
 export default function LatestList({ sajakList }) {
   // support berbagai bentuk: array | { data: [...] } | undefined
   const raw = Array.isArray(sajakList)
     ? sajakList
     : sajakList?.data ?? FALLBACK;
 
-  // normalize tiap item ke bentuk yang BoxSajak lebih mungkin harapkan
   const normalize = (item) => {
     if (!item) return null;
 
-    // Prefer authorName jika sudah di-attach di root
-    const resolvedAuthorName = item.authorName ?? null;
+    // keep original raw for BoxSajak to read hashtags
+    const __raw = item.__raw ?? item;
 
-    // Jika item sudah menggunakan struktur mockmu (id numeric)
-    if (item.id || typeof item._id === "undefined") {
-      return {
-        id: item.id ?? item._id ?? Math.random().toString(36).slice(2),
-        title: item.title,
-        // gunakan authorName dulu, lalu fallback ke struktur lama
-        author:
-          resolvedAuthorName ??
-          item.author ??
-          item.authorId?.username ??
-          item.authorId ??
-          "Penulis",
-        createdAt: item.createdAt ?? item.created_at ?? item.createdAt,
-        content: item.content ?? item.body ?? "",
-        image: item.image ?? "",
-        likes: item.likes ?? 0,
-        commentCount:
-          item.commentCount ?? item.commentsCount ?? item.comments?.length ?? 0,
-        // expose authorName explicitly as well so BoxSajak mudah akses
-        authorName: resolvedAuthorName,
-        __raw: item,
-      };
-    }
+    // prefer _id (API/Mongo) else id else generate
+    const id = item._id ?? item.id ?? Math.random().toString(36).slice(2);
 
-    // Jika item dari API (Mongo style) biasanya punya _id, authorId, etc.
+    // createdAt normalization
+    const createdAt =
+      item.createdAt ?? item.created_at ?? new Date().toISOString();
+
+    // resolve author name & profile using helper
+    const { name: authorName, profilePhoto: authorProfilePhoto } =
+      resolveAuthorFromItem(item);
+
     return {
-      id: item._id ?? item.id ?? Math.random().toString(36).slice(2),
+      id,
       title: item.title ?? "Tanpa Judul",
-      author:
-        // prefer attached authorName, else derive from populated authorId, else fallback
-        resolvedAuthorName ??
-        (typeof item.authorId === "string"
-          ? item.authorId
-          : item.authorId?.username ?? item.authorId?.name ?? "Penulis"),
-      createdAt: item.createdAt ?? item.created_at ?? new Date().toISOString(),
+      author: authorName,
+      createdAt,
       content: item.content ?? item.body ?? "",
       image: item.image ?? item.thumbnail ?? "",
       likes: typeof item.likes === "number" ? item.likes : item.likes ?? 0,
       commentCount:
-        item.commentsCount ?? item.commentCount ?? item.comments?.length ?? 0,
-      authorName: resolvedAuthorName,
-      __raw: item,
+        item.commentCount ?? item.commentsCount ?? item.comments?.length ?? 0,
+      authorName,
+      authorProfilePhoto, // may be null
+      __raw,
     };
   };
 
