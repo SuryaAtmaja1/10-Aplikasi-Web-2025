@@ -68,15 +68,36 @@ exports.getComments = async (req, res) => {
 
     const comments = await Comment.find({ post: sajakId })
       .populate("authorId", "username email")
-      .populate("parent", "_id")
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .lean(); // Convert Mongoose docs to plain JS objects
 
-    res.status(200).json(comments);
+    // Build nested comment tree
+    const commentMap = {};
+    const roots = [];
+
+    comments.forEach((c) => {
+      c.replies = []; // initialize replies array
+      commentMap[c._id] = c;
+    });
+
+    comments.forEach((c) => {
+      if (c.parent) {
+        // If comment has a parent, push into parent's replies
+        const parent = commentMap[c.parent];
+        if (parent) parent.replies.push(c);
+      } else {
+        // Otherwise it's a root comment
+        roots.push(c);
+      }
+    });
+
+    res.status(200).json(roots); // send nested comments
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 };
+
 
 // Delete a specific comment by id
 exports.deleteComment = async (req, res) => {
