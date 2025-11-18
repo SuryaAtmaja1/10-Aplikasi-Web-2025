@@ -7,6 +7,7 @@ import LoginButton from "./LoginButton";
 import { FaRegUserCircle } from "react-icons/fa";
 import api from "@/utils/axiosInstance";
 import Modal from "../Modal";
+import toast from "react-hot-toast";
 
 const BsJustify = dynamic(
   () => import("react-icons/bs").then((mod) => mod.BsJustify),
@@ -29,8 +30,10 @@ export const MobileNavbar = React.memo(function MobileNavbar() {
   const handleConfirmLogout = async () => {
     try {
       await api.post("/auth/logout");
+      toast.success("Berhasil logout.");
     } catch (e) {
       console.error(e);
+      toast.error("Gagal logout. Coba lagi.");
     }
     setIsLogoutModalOpen(false);
     setIsLoggedIn(false);
@@ -51,9 +54,11 @@ export const MobileNavbar = React.memo(function MobileNavbar() {
         } else {
           setIsLoggedIn(false);
         }
+        toast.success("Berhasil login.");
       } catch (err) {
         if (!mounted) return;
         setIsLoggedIn(false);
+        toast.error("Anda belum login.");
       }
     };
 

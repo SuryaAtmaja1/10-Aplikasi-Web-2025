@@ -5,6 +5,7 @@ import Link from "next/link";
 import KakekKakek from "../../../public/assets/landing/kakek-duduk.png";
 import LihatSemua from "../../../public/assets/landing/LihatSemua";
 import { useEffect, useState } from "react";
+import PageLoading from "../PageLoading";
 import api from "@/utils/axiosInstance";
 
 export const LandingTerbaru = () => {
@@ -32,7 +33,6 @@ export const LandingTerbaru = () => {
           author: authorMap[item.authorId] || null,
         }));
         setRecentPosts(merged);
-        console.log("Sajak terbaru dan penulis berhasil diambil:", merged);
       } catch (err) {
         console.error(
           "Gagal mengambil sajak terbaru:",
@@ -45,6 +45,7 @@ export const LandingTerbaru = () => {
 
     fetchSajakAndAuthors();
   }, []);
+  if (loading) return <PageLoading message="Memuat konten terbaru..." />;
 
   return (
     <div className="relative flex font-jakarta h-fit mt-12">

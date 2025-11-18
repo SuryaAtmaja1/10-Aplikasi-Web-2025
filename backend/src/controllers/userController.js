@@ -32,7 +32,7 @@ exports.getUserData = async (req, res) => {
 // Update user data
 exports.updateUserData = async (req, res) => {
   try {
-    const { username, email, categoryPreference } = req.body;
+    const { username, email, categoryPreference, bio, address } = req.body;
 
     // check if email is used by another user
     const existing = await User.findOne({ email });
@@ -55,7 +55,7 @@ exports.updateUserData = async (req, res) => {
         return res.status(400).json({ message: "Only image files are allowed" });
       }
 
-      // 🔹 Step 1: delete old profile photo if exists
+      // Delete old profile photo if exists
       if (currentUser.profilePhoto) {
         try {
           const oldFileId = currentUser.profilePhoto.match(/id=([^&]+)/)?.[1];
@@ -67,7 +67,7 @@ exports.updateUserData = async (req, res) => {
         }
       }
 
-      // 🔹 Step 2: upload new photo
+      // Upload new photo
       const bufferStream = new stream.PassThrough();
       bufferStream.end(req.file.buffer);
 
@@ -78,7 +78,7 @@ exports.updateUserData = async (req, res) => {
         },
         requestBody: {
           name: "profile_" + req.userId + path.extname(req.file.originalname),
-          parents: [process.env.DRIVEID_PROFILE_PHOTO], // replace with your Drive folder ID
+          parents: [process.env.DRIVEID_PROFILE_PHOTO],
         },
         fields: "id",
       });
@@ -93,15 +93,20 @@ exports.updateUserData = async (req, res) => {
       profilePhotoLink = `https://drive.google.com/uc?export=view&id=${newFileId}`;
     }
 
-    // build update fields dynamically
-    const updateFields = { username, email };
+    // Build update fields dynamically
+    const updateFields = {};
+    if (username) updateFields.username = username;
+    if (email) updateFields.email = email;
     if (profilePhotoLink) updateFields.profilePhoto = profilePhotoLink;
     if (categoryPreference) {
       updateFields.categoryPreference = Array.isArray(categoryPreference)
         ? categoryPreference
         : [categoryPreference];
     }
-
+    // Only update bio/address if non-empty, else remove them
+    updateFields.bio = bio && bio.trim() !== "" ? bio.trim() : undefined;
+    updateFields.address = address && address.trim() !== "" ? address.trim() : undefined;
+        
     const updatedUser = await User.findByIdAndUpdate(
       req.userId,
       updateFields,
@@ -129,6 +134,7 @@ exports.updateUserData = async (req, res) => {
     });
   }
 };
+
 
 
 exports.deleteUserData = async (req, res) => {

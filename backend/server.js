@@ -44,7 +44,10 @@ app.use(passport.initialize());
 const authRoutes = require("./src/routes/authRoutes");
 const sajakRoutes = require("./src/routes/sajakRoutes");
 const userRoutes = require("./src/routes/userRoutes");
+const proxyGDrive = require("./src/routes/proxyGdrive");
 
+// mount route under /api/proxy
+app.use("/api/proxy", proxyGDrive);
 // Routes
 app.get("/", (req, res) => {
   res.send("Backend is running 🚀");

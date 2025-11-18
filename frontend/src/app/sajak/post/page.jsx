@@ -83,7 +83,10 @@ export default function EditSajakPage() {
       const formData = new FormData();
       formData.append("title", title);
       formData.append("content", content);
-      formData.append("tags", selectedTags.join(","));
+      selectedTags.forEach(tag => {
+        formData.append("tags[]", tag);
+      });
+      // formData.append("tags", selectedTags.join(","));
       if (imageFile) formData.append("image", imageFile);
 
       const res = await api.post("/sajak/", formData);

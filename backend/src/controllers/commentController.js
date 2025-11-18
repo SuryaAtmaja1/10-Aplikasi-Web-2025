@@ -86,8 +86,7 @@ exports.deleteComment = async (req, res) => {
 
     if (!commentId) {
       return res.status(400).json({ message: "Comment ID is required" });
-    }
-
+    }   
     // Find the comment
     const comment = await Comment.findById(commentId);
     if (!comment) {

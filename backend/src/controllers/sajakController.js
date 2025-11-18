@@ -5,7 +5,9 @@ const { drive } = require("../config/googleDrive.js"); // <-- your Google Drive 
 
 exports.createSajak = async (req, res) => {
   try {
-    const { title, content, tags, isPublish } = req.body;
+    const { title, content, isPublish } = req.body;
+
+    let tags = req.body["tags[]"];
 
     if (!title || !content) {
       return res.status(400).json({ message: "Title and content are required." });
@@ -52,6 +54,10 @@ exports.createSajak = async (req, res) => {
       imageLink = `https://drive.google.com/uc?export=view&id=${newFileId}`;
     }
 
+    if (tags && !Array.isArray(tags)) {
+      tags = [tags];
+    }
+
     const newSajak = new Sajak({
       authorId: req.userId,
       title,
@@ -59,6 +65,7 @@ exports.createSajak = async (req, res) => {
       image: imageLink,
       hashtags: tags,
       views: 0,
+      likes: 0,
       commentsCount: 0,
       isPublish: isPublish || true,
       createdAt: new Date(),

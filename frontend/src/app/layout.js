@@ -6,6 +6,8 @@ import {
   Playfair_Display,
 } from "next/font/google";
 
+import { Toaster } from "react-hot-toast";
+
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import MaybeFooter from "@/components/MaybeFooter";
@@ -50,6 +52,7 @@ export default function RootLayout({ children }) {
       >
         <Navbar />
         {children}
+        <Toaster />
         <MaybeFooter />
       </body>
     </html>
