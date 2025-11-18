@@ -17,9 +17,6 @@ app.use((req, res, next) => {
     "https://studio.apollographql.com",
   ].filter(Boolean);
 
-  console.log("frontend_url:", process.env.FRONTEND_URL);
-  console.log("mongodb_uri:", process.env.MONGODB_URI);
-
   if (origin && allowedOrigins.includes(origin)) {
     res.setHeader("Access-Control-Allow-Origin", origin);
   }
