@@ -36,7 +36,7 @@ export default function RegisterPage() {
       }
     }
   }, [username, email, password, router]);
-  
+
   const handleGoogleLogin = () => {
     const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
     window.location.href = `${API_URL}/auth/google`;
@@ -89,7 +89,7 @@ export default function RegisterPage() {
             />
             <TextInput
               label="Password"
-              placeholder="********"
+              placeholder="at least 8 characters"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               type="password"
