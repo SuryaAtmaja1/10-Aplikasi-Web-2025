@@ -10,6 +10,10 @@
   4. Azfanova Sammy Rafif S. | (23/521764/TK/57572)
   5. Anggita Salsabilla | (23/516001/TK/56775)
 
+## Singkat Sajak -- Website
+
+**[Singkat Sajak](https://singkat-sajak.vercel.app)**
+
 ## 📚 Deskripsi Aplikasi
 
 Aplikasi web ini merupakan platform komunitas untuk berbagi dan membaca karya tulis (sajak, esai, opini). Pengguna bisa mengunggah, mengedit, dan menghapus karya mereka secara bebas. Selain itu, pengguna juga bisa mengekpresikan diri mereka melalui kolom komentar terkait dengan karya (sajak) yang mereka baca.
