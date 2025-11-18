@@ -12,6 +12,11 @@ export const LandingTerbaru = () => {
   const [recentPosts, setRecentPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  function truncateText(text, max = 30) {
+    if (!text) return "";
+    return text.length > max ? text.slice(0, max - 1) + "…" : text;
+  }
+
   useEffect(() => {
     async function fetchSajakAndAuthors() {
       try {
@@ -73,7 +78,9 @@ export const LandingTerbaru = () => {
               href=""
               className="bg-putih relative flex flex-col justify-between w-full h-full py-1.5 md:py-4 px-1.5 md:px-4 hover:-translate-2 hover:shadow-[6px_6px_0_black] active:scale-90"
             >
-              <h1 className="md:text-3xl font-bold">{recentPosts[0]?.title}</h1>
+              <h1 className="md:text-3xl font-bold">
+                {truncateText(recentPosts[0]?.title, 60)}
+              </h1>
               <h2 className="font-instrument md:text-xl text-nowrap">
                 {recentPosts[0]?.author?.username}
               </h2>
@@ -82,45 +89,55 @@ export const LandingTerbaru = () => {
               href=""
               className="bg-putih relative flex flex-col justify-between w-full h-full py-1.5 md:py-4 px-1.5 md:px-4 hover:-translate-2 hover:shadow-[6px_6px_0_black] active:scale-90"
             >
-              <h1 className="md:text-3xl font-bold">{recentPosts[1]?.title}</h1>
+              <h1 className="md:text-3xl font-bold">
+                {truncateText(recentPosts[1]?.title, 60)}
+              </h1>
               <h2 className="font-instrument md:text-xl text-nowrap">
-                {recentPosts[0]?.author?.username}
+                {recentPosts[1]?.author?.username}
               </h2>
             </a>
             <a
               href=""
               className="bg-putih relative flex flex-col justify-between w-full h-full py-1.5 md:py-4 px-1.5 md:px-4 hover:-translate-2 hover:shadow-[6px_6px_0_black] active:scale-90"
             >
-              <h1 className="md:text-3xl font-bold">{recentPosts[2]?.title}</h1>
+              <h1 className="md:text-3xl font-bold">
+                {truncateText(recentPosts[2]?.title, 60)}
+              </h1>
               <h2 className="font-instrument md:text-xl text-nowrap">
-                {recentPosts[0]?.author?.username}
+                {recentPosts[2]?.author?.username}
               </h2>
             </a>
             <a
               href=""
               className="bg-putih relative flex flex-col justify-between w-full h-full py-1.5 md:py-4 px-1.5 md:px-4 hover:-translate-2 hover:shadow-[6px_6px_0_black] active:scale-90"
             >
-              <h1 className="md:text-3xl font-bold">{recentPosts[3]?.title}</h1>
+              <h1 className="md:text-3xl font-bold">
+                {truncateText(recentPosts[3]?.title, 60)}
+              </h1>
               <h2 className="font-instrument md:text-xl text-nowrap">
-                {recentPosts[0]?.author?.username}
+                {recentPosts[3]?.author?.username}
               </h2>
             </a>
             <a
               href=""
               className="bg-putih relative flex flex-col justify-between w-full h-full py-1.5 md:py-4 px-1.5 md:px-4 hover:-translate-2 hover:shadow-[6px_6px_0_black] active:scale-90"
             >
-              <h1 className="md:text-3xl font-bold">{recentPosts[4]?.title}</h1>
+              <h1 className="md:text-3xl font-bold">
+                {truncateText(recentPosts[4]?.title, 60)}
+              </h1>
               <h2 className="font-instrument md:text-xl text-nowrap">
-                {recentPosts[0]?.author?.username}
+                {recentPosts[4]?.author?.username}
               </h2>
             </a>
             <a
               href=""
               className="bg-putih relative flex flex-col justify-between w-full h-full py-1.5 md:py-4 px-1.5 md:px-4 hover:-translate-2 hover:shadow-[6px_6px_0_black] active:scale-90"
             >
-              <h1 className="md:text-3xl font-bold">{recentPosts[5]?.title}</h1>
+              <h1 className="md:text-3xl font-bold">
+                {truncateText(recentPosts[5]?.title, 60)}
+              </h1>
               <h2 className="font-instrument md:text-xl text-nowrap">
-                {recentPosts[0]?.author?.username}
+                {recentPosts[5]?.author?.username}
               </h2>
             </a>
             {/* show more */}
