@@ -12,9 +12,13 @@ app.use((req, res, next) => {
   const origin = req.headers.origin;
   const allowedOrigins = [
     process.env.FRONTEND_URL,
+    "https://singkat-sajak.vercel.app",
     "http://localhost:3000",
     "https://studio.apollographql.com",
   ].filter(Boolean);
+
+  console.log("frontend_url:", process.env.FRONTEND_URL);
+  console.log("mongodb_uri:", process.env.MONGODB_URI);
 
   if (origin && allowedOrigins.includes(origin)) {
     res.setHeader("Access-Control-Allow-Origin", origin);

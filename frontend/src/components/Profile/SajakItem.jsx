@@ -17,9 +17,11 @@ export default function SajakItem({ sajak, onDelete, onLike }) {
   return (
     <article className="flex flex-col">
       <div className="flex items-start justify-between gap-3 md:gap-6 mb-4 md:mb-6">
-        <h3 className="font-instrument font-normal text-4xl md:text-5xl text-[#363231] flex-1 leading-tight">
-          {sajak.title}
-        </h3>
+        <Link href={`/sajak/${sajak.hashtags[0]}/${sajak._id}`}>
+          <h3 className="font-instrument font-normal text-4xl md:text-5xl text-[#363231] flex-1 leading-tight hover:text-biru transition-colors cursor-pointer">
+            {sajak.title}
+          </h3>
+        </Link>
 
         <div className="flex gap-3 shrink-0 pt-2">
           <Link href={`/sajak/edit/${sajak._id}`}>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import ImageDropzone from "@/components/ReuseEditPost/ImageDropzone";
 import TextInput from "@/components/ReuseEditPost/TextInput";
 import TextAreaInput from "@/components/ReuseEditPost/TextAreaInput";
@@ -8,53 +8,136 @@ import Image from "next/image";
 import Modal from "@/components/Modal";
 import api from "@/utils/axiosInstance";
 import { useRouter, useParams } from "next/navigation";
+import toast from "react-hot-toast";
 
 const ALL_TAGS = ["Alam", "Lokal", "Politik", "Sosial", "Ekonomi", "Teknologi"];
 
-export default function EditSajakPage({ params }) {
+export default function EditSajakPage() {
   const router = useRouter();
+  const params = useParams();
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
+  const [imageFile, setImageFile] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
 
+  const [loading, setLoading] = useState(true);
+
+  // ================================
+  //  Load Current SAJAK
+  // ================================
+  useEffect(() => {
+    const fetchSajak = async () => {
+      try {
+        const res = await api.get(`/sajak/${params.id}`);
+
+        const data = res.data;
+        console.log(data);
+        setTitle(data.title);
+        setContent(data.content);
+        setSelectedTags(data.hashtags || []);
+
+      } catch (error) {
+        console.log(error);
+
+        if (error?.response?.status === 401) {
+          toast.error("Sesi habis, silakan login kembali");
+          router.push("/auth/login");
+        } else {
+          toast.error("Gagal memuat data sajak");
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSajak();
+  }, [params.id, router]);
+
+  // ================================
+  //  Add/Remove TAG
+  // ================================
   const removeTag = (tagToRemove) => {
-    setSelectedTags(
-      selectedTags.filter((tag) => tag !== tagToRemove && tag !== "")
-    );
+    setSelectedTags(selectedTags.filter((tag) => tag !== tagToRemove));
   };
 
   const addTag = (tagToAdd) => {
-    if (!selectedTags.includes(tagToAdd) && tagToAdd !== "") {
+    if (!selectedTags.includes(tagToAdd)) {
       setSelectedTags([...selectedTags, tagToAdd]);
     }
     setIsDropdownOpen(false);
   };
 
-  const handlePostConfirm = useCallback(() => {
-    console.log("Posting sajak:", { title, content, selectedTags });
+  // ================================
+  //  Confirm SAVE (PATCH)
+  // ================================
+  const handlePostConfirm = useCallback(async () => {
     setIsPostModalOpen(false);
-    // logic POST data ke backend
-  }, [title, content, selectedTags]);
 
-  const handleCancelConfirm = useCallback(() => {
-    console.log("Batalkan post.");
+    try {
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("content", content);
+
+      selectedTags.forEach(tag => {
+        formData.append("tags[]", tag);
+      });
+
+      if (imageFile) {
+        formData.append("image", imageFile);
+      }
+
+      await api.patch(`/sajak/${params.id}`, formData, {
+        headers: { "Content-Type": "multipart/form-data" }
+      });
+
+      toast.success("Sajak berhasil diubah!");
+
+      router.push("/profile");
+
+    } catch (error) {
+      console.log("Edit error:", error);
+
+      if (error?.response?.status === 401) {
+        toast.error("Sesi habis, silakan login kembali");
+        router.push("/auth/login");
+        return;
+      }
+
+      toast.error(error?.response?.data?.message || "Terjadi kesalahan");
+    }
+  }, [title, content, selectedTags, imageFile, router, params.id]);
+
+  // ================================
+  //  CANCEL confirm
+  // ================================
+  const handleCancelConfirm = () => {
     setIsCancelModalOpen(false);
     router.push("/profile");
-  }, [router]);
+  };
+
+  if (loading) {
+    return (
+      <div className="w-full text-center pt-20 text-lg font-jakarta">
+        Loading...
+      </div>
+    );
+  }
 
   return (
     <div className="relative min-h-screen pb-20">
+      {/* MODALS */}
       <Modal
         isOpen={isPostModalOpen}
-        title="Post Sajak?"
+        title="Simpan perubahan?"
         onConfirm={handlePostConfirm}
         onCancel={() => setIsPostModalOpen(false)}
       />
+
       <Modal
         isOpen={isCancelModalOpen}
         title="Kembali ke halaman profile?"
@@ -88,6 +171,7 @@ export default function EditSajakPage({ params }) {
           </div>
         </div>
 
+        {/* TAG SELECT */}
         <div className="mb-6 md:mb-8">
           <div className="flex flex-col md:flex-row md:items-center gap-4">
             <div className="relative inline-block w-auto">
@@ -96,11 +180,7 @@ export default function EditSajakPage({ params }) {
                 className="flex items-center justify-between w-40 px-4 py-1.5 md:px-5 md:py-2 bg-oren text-black text-sm md:text-base font-jakarta font-bold rounded-lg"
               >
                 TAG
-                <span
-                  className={`transition-transform ${
-                    isDropdownOpen ? "rotate-180" : ""
-                  }`}
-                >
+                <span className={`transition-transform ${isDropdownOpen ? "rotate-180" : ""}`}>
                   ▼
                 </span>
               </button>
@@ -121,31 +201,29 @@ export default function EditSajakPage({ params }) {
             </div>
 
             <div className="flex flex-wrap gap-2">
-              {selectedTags.map(
-                (tag) =>
-                  tag !== "" && (
-                    <div
-                      key={tag}
-                      className="flex items-center bg-white rounded-md px-2 py-0.5 md:px-3 md:py-1 text-sm md:text-base font-jakarta font-medium text-black border border-oren"
-                    >
-                      <span>{tag}</span>
+              {selectedTags.map((tag) => (
+                <div
+                  key={tag}
+                  className="flex items-center bg-white rounded-md px-2 py-0.5 md:px-3 md:py-1 text-sm md:text-base font-jakarta font-medium text-black border border-oren"
+                >
+                  <span>{tag}</span>
 
-                      <button
-                        onClick={() => removeTag(tag)}
-                        className="ml-2 text-black hover:text-cerise font-jakarta font-bold"
-                      >
-                        &times;
-                      </button>
-                    </div>
-                  )
-              )}
+                  <button
+                    onClick={() => removeTag(tag)}
+                    className="ml-2 text-black hover:text-cerise font-jakarta font-bold"
+                  >
+                    &times;
+                  </button>
+                </div>
+              ))}
             </div>
           </div>
         </div>
 
+        {/* IMAGE + FORM */}
         <div className="grid grid-cols-1 md:grid-cols-12 md:gap-6 lg:gap-10">
           <div className="mb-6 md:mb-0 md:col-span-5">
-            <ImageDropzone />
+            <ImageDropzone onFileSelect={(file) => setImageFile(file)} />
           </div>
 
           <div className="flex flex-col gap-6 md:col-span-7">
@@ -158,7 +236,7 @@ export default function EditSajakPage({ params }) {
 
             <TextAreaInput
               label="Konten"
-              placeholder="Masukan isi konten sajak anda...."
+              placeholder="Masukkan isi konten sajak anda...."
               rows={10}
               value={content}
               onChange={(e) => setContent(e.target.value)}
@@ -166,6 +244,7 @@ export default function EditSajakPage({ params }) {
           </div>
         </div>
 
+        {/* BUTTONS */}
         <div className="flex flex-col-reverse md:flex-row md:justify-end items-end gap-3 mt-8">
           <button
             onClick={() => setIsCancelModalOpen(true)}
