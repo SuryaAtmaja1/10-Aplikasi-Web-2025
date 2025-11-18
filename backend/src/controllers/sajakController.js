@@ -169,10 +169,6 @@ exports.createSajak = async (req, res) => {
 //       .json({ message: "Server error", error: err.message });
 //   }
 // };
-const Sajak = require("../models/Sajak");
-const drive = require("../utils/drive"); // pastikan sudah setup Google Drive helper
-const stream = require("stream");
-const path = require("path");
 
 // ----------------------
 // EDIT SAJAK & LIKE CONTROLLER
@@ -283,6 +279,7 @@ exports.editSajak = async (req, res) => {
     return res.status(500).json({ message: "Server error", error: err.message });
   }
 };
+
 
 exports.getSajakByUser = async (req, res) => {
   try {
