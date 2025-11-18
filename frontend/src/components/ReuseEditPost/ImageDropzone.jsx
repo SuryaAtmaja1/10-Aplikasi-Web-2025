@@ -2,7 +2,7 @@
 import React, { useRef, useCallback, useState, useEffect } from 'react';
 import Image from 'next/image';
 
-const ImageDropzone = () => {
+const ImageDropzone = ({ onFileSelect }) => {  // ← TAMBAH INI
     const fileInputRef = useRef(null);
     const [previewSrc, setPreviewSrc] = useState(null); 
     const [isDragging, setIsDragging] = useState(false); 
@@ -10,13 +10,18 @@ const ImageDropzone = () => {
     const processFile = useCallback((file) => {
         if (!file) return;
         if (!file.type.startsWith("image/")) {
-            console.error("File bukan gambar:", file.type);
-            alert("File yang di-upload harus berupa gambar.");
+            alert("File harus berupa gambar.");
             return;
         }
 
-        console.log('File dipilih:', file.name, file.type);
+        console.log('File dipilih:', file);
 
+        // KIRIM FILE KE PARENT 
+        if (onFileSelect) {
+            onFileSelect(file);
+        }
+
+        // Preview
         if (previewSrc) {
             URL.revokeObjectURL(previewSrc);
         }
@@ -24,13 +29,15 @@ const ImageDropzone = () => {
         const newPreviewSrc = URL.createObjectURL(file);
         setPreviewSrc(newPreviewSrc);
 
+        // simpan file ke <input>
         const dataTransfer = new DataTransfer();
         dataTransfer.items.add(file);
-        if(fileInputRef.current) {
+
+        if (fileInputRef.current) {
             fileInputRef.current.files = dataTransfer.files;
         }
 
-    }, [previewSrc]);
+    }, [previewSrc, onFileSelect]);
 
     const handleFileChange = useCallback((e) => {
         const file = e.target.files?.[0];
@@ -77,7 +84,6 @@ const ImageDropzone = () => {
                 className={`flex flex-col items-center justify-center w-full h-full border border-dashed rounded-lg cursor-pointer transition-colors duration-200
                 ${isDragging ? 'border-blue-500 bg-blue-50' : 'border-[#B5B5B5] bg-[#FFFFFF] hover:bg-[#F3F3F3]'}`}
             >
-
                 {previewSrc ? (
                     <div className="relative w-full h-full">
                         <Image 
