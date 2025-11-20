@@ -119,11 +119,14 @@ export const MobileNavbar = React.memo(function MobileNavbar() {
       >
         <div className="flex items-center justify-between px-4 border-b h-16 bg-putih">
           <div className="flex items-center space-x-3">
-            <div className="flex font-playfair items-center font-bold text-[18px] space-x-2 hover:cursor-pointer">
+            <a
+              href="/"
+              className="flex font-playfair items-center font-bold text-[18px] space-x-2 hover:cursor-pointer"
+            >
               <div>Singkat</div>
               <LogoSingkatSajak className="text-hitam w-6" />
               <div>Sajak</div>
-            </div>
+            </a>
           </div>
 
           <div className="flex items-center gap-3">
