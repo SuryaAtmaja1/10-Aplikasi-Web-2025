@@ -59,6 +59,7 @@ export default function ArticlePage() {
     let mounted = true;
 
     async function fetchUserAndSajak() {
+      let userRes = null;
       try {
         setCheckingAuth(true);
         const userRes = await api.get("/user");
