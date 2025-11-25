@@ -42,6 +42,9 @@ export const metadata = {
   title: "Singkat Sajak",
   description:
     "Sebuah komunitas jurnalis yang berkarya melalui tulisan-tulisan mengenai alam, kearifan lokal, politik, sosial, ekonomi, dan teknologi.",
+  icons: {
+    icon: "/icon.png",
+  },
 };
 
 export default function RootLayout({ children }) {

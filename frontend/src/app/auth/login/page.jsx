@@ -92,7 +92,7 @@ export default function LoginPage() {
             />
             <TextInput
               label="Password"
-              placeholder="********"
+              placeholder="at least 8 characters"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               type="password"
