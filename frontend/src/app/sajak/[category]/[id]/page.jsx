@@ -92,8 +92,11 @@ export default function ArticlePage() {
         if (typeof res.data.likes === "number") setLikeCount(res.data.likes);
         else setLikeCount(0);
 
-        if (res.data.likedBy && user?._id) {
-          const alreadyLiked = res.data.likedBy.includes(user._id);
+
+        if (userRes?.data?._id && res.data?.likedBy) {
+          const alreadyLiked = res.data.likedBy.some(
+            uid => String(uid) === String(userRes.data._id)
+          );
           setLiked(alreadyLiked);
         }
 
