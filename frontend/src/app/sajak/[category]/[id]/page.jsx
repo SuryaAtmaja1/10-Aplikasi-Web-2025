@@ -165,7 +165,7 @@ export default function ArticlePage() {
     setLikeCount(prevCount + (prevLiked ? -1 : 1));
 
     try {
-      const res = await api.patch(`/sajak/${id}`, { like: !prevLiked });
+      const res = await api.patch(`/sajak/${id}/like`, { like: !prevLiked });
       // update UI berdasarkan response backend
       if (res.data?.sajak?.likes !== undefined) {
         setLikeCount(res.data.sajak.likes);
