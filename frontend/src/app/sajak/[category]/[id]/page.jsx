@@ -92,6 +92,11 @@ export default function ArticlePage() {
         if (typeof res.data.likes === "number") setLikeCount(res.data.likes);
         else setLikeCount(0);
 
+        if (res.data.likedBy && user?._id) {
+          const alreadyLiked = res.data.likedBy.includes(user._id);
+          setLiked(alreadyLiked);
+        }
+
         const sajakOwnerId = res.data.authorId ?? res.data.userId ?? res.data.author ?? null;
         const currentUserId = getUserId(user);
         if (currentUserId && sajakOwnerId) {
