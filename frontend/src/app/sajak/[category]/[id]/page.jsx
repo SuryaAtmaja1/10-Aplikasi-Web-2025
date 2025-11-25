@@ -88,7 +88,7 @@ export default function ArticlePage() {
         const res = await api.get(`/sajak/${id}`);
         if (!mounted) return;
         setSajak(res.data);
-
+        console.log(res.data);
         if (typeof res.data.likes === "number") setLikeCount(res.data.likes);
         else setLikeCount(0);
 
@@ -147,10 +147,41 @@ export default function ArticlePage() {
     fetchComments();
   }, [fetchComments]);
 
-  const toggleLike = () => {
-    setLiked((prev) => !prev);
-    setLikeCount((prev) => prev + (liked ? -1 : 1));
+  // --- LIKE STATE & HANDLER ---
+  const toggleLike = async () => {
+    console.log("Tombol Like diklik");
+    if (!user) {
+      toast.error("Silakan login untuk memberi like.");
+      router.push("/auth/login");
+      return;
+    }
+    if (!id) return;
+
+    const prevLiked = liked;
+    const prevCount = likeCount;
+
+    // Optimistic UI
+    setLiked(!prevLiked);
+    setLikeCount(prevCount + (prevLiked ? -1 : 1));
+
+    try {
+      const res = await api.patch(`/sajak/${id}`, { like: !prevLiked });
+      // update UI berdasarkan response backend
+      if (res.data?.sajak?.likes !== undefined) {
+        setLikeCount(res.data.sajak.likes);
+        setLiked(res.data.sajak.likedBy?.includes(user._id));
+      }
+      toast.success(prevLiked ? "Berhasil batal like." : "Berhasil like!");
+    } catch (err) {
+      console.error("Gagal like/unlike:", err);
+      // rollback UI
+      setLiked(prevLiked);
+      setLikeCount(prevCount);
+      toast.error(err?.response?.data?.message || "Gagal memproses like.");
+    }
   };
+
+
 
   const sendComment = async () => {
     if (!comment.trim()) return toast.error("Isi komentar tidak boleh kosong.");
@@ -294,9 +325,16 @@ export default function ArticlePage() {
       </section>
 
       {/* Likes & Share */}
-      <div className="flex items-center gap-6 my-10 text-sm">
-        <button onClick={toggleLike} className="flex items-center gap-1">
-          {liked ? <PiHeartFill className="text-oren w-[22px] h-[22px]" /> : <PiHeart className="text-oren w-[22px] h-[22px]" />}
+      <div className="flex items-center gap-6 my-10 text-sm relative z-10">
+        <button
+          onClick={toggleLike}
+          className="flex items-center gap-1 cursor-pointer"
+        >
+          {liked ? (
+            <PiHeartFill className="text-oren w-[22px] h-[22px]" />
+          ) : (
+            <PiHeart className="text-oren w-[22px] h-[22px]" />
+          )}
           <span>{likeCount}</span>
         </button>
 
@@ -305,7 +343,13 @@ export default function ArticlePage() {
           <span>{countAllComments(comments)}</span>
         </div>
 
-        <div className="flex items-center gap-1 cursor-pointer" onClick={() => { navigator.clipboard?.writeText(window.location.href); toast.success("Link artikel disalin ke clipboard."); }}>
+        <div
+          className="flex items-center gap-1 cursor-pointer"
+          onClick={() => {
+            navigator.clipboard?.writeText(window.location.href);
+            toast.success("Link artikel disalin ke clipboard.");
+          }}
+        >
           <RiShareForwardLine className="text-oren w-[22px] h-[22px]" />
         </div>
       </div>

@@ -11,7 +11,8 @@ const {
   getRecentSajak,
   deleteSajak,
   searchSajak,
-  getSajakByUser
+  getSajakByUser,
+  toggleLike
 } = require("../controllers/sajakController");
 const { verifyUser } = require("../middlewares/auth");
 const upload = require("../middlewares/upload")
@@ -51,6 +52,9 @@ router.delete("/:id", verifyUser, deleteSajak);
 
 // PATCH /sajak 
 router.patch("/:id", verifyUser, upload.single("image"), editSajak);
+
+// PATCH /sajak 
+router.patch("/:id/like", verifyUser, toggleLike);
 
 
 

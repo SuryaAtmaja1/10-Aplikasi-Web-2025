@@ -85,168 +85,56 @@ exports.createSajak = async (req, res) => {
   }
 };
 
-// exports.editSajak = async (req, res) => {
-//   try {
-//     const { id } = req.params; // sajak ID
-//     const { title, content, tags, isPublish } = req.body;
-//     const userId = req.userId; // from verifyUser middleware
-
-//     // Find the sajak
-//     const sajak = await Sajak.findById(id);
-//     if (!sajak) {
-//       return res.status(404).json({ message: "Sajak not found" });
-//     }
-
-//     //Check if the logged-in user is the author
-//     if (sajak.authorId.toString() !== userId) {
-//       return res.status(403).json({ message: "Not authorized to edit this sajak" });
-//     }
-
-//     let imageLink = sajak.image; // keep old image by default
-
-//     // If new image is uploaded
-//     if (req.file) {
-//       const allowedTypes = ["image/png", "image/jpeg", "image/jpg", "image/gif"];
-//       if (!allowedTypes.includes(req.file.mimetype)) {
-//         return res.status(400).json({ message: "Only image files are allowed" });
-//       }
-
-//       // Delete old image from Google Drive if exists
-//       if (sajak.image) {
-//         try {
-//           const oldFileId = sajak.image.match(/id=([^&]+)/)?.[1];
-//           if (oldFileId) {
-//             await drive.files.delete({ fileId: oldFileId });
-//           }
-//         } catch (deleteErr) {
-//           console.warn("Failed to delete old image:", deleteErr.message);
-//         }
-//       }
-
-//       //Upload new image
-//       const bufferStream = new stream.PassThrough();
-//       bufferStream.end(req.file.buffer);
-
-//       const uploadResponse = await drive.files.create({
-//         media: {
-//           mimeType: req.file.mimetype,
-//           body: bufferStream,
-//         },
-//         requestBody: {
-//           name: "sajak_" + Date.now() + path.extname(req.file.originalname),
-//           parents: [process.env.DRIVEID_SAJAK_PHOTO], // Drive folder ID
-//         },
-//         fields: "id",
-//       });
-
-//       const newFileId = uploadResponse.data.id;
-
-//       await drive.permissions.create({
-//         fileId: newFileId,
-//         requestBody: { role: "reader", type: "anyone" },
-//       });
-
-//       imageLink = `https://drive.google.com/uc?export=view&id=${newFileId}`;
-//     }
-
-//     // 3. Update fields
-//     sajak.title = title || sajak.title;
-//     sajak.content = content || sajak.content;
-//     sajak.hashtags = tags || sajak.hashtags;
-//     sajak.isPublish = typeof isPublish === "boolean" ? isPublish : sajak.isPublish;
-//     sajak.image = imageLink;
-
-//     await sajak.save();
-
-//     return res.status(200).json({
-//       message: "Sajak updated successfully",
-//       sajak,
-//     });
-//   } catch (err) {
-//     console.error("Error editing sajak:", err);
-//     return res
-//       .status(500)
-//       .json({ message: "Server error", error: err.message });
-//   }
-// };
-
-// ----------------------
-// EDIT SAJAK & LIKE CONTROLLER
-// ----------------------
 exports.editSajak = async (req, res) => {
   try {
-    const { id } = req.params; // Sajak ID
-    const { title, content, tags, isPublish, action } = req.body;
-    const userId = req.userId; // dari verifyUser middleware
+    const { id } = req.params; // sajak ID
+    const { title, content, tags, isPublish } = req.body;
+    const userId = req.userId; // from verifyUser middleware
 
-    // Temukan sajak
+    // Find the sajak
     const sajak = await Sajak.findById(id);
-    if (!sajak) return res.status(404).json({ message: "Sajak not found" });
-
-    // ----------------------
-    // LIKE / UNLIKE
-    // ----------------------
-    if (action === "like" || action === "unlike") {
-      if (!userId) return res.status(401).json({ message: "Login required" });
-
-      sajak.likedBy = sajak.likedBy || [];
-
-      if (action === "like") {
-        if (!sajak.likedBy.includes(userId)) {
-          sajak.likedBy.push(userId);
-          sajak.likes = (sajak.likes || 0) + 1;
-        }
-      } else if (action === "unlike") {
-        if (sajak.likedBy.includes(userId)) {
-          sajak.likedBy = sajak.likedBy.filter((uid) => uid.toString() !== userId.toString());
-          sajak.likes = Math.max((sajak.likes || 1) - 1, 0);
-        }
-      }
-
-      await sajak.save();
-
-      return res.status(200).json({
-        message: `Sajak ${action}d successfully`,
-        likes: sajak.likes,
-        likedBy: sajak.likedBy,
-      });
+    if (!sajak) {
+      return res.status(404).json({ message: "Sajak not found" });
     }
 
-    // ----------------------
-    // EDIT SAJAK (Hanya Author)
-    // ----------------------
+    //Check if the logged-in user is the author
     if (sajak.authorId.toString() !== userId) {
       return res.status(403).json({ message: "Not authorized to edit this sajak" });
     }
 
-    let imageLink = sajak.image;
+    let imageLink = sajak.image; // keep old image by default
 
-    // Upload image baru jika ada
+    // If new image is uploaded
     if (req.file) {
       const allowedTypes = ["image/png", "image/jpeg", "image/jpg", "image/gif"];
       if (!allowedTypes.includes(req.file.mimetype)) {
         return res.status(400).json({ message: "Only image files are allowed" });
       }
 
-      // Delete old image dari Google Drive jika ada
+      // Delete old image from Google Drive if exists
       if (sajak.image) {
         try {
           const oldFileId = sajak.image.match(/id=([^&]+)/)?.[1];
-          if (oldFileId) await drive.files.delete({ fileId: oldFileId });
-        } catch (err) {
-          console.warn("Failed to delete old image:", err.message);
+          if (oldFileId) {
+            await drive.files.delete({ fileId: oldFileId });
+          }
+        } catch (deleteErr) {
+          console.warn("Failed to delete old image:", deleteErr.message);
         }
       }
 
-      // Upload new image
+      //Upload new image
       const bufferStream = new stream.PassThrough();
       bufferStream.end(req.file.buffer);
 
       const uploadResponse = await drive.files.create({
-        media: { mimeType: req.file.mimetype, body: bufferStream },
+        media: {
+          mimeType: req.file.mimetype,
+          body: bufferStream,
+        },
         requestBody: {
           name: "sajak_" + Date.now() + path.extname(req.file.originalname),
-          parents: [process.env.DRIVEID_SAJAK_PHOTO],
+          parents: [process.env.DRIVEID_SAJAK_PHOTO], // Drive folder ID
         },
         fields: "id",
       });
@@ -276,9 +164,50 @@ exports.editSajak = async (req, res) => {
     });
   } catch (err) {
     console.error("Error editing sajak:", err);
+    return res
+      .status(500)
+      .json({ message: "Server error", error: err.message });
+  }
+};
+
+exports.toggleLike = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userId = req.userId; // harus login
+
+    if (!userId) return res.status(401).json({ message: "Login required" });
+
+    const sajak = await Sajak.findById(id);
+    if (!sajak) return res.status(404).json({ message: "Sajak not found" });
+
+    sajak.likedBy = sajak.likedBy || [];
+    sajak.likes = sajak.likes || 0;
+
+    const alreadyLiked = sajak.likedBy.includes(userId);
+
+    if (alreadyLiked) {
+      // Unlike
+      sajak.likedBy = sajak.likedBy.filter(uid => uid.toString() !== userId.toString());
+      sajak.likes = Math.max(sajak.likes - 1, 0);
+    } else {
+      // Like
+      sajak.likedBy.push(userId);
+      sajak.likes += 1;
+    }
+
+    await sajak.save();
+
+    return res.status(200).json({
+      message: alreadyLiked ? "Sajak unliked successfully" : "Sajak liked successfully",
+      likes: sajak.likes,
+      likedBy: sajak.likedBy,
+    });
+  } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Server error", error: err.message });
   }
 };
+
 
 
 exports.getSajakByUser = async (req, res) => {
