@@ -45,6 +45,8 @@ export default function PopulerList() {
     fetchSajakAndAuthors();
   }, []);
   if (loading) return <PageLoading message="Memuat konten terbaru..." />;
+
+  console.log("trendingPosts:", trendingPosts[0]?.hashtags[0]);
   return (
     <div className="w-full flex flex-col items-center md:flex-row md:justify-center gap-6">
       <Image
@@ -57,17 +59,35 @@ export default function PopulerList() {
 
       <div className="md:hidden flex flex-col items-center gap-7">
         <WhiteBox
+          href={
+            "sajak/" +
+            trendingPosts[0]?.hashtags[0] +
+            "/" +
+            trendingPosts[0]?._id
+          }
           isPhone={true}
           title={trendingPosts[0]?.title}
           author={trendingPosts[0]?.author?.username}
         />
         <div className="flex flex-row justify-center gap-12">
           <WhiteBox
+            href={
+              "sajak/" +
+              trendingPosts[1]?.hashtags[1] +
+              "/" +
+              trendingPosts[1]?._id
+            }
             isPhone={true}
             title={trendingPosts[1]?.title}
             author={trendingPosts[1]?.author?.username}
           />
           <WhiteBox
+            href={
+              "sajak/" +
+              trendingPosts[2]?.hashtags[2] +
+              "/" +
+              trendingPosts[2]?._id
+            }
             isPhone={true}
             title={trendingPosts[2]?.title}
             author={trendingPosts[2]?.author?.username}
@@ -76,16 +96,34 @@ export default function PopulerList() {
       </div>
       <div className="hidden md:flex flex-row gap-20">
         <WhiteBox
+          href={
+            "sajak/" +
+            trendingPosts[0]?.hashtags[0] +
+            "/" +
+            trendingPosts[0]?._id
+          }
           isPhone={false}
           title={trendingPosts[0]?.title}
           author={trendingPosts[0]?.author?.username}
         />
         <WhiteBox
+          href={
+            "sajak/" +
+            trendingPosts[1]?.hashtags[1] +
+            "/" +
+            trendingPosts[1]?._id
+          }
           isPhone={false}
           title={trendingPosts[1]?.title}
           author={trendingPosts[1]?.author?.username}
         />
         <WhiteBox
+          href={
+            "sajak/" +
+            trendingPosts[2]?.hashtags[2] +
+            "/" +
+            trendingPosts[2]?._id
+          }
           isPhone={false}
           title={trendingPosts[2]?.title}
           author={trendingPosts[2]?.author?.username}

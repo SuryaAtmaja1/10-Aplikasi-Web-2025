@@ -75,7 +75,12 @@ export const LandingTerbaru = () => {
           {/* articles */}
           <div className="grid grid-cols-3 grid-rows-2 gap-3 md:gap-10 w-[760px] h-[70vh] md:h-[76.67vh]">
             <a
-              href=""
+              href={
+                "sajak/" +
+                recentPosts[0]?.hashtags[0] +
+                "/" +
+                recentPosts[0]?._id
+              }
               className="bg-putih relative flex flex-col justify-between w-full h-full py-1.5 md:py-4 px-1.5 md:px-4 hover:-translate-2 hover:shadow-[6px_6px_0_black] active:scale-90"
             >
               <h1 className="md:text-3xl font-bold">
@@ -86,7 +91,12 @@ export const LandingTerbaru = () => {
               </h2>
             </a>
             <a
-              href=""
+              href={
+                "sajak/" +
+                recentPosts[1]?.hashtags[1] +
+                "/" +
+                recentPosts[1]?._id
+              }
               className="bg-putih relative flex flex-col justify-between w-full h-full py-1.5 md:py-4 px-1.5 md:px-4 hover:-translate-2 hover:shadow-[6px_6px_0_black] active:scale-90"
             >
               <h1 className="md:text-3xl font-bold">
@@ -97,7 +107,12 @@ export const LandingTerbaru = () => {
               </h2>
             </a>
             <a
-              href=""
+              href={
+                "sajak/" +
+                recentPosts[2]?.hashtags[2] +
+                "/" +
+                recentPosts[2]?._id
+              }
               className="bg-putih relative flex flex-col justify-between w-full h-full py-1.5 md:py-4 px-1.5 md:px-4 hover:-translate-2 hover:shadow-[6px_6px_0_black] active:scale-90"
             >
               <h1 className="md:text-3xl font-bold">
@@ -108,7 +123,12 @@ export const LandingTerbaru = () => {
               </h2>
             </a>
             <a
-              href=""
+              href={
+                "sajak/" +
+                recentPosts[3]?.hashtags[3] +
+                "/" +
+                recentPosts[3]?._id
+              }
               className="bg-putih relative flex flex-col justify-between w-full h-full py-1.5 md:py-4 px-1.5 md:px-4 hover:-translate-2 hover:shadow-[6px_6px_0_black] active:scale-90"
             >
               <h1 className="md:text-3xl font-bold">
@@ -119,7 +139,12 @@ export const LandingTerbaru = () => {
               </h2>
             </a>
             <a
-              href=""
+              href={
+                "sajak/" +
+                recentPosts[4]?.hashtags[4] +
+                "/" +
+                recentPosts[4]?._id
+              }
               className="bg-putih relative flex flex-col justify-between w-full h-full py-1.5 md:py-4 px-1.5 md:px-4 hover:-translate-2 hover:shadow-[6px_6px_0_black] active:scale-90"
             >
               <h1 className="md:text-3xl font-bold">
@@ -130,7 +155,12 @@ export const LandingTerbaru = () => {
               </h2>
             </a>
             <a
-              href=""
+              href={
+                "sajak/" +
+                recentPosts[5]?.hashtags[5] +
+                "/" +
+                recentPosts[5]?._id
+              }
               className="bg-putih relative flex flex-col justify-between w-full h-full py-1.5 md:py-4 px-1.5 md:px-4 hover:-translate-2 hover:shadow-[6px_6px_0_black] active:scale-90"
             >
               <h1 className="md:text-3xl font-bold">
