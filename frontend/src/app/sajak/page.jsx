@@ -152,7 +152,7 @@ export default function SajakPage() {
         setLoading(true);
         setError(null);
 
-        const res = await api.get("/sajak/trending");
+        const res = await api.get("/sajak/recent");
         const arr =
           (res.data?.data && Array.isArray(res.data.data) && res.data.data) ||
           (Array.isArray(res.data) && res.data) ||
